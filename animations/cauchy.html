@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cauchy Distribution</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background: #1a1a1a;
+            color: white;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        canvas {
+            border: 2px solid #444;
+            background: #000;
+        }
+        .controls {
+            margin-top: 10px;
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+        .info {
+            margin-top: 10px;
+            font-size: 14px;
+            color: #ccc;
+        }
+        button {
+            padding: 8px 16px;
+            background: #333;
+            color: white;
+            border: 1px solid #555;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        button:hover {
+            background: #444;
+        }
+    </style>
+</head>
+<body>
+    <h1>Cauchy Distribution</h1>
+    <canvas id="canvas" width="800" height="600"></canvas>
+    <div class="controls">
+        <button onclick="toggleAnimation()">Start/Stop</button>
+        <button onclick="resetAnimation()">Reset</button>
+        <span>Shoot Rate: <input type="range" id="shootRate" min="0.1" max="0.8" value="0.3" step="0.1" onchange="updateShootRate()"></span>
+    </div>
+    <div class="info" id="info">
+        Gun Angle: 0° | Active Particles: 0 | Animation: Stopped
+    </div>
+
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        const info = document.getElementById('info');
+
+        // Animation parameters
+        const DT = 0.2; // ~60fps
+        const INITIAL_SPEED = -300;
+        
+        // Gun parameters
+        const GUN_LENGTH = 60;
+        const GUN_WIDTH = 8;
+        const GUN_X = canvas.width / 2;
+        const GUN_Y = canvas.height - 50;
+        
+        // Target line parameters
+        const TARGET_Y = 150;
+        
+        // Particle parameters
+        const PARTICLE_LIFETIME = 300; // frames
+        let SHOOT_PROBABILITY = 0.3;
+        
+        // Animation state
+        let animationRunning = false;
+        let animationId = null;
+        
+        // Gun state
+        let gunAngle = 0;
+        let gunRotationSpeed = -0.02;
+        
+        // Particles array
+        let particles = [];
+        
+        class Particle {
+            constructor(x, y, vx, vy) {
+                this.x = x;
+                this.y = y;
+                this.vx = vx;
+                this.vy = vy;
+                this.age = 0;
+                this.active = true;
+            }
+            
+            update() {
+                if (!this.active) return;
+                
+                // Update position (no gravity - straight line motion)
+                this.x += this.vx * DT;
+                this.y += this.vy * DT;
+                
+                // Stop at target line but don't disappear
+                if (this.y <= TARGET_Y) {
+                    this.y = TARGET_Y; // Lock to target line
+                    this.vx = 0; // Stop horizontal movement
+                    this.vy = 0; // Stop vertical movement
+                }
+                
+                // Check bounds and lifetime  
+                if (this.y > GUN_Y || this.x < 0 || this.x > canvas.width || this.age > PARTICLE_LIFETIME) {
+                    this.active = false;
+                    return;
+                }
+                
+                this.age++;
+            }
+            
+            draw() {
+                if (!this.active) return;
+                
+                ctx.fillStyle = '#ffff00';
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, 3, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+        
+        function updateGun() {
+            gunAngle += gunRotationSpeed;
+            
+            // Reverse direction at limits (0 to π radians = 0° to 180°)
+            // 0° = straight up, 90° = horizontal right, 180° = horizontal left
+            if (gunAngle >= Math.PI || gunAngle <= 0) {
+                gunRotationSpeed = -gunRotationSpeed;
+                gunAngle = Math.max(0, Math.min(Math.PI, gunAngle));
+            }
+        }
+        
+        function createParticle() {
+            // Calculate gun tip position using the same transform as the visual gun
+            // The tip is at (-GUN_LENGTH/2, 0) in the gun's local coordinates
+            const tipX = GUN_X + (-GUN_LENGTH/2) * Math.cos(gunAngle) - 0 * Math.sin(gunAngle);
+            const tipY = GUN_Y + (-GUN_LENGTH/2) * Math.sin(gunAngle) + 0 * Math.cos(gunAngle);
+            
+            // Particle velocity exactly along gun barrel direction
+            const vx = INITIAL_SPEED * Math.cos(gunAngle);
+            const vy = INITIAL_SPEED * Math.sin(gunAngle);
+            
+            return new Particle(tipX, tipY, vx, vy);
+        }
+        
+        function drawGun() {
+            ctx.save();
+            ctx.translate(GUN_X, GUN_Y);
+            ctx.rotate(gunAngle);
+            
+            // Draw gun rectangle
+            ctx.fillStyle = '#888888';
+            ctx.fillRect(-GUN_LENGTH/2, -GUN_WIDTH/2, GUN_LENGTH, GUN_WIDTH);
+            
+            // Draw gun outline
+            ctx.strokeStyle = '#aaaaaa';
+            ctx.lineWidth = 2;
+            ctx.strokeRect(-GUN_LENGTH/2, -GUN_WIDTH/2, GUN_LENGTH, GUN_WIDTH);
+            
+            // Draw tip indicator at the front of the gun rectangle (negative end)
+            ctx.fillStyle = '#ffaa00';
+            ctx.beginPath();
+            ctx.arc(-GUN_LENGTH/2, 0, 4, 0, Math.PI * 2);
+            ctx.fill();
+            
+            ctx.restore();
+        }
+        
+        function drawTargetLine() {
+            ctx.strokeStyle = '#ff0000';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            ctx.moveTo(0, TARGET_Y);
+            ctx.lineTo(canvas.width, TARGET_Y);
+            ctx.stroke();
+            
+            // Add target line label
+            ctx.fillStyle = '#ff0000';
+            ctx.font = '14px Arial';
+            ctx.fillText('TARGET LINE', 10, TARGET_Y - 10);
+        }
+        
+        function updateInfo() {
+            const angleDegrees = (gunAngle * 180 / Math.PI).toFixed(1);
+            const activeParticles = particles.filter(p => p.active).length;
+            const status = animationRunning ? 'Running' : 'Stopped';
+            info.textContent = `Gun Angle: ${angleDegrees}° | Active Particles: ${activeParticles} | Animation: ${status}`;
+        }
+        
+        function animate() {
+            // Clear canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Update gun rotation
+            updateGun();
+            
+            // Randomly create new particles
+            if (Math.random() < SHOOT_PROBABILITY) {
+                particles.push(createParticle());
+            }
+            
+            // Update particles
+            particles.forEach(particle => particle.update());
+            
+            // Remove inactive particles
+            particles = particles.filter(p => p.active);
+            
+            // Draw everything
+            drawTargetLine();
+            drawGun();
+            particles.forEach(particle => particle.draw());
+            
+            // Update info display
+            updateInfo();
+            
+            // Continue animation
+            if (animationRunning) {
+                animationId = requestAnimationFrame(animate);
+            }
+        }
+        
+        function toggleAnimation() {
+            animationRunning = !animationRunning;
+            if (animationRunning) {
+                animate();
+            } else if (animationId) {
+                cancelAnimationFrame(animationId);
+            }
+        }
+        
+        function resetAnimation() {
+            animationRunning = false;
+            if (animationId) {
+                cancelAnimationFrame(animationId);
+            }
+            
+            // Reset state
+            gunAngle = 0;
+            //gunRotationSpeed = 0.02;
+            particles = [];
+            
+            // Draw initial state
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawTargetLine();
+            drawGun();
+            updateInfo();
+        }
+        
+        function updateShootRate() {
+            SHOOT_PROBABILITY = parseFloat(document.getElementById('shootRate').value);
+        }
+        
+        // Initialize
+        resetAnimation();
+        
+        // Auto-start animation
+        setTimeout(() => {
+            toggleAnimation();
+        }, 500);
+    </script>
+</body>
+</html>

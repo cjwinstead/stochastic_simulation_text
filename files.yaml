@@ -1,0 +1,7 @@
+---
+text:
+  - ./1_TheoreticalFoundations/1_RandomVariables.md
+  - ./1_TheoreticalFoundations/2_Probability_Measure.md
+  - ./2_Estimation/1_Concept_of_Estimation.md
+  - ./3_ImportanceSamplingFundamentals/1_MagicSampling.md
+---

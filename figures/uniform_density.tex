@@ -1,0 +1,17 @@
+\begin{tikzpicture}
+
+  \begin{axis}[
+      height=2in,
+      width=5in,
+      xlabel={$x$},
+      ylabel={},
+      xtick={-1,1},
+      xticklabels={$a$,$b$},
+      ytick={0,1,3},
+      yticklabels={0,$\frac{1}{b-a}$,1}
+    ]
+    \addplot[blue,no marks,thick] coordinates {(-3,0) (-1,0) (-1,1) (1,1) (1,0) (4,0)};
+    \addlegendentry{$f_X(x)$};
+
+  \end{axis}
+\end{tikzpicture}

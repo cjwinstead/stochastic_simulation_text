@@ -1,0 +1,188 @@
+
+\documentclass[letterpaper,11pt]{book}
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+%\usepackage{lmodern}
+\usepackage[parfill]{parskip}
+%\usepackage[default]{sourcecodepro}
+%\usepackage{unicode-math}
+%\setmainfont{Minion Pro} % or any other recommended font
+%\usepackage{palatino}
+\usepackage{fontspec}
+
+\setmainfont{DejaVuSerif}
+\setmonofont{FreeMono}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Source: http://en.wikibooks.org/wiki/LaTeX/Hyperlinks %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage[english]{babel}
+\usepackage{framed}
+
+$if(listings)$
+\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage{listings}
+\newcommand{\passthrough}[1]{#1}
+\lstdefinelanguage{Julia}%
+{morekeywords={abstract,break,case,catch,const,continue,do,else,elseif,%
+end,export,false,for,function,immutable,import,importall,if,in,%
+macro,module,otherwise,quote,return,switch,true,try,type,typealias,%
+using,while},%
+sensitive=true,%
+morecomment=[l]\#,%
+morecomment=[n]{\#=}{=\#},%
+morestring=[s]{"}{"},%
+morestring=[m]{'}{'},%
+}[keywords,comments,strings]%
+
+\lstset{%
+language         = Julia,
+basicstyle       = \ttfamily,
+keywordstyle     = \bfseries\color{blue},
+stringstyle      = \color{magenta},
+commentstyle     = \color{ForestGreen},
+showstringspaces = false,
+}
+$endif$
+$if(lhs)$
+\lstnewenvironment{code}{\lstset{language=Haskell,basicstyle=\small\ttfamily}}{}
+$endif$
+$if(highlighting-macros)$
+$highlighting-macros$
+$endif$
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 'dedication' environment: To add a dedication paragraph at the start of book %
+% Source: http://www.tug.org/pipermail/texhax/2010-June/015184.html            %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newenvironment{dedication}
+{
+   \cleardoublepage
+   \thispagestyle{empty}
+   \vspace*{\stretch{1}}
+   \hfill\begin{minipage}[t]{0.66\textwidth}
+   \raggedright
+}
+{
+   \end{minipage}
+   \vspace*{\stretch{3}}
+   \clearpage
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Chapter quote at the start of chapter        %
+% Source: http://tex.stackexchange.com/a/53380 %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\makeatletter
+\renewcommand{\@chapapp}{}% Not necessary...
+\newenvironment{chapquote}[2][2em]
+  {\setlength{\@tempdima}{#1}%
+   \def\chapquote@author{#2}%
+   \parshape 1 \@tempdima \dimexpr\textwidth-2\@tempdima\relax%
+   \itshape}
+  {\par\normalfont\hfill--\ \chapquote@author\hspace*{\@tempdima}\par\bigskip}
+\makeatother
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% First page of book which contains 'stuff' like: %
+%  - Book title, subtitle                         %
+%  - Book author name                             %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Book's title and subtitle
+\title{\Huge \textbf{$title$} \\ \huge $if(subtitle)$ $subtitle$ $endif$}
+% Author
+\author{\textsc{$author$}}
+
+
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usetikzlibrary{arrows,calc,shapes,backgrounds,intersections,patterns,positioning}
+\usepackage[american]{circuitikz}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{customdice}
+\usepackage[capitalize,nameinlink,noabbrev]{cleveref}
+
+
+\tikzset{plotfigstyle/.style={}}
+\pgfplotsset{plotaxisstyle/.style={width=0.9\linewidth,height=0.6\linewidth},legend pos=south east}
+
+%----------------------------------------------------------------------
+%	FONTS
+%----------------------------------------------------------------------
+%\usepackage{times}      % Loads the Times-Roman Fonts
+%\usepackage{mathptmx}   % Loads the Times-Roman Math Fonts
+
+
+%\newtheorem{example}{Example}[chapter]
+
+
+
+\usepackage{tcolorbox}
+\tcbuselibrary{theorems}
+
+\newtcbtheorem[number within=chapter]{example}{Example}%
+{parbox=false,colback=green!5,colframe=green!35!black,fonttitle=\bfseries}{th}
+
+\newtcbtheorem[number within=chapter]{source}{Julia Example}%
+{parbox=false,colback=green!5,colframe=green!35!black,fonttitle=\bfseries}{th}
+
+
+\newcommand{\exampleautorefname}{Example}
+\newcommand{\sourceautorefname}{Julia Example}
+
+
+\crefname{example}{example}{examples}
+\Crefname{example}{Example}{Examples}
+
+\crefname{source}{julia example}{julia examples}
+\Crefname{source}{Julia Example}{Julia Examples}
+
+
+
+
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+
+$for(header-includes)$
+$header-includes$
+$endfor$
+
+
+\begin{document}
+
+\frontmatter
+\maketitle
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Add a dedication paragraph to dedicate your book to someone %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{dedication}
+Dedicated to the wind and the waves.
+\end{dedication}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Auto-generated table of contents, list of figures and list of tables %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\tableofcontents
+\listoffigures
+\listoftables
+
+
+\mainmatter
+
+$body$
+
+\end{document}
+
