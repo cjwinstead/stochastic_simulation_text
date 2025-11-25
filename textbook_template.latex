@@ -107,7 +107,7 @@ $endif$
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{mathtools}
-\usepackage{customdice}
+
 \usepackage[capitalize,nameinlink,noabbrev]{cleveref}
 
 

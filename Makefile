@@ -30,6 +30,7 @@ all: pdf/stochastic_simulation_text.pdf
 
 
 pdf/stochastic_simulation_text.pdf: $(TEXT_FILES) FORCE
+	@mkdir -p pdf
 	pandoc $(TEXT_FILES) $(PANDOC_FLAGS)  -o "$@"
 
 
