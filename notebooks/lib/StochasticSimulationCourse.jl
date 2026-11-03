@@ -1,7 +1,7 @@
 # StochasticSimulationCourse.jl
 #
 # Shared code for the Stochastic Verification course notebooks.
-# Version 0.1.0: scope is Modules 1 and 2.
+# Version 0.1.1: scope is Modules 1 and 2.
 #
 # Usage, in the setup cell of a notebook:
 #
@@ -39,7 +39,7 @@ export interval_probability, wald_interval, wilson_interval
 export running_mean, running_var, trace
 export report, within_se
 
-const COURSE_VERSION = v"0.1.0"
+const COURSE_VERSION = v"0.1.1"
 
 """
     check_version(required)
@@ -363,7 +363,7 @@ function _warnings(r::EstimateResult)
         s = max_weight_share(r)
         s > 0.1 && push!(msgs, "one sample carries " * _pct(s) * " of the estimate")
         ne = N_eff(r)
-        k >= 100 && ne < 0.01k && push!(msgs, @sprintf(
+        k >= 100 && ne < 0.05k && push!(msgs, @sprintf(
             "N_eff is %.1f out of %d nonzero terms; a few samples dominate", ne, k))
         any(isinf, r.terms) && push!(msgs, "a term overflowed to Inf")
     end
