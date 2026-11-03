@@ -8,20 +8,28 @@ This is a work-in-progress and is undergoing a lot of revision. All content is r
 
 # Dependencies
 
-This document is written using Markdown and LaTeX, and is designed to be built 
-as a pdf document using pandoc and GNU make. At time of this writing, the document
-is built using pandoc 3.6.4 with the `pandoc-xnos` filter.
+The text is written in Markdown and LaTeX and built with pandoc and GNU make.
+It requires pandoc 3.13 with the `pandoc-crossref` filter, which numbers
+figures, equations, tables and sections and resolves references to them.
+`pandoc-crossref` is built for a specific pandoc release, so install a matching
+pair (for example, from the release page of
+[pandoc-crossref](https://github.com/lierdakil/pandoc-crossref/releases) or from
+conda-forge). The PDF is typeset with `xelatex`.
 
-## Note on pandoc-xnos
+## Cross-reference syntax
 
-The `pandoc-xnos` filter seems to be no longer maintained and throws errors with
-current pandoc versions. A patched version of the filter is available from a forked
-version and can be installed using `pip`:
+Label a figure, equation or table, then refer to it:
 
 ```
-pip install git+https://github.com/TimothyElder/pandoc-xnos --force-reinstall
+![Caption text.](figures/name.tex){#fig:name}
+
+$$ \tilde{\xi} = \frac{1}{N}\sum_{i=1}^N h(y_i)\,\ell(y_i) $$ {#eq:is-estimator}
+
+See @fig:name and @eq:is-estimator.   @Fig:name begins a sentence.
 ```
 
+In the PDF, references go through `cleveref` and read "Figure 3.1",
+"Equation 4.2"; the names are set in `book_info.yaml`.
 
 # Notebooks
 

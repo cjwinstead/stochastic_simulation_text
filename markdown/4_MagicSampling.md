@@ -199,7 +199,7 @@ Sampling Gain is 3.86e+01
 We see the sampling gain is around 38, which loosely means importance sampling 
 converges 38 times faster than naive estimation. The convergence is especially
 clear when comparing the naive and importance estimates for increasing sample
-counts, as in +@fig:gaussian_interval_trace.
+counts, as in @fig:gaussian_interval_trace.
 :::
 
 

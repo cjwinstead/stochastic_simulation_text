@@ -5,25 +5,27 @@ PANDOC_FLAGS =	--verbose \
 		--pdf-engine=xelatex \
 		--template=textbook_template.latex \
 		--top-level-division=chapter \
+		--filter pandoc-crossref \
 		--lua-filter ./textbook.lua \
-		--filter pandoc-fignos \
-		--highlight-style tango \
+		--syntax-highlighting=tango \
 		book_info.yaml
 
 HTML_FLAGS =	--verbose \
                 -fmarkdown+definition_lists \
+		--filter pandoc-crossref \
 		--lua-filter ./textbook.lua \
 		--mathjax \
 		--toc \
-		--highlight-style tango 
+		--syntax-highlighting=tango
 
 CHUNK_FLAGS =	--verbose \
                 -fmarkdown+definition_lists \
+		--filter pandoc-crossref \
 		--lua-filter ../../textbook.lua \
 		-tchunkedhtml \
 		--toc \
 		--mathjax \
-		--highlight-style tango 
+		--syntax-highlighting=tango
 
 .PHONY: all 
 all: pdf/stochastic_simulation_text.pdf

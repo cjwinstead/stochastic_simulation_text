@@ -2,4 +2,13 @@
 title: "Verification via Stochastic Simulation"
 author: "Chris Winstead"
 monofont: Everson Mono
+# pandoc-crossref: emit \cref references through the template's cleveref,
+# number figures within chapters, and spell out reference names.
+cref: true
+chapters: true
+linkReferences: true
+figPrefix: [Figure, Figures]
+eqnPrefix: [Equation, Equations]
+tblPrefix: [Table, Tables]
+secPrefix: [Section, Sections]
 ...
