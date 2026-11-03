@@ -153,6 +153,9 @@ $endif$
 
 \usepackage{longtable,booktabs,array}
 \usepackage{calc} % for calculating minipage widths
+% pandoc 3 sets \LTcaptype to "none" for tables without a caption, so they
+% are not numbered; longtable then needs a counter by that name.
+\newcounter{none}
 
 $for(header-includes)$
 $header-includes$
