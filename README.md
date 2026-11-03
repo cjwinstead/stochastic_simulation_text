@@ -22,3 +22,34 @@ version and can be installed using `pip`:
 pip install git+https://github.com/TimothyElder/pandoc-xnos --force-reinstall
 ```
 
+
+# Notebooks
+
+Assignment notebooks live in `notebooks/`, one Jupytext percent-format `.jl`
+file per video item, named `M<module>_<lesson>_<item>_<Name>.jl`:
+
+```
+notebooks/
+  lib/   StochasticSimulationCourse.jl, course_plots.jl, test_course.jl
+  M1/    Module 1 notebooks
+  M2/    Module 2 notebooks
+tools/   solutions.py (split/merge/check), pre-commit
+```
+
+Solutions and hidden tests are kept in a separate private repository. In a
+public notebook each one is an empty region:
+
+```
+#@solution p1
+#@end
+```
+
+`make notebooks` fills the regions from the private repository (default
+location `../stochastic_simulation_solutions`, override with `SOLUTIONS=`),
+copies the course files next to each notebook, and writes `.jl` and `.ipynb`
+files under `build/notebooks/`. Add `NBGRADER=1` to emit nbgrader delimiters
+instead of `#@` markers. Building requires `python3` and `jupytext`.
+
+`make check-notebooks` fails if any public notebook contains a solution.
+Install the same check as a commit hook with
+`cp tools/pre-commit .git/hooks/pre-commit`.

@@ -1,0 +1,6 @@
+#!/bin/sh
+# Refuse a commit that would publish notebook solutions.
+# Install once per clone:  cp tools/pre-commit .git/hooks/pre-commit
+files=$(git diff --cached --name-only --diff-filter=ACM -- 'notebooks/M*/*.jl')
+[ -z "$files" ] && exit 0
+exec python3 tools/solutions.py check $files
