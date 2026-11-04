@@ -33,6 +33,11 @@
 % Mathematics and figures
 % ---------------------------------------------------------------------------
 \usepackage{mathtools}
+% Under XeLaTeX, pandoc's template loads unicode-math, which does not support
+% \boldsymbol. The text uses it only for Greek letters (bold random variables
+% such as \boldsymbol{\xi}), so map it to unicode-math's bold italic letters.
+% The Markdown keeps \boldsymbol, which MathJax needs for the HTML.
+\AtBeginDocument{\renewcommand{\boldsymbol}[1]{\symbfit{#1}}}
 \usepackage{graphicx}
 \usepackage{tikz}
 \usepackage{pgfplots}

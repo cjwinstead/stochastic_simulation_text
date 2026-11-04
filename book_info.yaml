@@ -14,9 +14,6 @@ secnumdepth: 2
 toc: true
 lof: true
 lot: true
-# mathspec instead of unicode-math keeps the traditional math fonts, under
-# which \boldsymbol works.
-mathspec: true
 # The book's LaTeX setup. It is loaded here, not with --include-in-header,
 # because that option would replace the header-includes pandoc-crossref adds.
 header-includes: |
