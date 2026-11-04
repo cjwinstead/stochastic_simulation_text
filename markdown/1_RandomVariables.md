@@ -4,13 +4,13 @@ A **random variable** $\mathbf{X}$ is a placeholder for an experiment,
 observation, event, or proposition with an uncertain outcome. A single
 measurement, observation or generated value is called a **sample** $x$. The
 specific result for a measurement is called an **outcome**.  Usually
-we indicate	a random variable using bold font, upper-case, like $\mathbf{X}$.
+we indicate a random variable using bold font, upper-case, like $\mathbf{X}$.
 Outcomes and sample values are written using normal font, lower-case.
 An experiment's possible outcomes are defined by a set, written in fancy font like
-$\mathcal{U}_X$. Sometimes we use an integer subscript to denote the unique
-elements of a set, like $x_i \in \mathcal{U}_X$. 
+$\mathcal{U}_X$. [The elements of $\mathcal{U}_X$ are written $u$, or $u_i$ when
+we number them.]{.draft}
 Samples
-are often annotated with an integer subscript like $x_i$, where $i\geq 0$,
+are often annotated with an integer subscript like $x_i$, where $i\geq 1$,
 signifying the $i^{\text{th}}$ repetition of the experiment. A collection of samples
 is an array of outcomes, signified by an arrow like $\vec{x}$. The difference between sample arrays
 and outcome sets is important, and should always be evident from the context
@@ -38,7 +38,7 @@ When a random variable is associated with a repeatable direct experiment, it can
 understood using the **frequentist probability interpretation**. In the
 frequentist theory, probability is defined as the frequency of
 observation for a particular **event**. An event $E$ refers to a
-set of outcomes (e.g. $E=\left\{x\in\mathcal{X}\,:\,x<4\right\}$).
+set of outcomes (e.g. $E=\left\{x\in\mathcal{U}_X\,:\,x<4\right\}$).
 For a random variable $\mathbf{X}$, the frequentist probability of an event $E$ is
 defined as
 
@@ -152,10 +152,10 @@ For completeness, $\Omega_X$ also contains the empty set, $\emptyset$.
 ### Event Probabilities {#eventprobabilities}
 
 Given an event $E\in \Omega_X$, $\Pr(E)$ denotes the probability that a sample
-from $\mathbf{X}$ is an outcome in $E$. A probability distribution $f_X(E)$ is a function
-that reports the probability of any event. These are almost identical concepts; we 
-will usually use $\Pr\left( \mathbf{X}\right)$ to indicate a factual probability 
-whereas $f_X(E)$ is a hypothesis or inferred assignment of probability.
+from $\mathbf{X}$ is an outcome in $E$. [A **probability distribution** is the
+function that assigns $\Pr(E)$ to every event $E\in\Omega_X$; Chapter 2 makes
+this precise as a probability measure $\mu(E)$. We reserve $f_X$ for probability
+densities.]{.draft}
 Elementary events have the property of
 being mutually exclusive, i.e. if $e_1$ and $e_2$ are elementary events, then
 $\Pr\left(e_1 \cup e_2\right)=\Pr\left(e_1\right)+\Pr\left(e_2\right)$. In general 
@@ -166,7 +166,7 @@ comprise the event. From this point we can obtain some basic properties. For any
 events $A,B\in\Omega_X$:
 
 $$\begin{aligned}
- \Pr\left(A\right) & > 0 &  \text{non-negativity} \\
+ \Pr\left(A\right) & \geq 0 &  \text{non-negativity} \\
  \Pr\left(\emptyset\right) & = 0 &  \text{empty set} \\
  \Pr\left(\mathcal{U}_X\right) & = 1 &  \text{totality} \\
  \Pr\left(A\right) & \leq \Pr\left(B\right) \text{~if~} A\subseteq B &  \text{subset} \\
@@ -186,31 +186,35 @@ in $\Omega_X$ can have the following basic relationships:
 * **Independent:** if $\Pr(A \cap B) = \Pr(A)\Pr(B)$.
 * **Conditional Probability:** $\Pr(A\,\left| B\right.)=\Pr(A\cap B)/\Pr(B)$.
 
-All elementary events are by definition mutually exclusive. A pair of events 
-cannot be both independent and mutually exclusive.
+All elementary events are by definition mutually exclusive. A pair of events
+[with nonzero probabilities]{.draft} cannot be both independent and mutually exclusive.
 
 ### Multiple Random Variables {#multiplerandomvariables}
 
 When jointly considering two random variables $\mathbf{X}$ and $\mathbf{Y}$,
 they can be combined into a joint variable $\left(\mathbf{X},\mathbf{Y}\right)$,
-very much like a vector. The joint sample space 
-$\mathcal{U}_{XY}=\mathcal{U}_X\times\mathcal{U}_Y$ and event space 
-$\Omega_{XY}=\Omega_X\times\Omega_Y$. An event $E\in\Omega_{XY}$ is an 
-ordered pair $(E_X,E_Y)$ where $E_X\in \Omega_X$ and $E_Y\in \Omega_Y$.
+very much like a vector. The joint sample space is
+$\mathcal{U}_{XY}=\mathcal{U}_X\times\mathcal{U}_Y$, the set of ordered pairs of
+outcomes. [The joint event space $\Omega_{XY}$ contains every set of such pairs.
+Among them are the **rectangles** $E_X\times E_Y$ with $E_X\in\Omega_X$ and
+$E_Y\in\Omega_Y$, which we write $(E_X,E_Y)$; but not every joint event is a
+rectangle. For two coins, "exactly one head" is the event
+$\{(H,T),(T,H)\}$, which is not of the form $E_X\times E_Y$.]{.draft}
 
-The joint probability distribution $f_{XY}(E)$ assigns probability to events 
+The joint probability distribution assigns a probability $\Pr(E)$ to each event
 $E\in \Omega_{XY}$. In the context of a joint distribution, the
-separated distributions $f_X(E_X)$ and $f_Y(E_Y)$ are called the 
+separated distributions [$\Pr(\mathbf{X}\in E_X)$ and $\Pr(\mathbf{Y}\in E_Y)$]{.draft} are called the 
 **marginal distributions**. Usually we can extract the marginal distributions
 if the joint distribution is given. Two random variables are **independent** 
-if $f_{XY}(E)=f_X(E_X)f_Y(E_Y)$. 
+if [$\Pr\left((E_X,E_Y)\right)=\Pr(\mathbf{X}\in E_X)\Pr(\mathbf{Y}\in E_Y)$ for every
+rectangle.]{.draft} 
 
 :::{.example title="Joint and Marginal Coin Toss Events"}
 
 Let $\mathbf{X}$ and $\mathbf{Y}$ correspond to two coin tosses 
 with $\mathcal{U}_X=\mathcal{U}_Y=\{H,T\}.$ Each random variable 
 has event space $\Omega_X=\Omega_Y=\left\{\emptyset, \{H\}, \{T\}, \{H,T\}\right\}$. 
-The joint event space $\Omega_{XY}$ is described in @tbl:coin_joint_events.
+The joint event space $\Omega_{XY}$ [contains the rectangles listed in @tbl:coin_joint_events, among other events.]{.draft}
 
 | Event             | Description                                                  |
 |-------------------|--------------------------------------------------------------|
@@ -224,7 +228,7 @@ The joint event space $\Omega_{XY}$ is described in @tbl:coin_joint_events.
 | $(\{H,T\},\{T\})$ | $\mathbf{X}$ is either heads or tails, $\mathbf{Y}$ is tails |
 | $(\{H,T\},\{H,T\})$ | $\mathbf{X}$ is either heads or tails, $\mathbf{Y}$ is either heads or tails |
 
-Table: [Events in the joint event space of two coin tosses.]{.draft} {#tbl:coin_joint_events}
+Table: [Rectangle events in the joint event space of two coin tosses.]{.draft} {#tbl:coin_joint_events}
 
 Embedded within $\Omega_{XY}$ are the marginal event spaces. 
 @Tbl:coin_marginal_events shows events that are indifferent to $\mathbf{Y}$.
@@ -240,7 +244,7 @@ rendered irrelevant:
 
 Table: [Joint events that are indifferent to $\mathbf{Y}$.]{.draft} {#tbl:coin_marginal_events}
 
-The distribution of these events is equal to the marginal distribution $f_X()$. 
+The distribution of these events is equal to the marginal distribution [of $\mathbf{X}$.]{.draft} 
 After a variable is marginalized we need no longer speak of it, so the $\mathbf{Y}$
 dimension can just be cut out from the marginal events, leaving $\mathbf{X}$.
 :::
@@ -270,7 +274,7 @@ Table: [Joint probabilities of two independent fair coin tosses.]{.draft} {#tbl:
 
 You can verify that the joint probabilities equal the product of the
 marginals, for instance 
-$f_{XY}(\{H\},\{T\})=f_{XY}(\{H\},\{H,T\})f_{XY}(\{H,T\},\{T\})=f_X(\{H\})f_Y(\{T\})$.
+$\Pr\left((\{H\},\{T\})\right)=\Pr\left((\{H\},\{H,T\})\right)\Pr\left((\{H,T\},\{T\})\right)=\Pr(\mathbf{X}=H)\Pr(\mathbf{Y}=T)$.
 Therefore $\mathbf{X}$ and $\mathbf{Y}$ are independent.
 
 :::
@@ -298,11 +302,11 @@ $\mathbf{X}\in \{u\}$, where $\{u\}$ is the elementary event
 corresponding to outcome $u$.
 
 Since the elements of $\mathcal{U}_{X}$ are countable, they can
-be arranged in a sensible order and enumerated as outcome 0, 1, 2, and so
-on. When so ordered, the outcome probabilities are arranged as a
+be arranged in a sensible order and enumerated as outcome 1, 2, 3, and so
+on[, matching Julia's 1-based arrays]{.draft}. When so ordered, the outcome probabilities are arranged as a
 vector, called the **probability mass vector** $\vec{p}_{X}$. The
 individual elements of $\vec{p}_{X}$ are written as $p_{X,i}$ 
-where $i$ is a non-negative integer. When there is no risk of 
+where $i$ is a positive integer. When there is no risk of 
 ambiguity, we may also indicate the elements more simply as $p_i$.
 
 Altogether, the vector $\vec{p}_{X}$ constitutes a **probability
@@ -397,7 +401,7 @@ Sample $x$
 
 : The observed or recorded result from a single random experiment. 
 
-Sample Space $U_X$
+Sample Space $\mathcal{U}_X$
 
 : The set of all possible sample values that may be recorded from a random experiment. 
 
@@ -413,7 +417,7 @@ Event $E$
 
 Elementary Event $\{x\}$
 
-: An singleton event containing one outcome $x\in \mathcal{U}_X$.
+: A singleton event containing one outcome $x\in \mathcal{U}_X$.
 
 Event Space $\Omega_X$
 
@@ -426,17 +430,17 @@ Probability $\Pr(E)$
   interpretation); or degree of belief/confidence in the truth of $E$ (Bayesian
   interpretation). 
   
-Probability Distribution $p_X(E)$
+Probability Distribution
 
 : A function that reports the probability for every event $E\in\Omega_X$.
   
 Probability Mass Vector $\vec{p}$
 
 : A vector that expresses a discrete probability distribution function. The
-  vector's length is equal to the number of events in the sample
+  vector's length is equal to the number of outcomes in the sample
   space, which could be countably infinite.
   
 
-Indicator Function $\mathbf{1}_E($x$)$
+Indicator Function $\mathbf{1}_E(x)$
 
 : A binary function that returns 1 if $x\in E$, otherwise returns 0.
