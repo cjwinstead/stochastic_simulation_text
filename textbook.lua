@@ -5,8 +5,34 @@ function isTikz(fname)
   return string.find(fname,".tikz") or string.find(fname,".tex")
 end
 
+-- Draft text, for the author to review: ::: {.draft} blocks and [text]{.draft}
+-- spans are set in the color "draftcolor" (defined in latex/preamble.tex) in
+-- the PDF, and styled by the .draft rule added to the HTML header below.
+function draftBlock(el)
+   return {
+      pandoc.RawBlock('latex', "\\begingroup\\color{draftcolor}"),
+      el,
+      pandoc.RawBlock('latex', "\\endgroup")
+   }
+end
+
+function draftInline(el)
+   local out = { pandoc.RawInline('latex', "\\protect\\textcolor{draftcolor}{") }
+   for _, v in ipairs(el.content) do table.insert(out, v) end
+   table.insert(out, pandoc.RawInline('latex', "}"))
+   return out
+end
+
 if FORMAT:match 'latex' then
+  function Span(el)
+      if el.classes:includes'draft' then
+         return draftInline(el)
+      end
+  end
   function Div(el)
+      if el.classes:includes'draft' then
+         return draftBlock(el)
+      end
       if el.classes:includes'example' then
       	 examples = examples + 1
 	 if el.attributes['ref'] then
@@ -42,7 +68,6 @@ if FORMAT:match 'latex' then
       opts = ""
 
       src=el.src
-      print(src)
 
       includeStr=""
       if (isTikz(src)) then
@@ -73,6 +98,20 @@ if FORMAT:match 'latex' then
 end
 
 if FORMAT:match 'html' then
+  function Meta(m)
+      local css = pandoc.MetaBlocks{pandoc.RawBlock('html',
+         '<style>.draft { color: #a40000; }</style>')}
+      local hi = m['header-includes']
+      if hi == nil then
+         m['header-includes'] = pandoc.MetaList{css}
+      elseif pandoc.utils.type(hi) == 'List' then
+         hi:insert(css)
+         m['header-includes'] = hi
+      else
+         m['header-includes'] = pandoc.MetaList{hi, css}
+      end
+      return m
+  end
   function Div(el)
       if el.classes:includes'example' then
       	 examples = examples + 1

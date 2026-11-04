@@ -39,6 +39,22 @@ See @fig:name and @eq:is-estimator.   @Fig:name begins a sentence.
 In the PDF, references go through `cleveref` and read "Figure 3.1",
 "Equation 4.2"; the names are set in `book_info.yaml`.
 
+## Draft text
+
+New or substantially revised text that awaits the author's review is marked
+`draft`. It is set in dark red in the PDF and the HTML; remove the markers once
+the text is accepted.
+
+```
+::: {.draft}
+A whole new section or paragraph...
+:::
+
+A sentence with [a revised phrase]{.draft} inside.
+
+![[A caption to review.]{.draft}](figures/name.tex){#fig:name}
+```
+
 # Notebooks
 
 Assignment notebooks live in `notebooks/`, one Jupytext percent-format `.jl`
