@@ -47,10 +47,20 @@
 \pgfplotsset{plotaxisstyle/.style={width=0.9\linewidth,height=0.6\linewidth},legend pos=south east}
 
 % ---------------------------------------------------------------------------
-% Cross-references. pandoc-crossref emits \cref and \Cref; it loads cleveref
-% itself only if it is not already loaded, so these options take effect.
+% Cross-references. cleveref must load after hyperref, which pandoc's template
+% loads after this preamble, so both it and the names that use it are deferred
+% to the end of the preamble. pandoc-crossref defers its own setup the same
+% way and loads cleveref only if it is not already loaded; this hook is
+% registered first, so these options take effect.
 % ---------------------------------------------------------------------------
-\usepackage[capitalize,nameinlink,noabbrev]{cleveref}
+\usepackage{etoolbox}
+\AtEndPreamble{%
+  \usepackage[capitalize,nameinlink,noabbrev]{cleveref}%
+  \crefname{example}{example}{examples}%
+  \Crefname{example}{Example}{Examples}%
+  \crefname{source}{julia example}{julia examples}%
+  \Crefname{source}{Julia Example}{Julia Examples}%
+}
 
 % ---------------------------------------------------------------------------
 % Example boxes, produced by textbook.lua from ::: {.example} divs
@@ -63,10 +73,6 @@
   {parbox=false,colback=green!5,colframe=green!35!black,fonttitle=\bfseries}{th}
 \newcommand{\exampleautorefname}{Example}
 \newcommand{\sourceautorefname}{Julia Example}
-\crefname{example}{example}{examples}
-\Crefname{example}{Example}{Examples}
-\crefname{source}{julia example}{julia examples}
-\Crefname{source}{Julia Example}{Julia Examples}
 
 % ---------------------------------------------------------------------------
 % Title page: large bold title, author in small capitals
