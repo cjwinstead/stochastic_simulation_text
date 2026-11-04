@@ -29,7 +29,7 @@ greater than zero. We can improve the precision, making $\epsilon$ as
 small as we want, but we can never take a true point measurement. The
 probability of a point is therefore always zero: for any point $x\in \mathcal{U}_X$, 
 $\Pr(\mathbf{X}=x)=0$. The same is true for any *countable* set of
-points. within a continuous space, discrete points have zero probability.
+points. Within a continuous space, discrete points have zero probability.
 
 In order to have a non-zero probability, our measurement needs to
 contain a "volume" of points; a continuous interval contains an
@@ -37,8 +37,11 @@ contain a "volume" of points; a continuous interval contains an
 interval. All the way back in 300 BCE, Euclid defined a **point** as
 "that which has no part", i.e. it's empty. A (countable) collection of points is
 just a collection of empties. But an *interval* contains an uncountable continuum, it
-isn't empty. A set is called **measurable** if it contains one or more
-continuous intervals. A measurable set can have a non-zero measure.
+isn't empty. [Points are not unmeasurable, though: a point, or any countable set
+of points, has a well-defined measure, and that measure is zero
+(@fig:measure_zero_points). An interval has positive measure. Which sets count
+as **measurable** is settled by the $\sigma$-algebra of
+@sec:sigmaalgebras.]{.draft}
 
 ![[Isolated points form a set of measure zero; an interval has positive measure.]{.draft}](figures/measurable_interval.tex){#fig:measure_zero_points}
 
@@ -55,15 +58,14 @@ Analysis](https://math.libretexts.org/Bookshelves/Analysis/Mathematical_Analysis
 ## Probability Density and Distribution {#probabilitydensity}
 
 Probability measure is quantified by a **probability density
-function** $f_X(x)$. Probalility density is defined for a
+function** $f_X(x)$. Probability density is defined for a
 real-valued random variable $\mathbf{X}\in\mathbb{R}$ as the
 differential probability that $\mathbf{X}$ lies in a vanishingly
 small interval $(x,x+dx)$: 
 $$f_X(x)dx \triangleq \Pr(x < \mathbf{X} \leq x+dx).$$
 The interval's width is $dx$, which is smaller than any
 finite value but still greater than zero. No matter how small,
-the interval contains a continuum of points is therefore
-measurable.
+the interval contains a continuum of points[, so it has positive measure]{.draft}.
 
 The total probability in a measurable set $\mathcal{S}$ is
 $$
@@ -103,35 +105,37 @@ probability in a real interval $(a,b)$, since
 $$\Pr(a < \mathbf{X} < b) = F_X(b) - F_X(a).$$
 
 
-## Sigma Algebras and Measure Spaces {#sigmaalgebras}
+## Sigma Algebras and Measure Spaces {#sec:sigmaalgebras}
 
 A **sigma algebra** (or $\sigma$-algebra) is a set of rules for manipulating sets whether
-they are countable or uncountable. A $\sigma$-algebra $\Omega$ is a set of sets that is
-closed under unions and intersections. More precisely,
-if $E_1 \in \Omega$ and $E_2 \in \Omega$ then:
+they are countable or uncountable. [A $\sigma$-algebra $\Omega$ on a set
+$\mathcal{U}_X$ is a set of subsets of $\mathcal{U}_X$ that contains $\mathcal{U}_X$
+itself and is closed under complements and *countable* unions. More precisely:]{.draft}
 
 $$\begin{aligned}
-E_1 \cup E_2 \in \Omega & \text{~~~union~closure}\\
-E_1 \cap E_2 \in \Omega & \text{~~~intersection~closure}\\
-E_1^c, E_2^c \in \Omega & \text{~~~complement~closure}
+\mathcal{U}_X \in \Omega & \text{~~~whole~space}\\
+E \in \Omega \Rightarrow E^c \in \Omega & \text{~~~complement~closure}\\
+E_1, E_2, \dots \in \Omega \Rightarrow \bigcup_i E_i \in \Omega & \text{~~~countable~union~closure}
 \end{aligned}$$
+
+[Closure under countable intersections follows from the other two properties.]{.draft}
 
 A practical example of a $\sigma$-algebra is the **power set**:
 given a set $\mathcal{U}_X$, the power set $\Omega_X$ is the set of all
 subsets of $\mathcal{U}_X$. 
 
-For a $\sigma$-algebra $\Omega_X$, a **measure** is a map $\mu:\Omega_X\rightarrow\mathbb{R}$
+For a $\sigma$-algebra $\Omega_X$, a **measure** is a map $\mu:\Omega_X\rightarrow[0,\infty]$
 with the following properties for $E\in\Omega_X$:
 
 $$\begin{aligned}
-\mu(E) & >0 & \text{non-negativity}\\
+\mu(E) & \geq 0 & \text{non-negativity}\\
 \mu(\emptyset) &=0 & \text{empty set}
 \end{aligned}
 $$
 
 Given a subset of pairwise disjoint\footnote{Pairwise disjoint means that
-$e_i \cap e_j = \emptyset$ if $i\neq j$.}
-elements $e_i\in \Omega$, with $i=1,2,\dots$,
+$E_i \cap E_j = \emptyset$ if $i\neq j$.}
+elements $E_i\in \Omega$, with $i=1,2,\dots$,
 the measure of the union equals the sum of the measures:
 
 $$\begin{aligned}
@@ -150,7 +154,7 @@ From the properties of probability measure, we can obtain all the
 properties of probability algebra:
 
 $$\begin{aligned}
- \mu\left(A\right) & > 0 &  \text{non-negativity} \\
+ \mu\left(A\right) & \geq 0 &  \text{non-negativity} \\
  \mu\left(\emptyset\right) & = 0 &  \text{empty set} \\
  \mu\left(\mathcal{U}_X\right) & = 1 &  \text{totality} \\
  \mu\left(A\right) & \leq \mu\left(B\right) \text{~if~} A\subseteq B &  \text{subset} \\
@@ -165,7 +169,7 @@ $$
 For a real-valued random variable $\mathbf{X}$ with probability measure
 $\mu$ and density function $f_X(x)$, the **expected value** or **expectation** is defined as
 
-$$ \mathcal{E}_\mu\left(\mathbf{X}\right) = \begin{cases*} \sum_{x_i \in \mathcal{U}_X} x_i \mu_i & (discrete) \\
+$$ \mathcal{E}_\mu\left(\mathbf{X}\right) = \begin{cases*} \sum_{u \in \mathcal{U}_X} u\, p_X(u) & (discrete) \\
 \int_{\mathcal{U}_X} x f_X(x) dx & (continuous)
 \end{cases*} $$
 
@@ -184,42 +188,39 @@ Additionally, if $\mathbf{X}$ and $\mathbf{Y}$ are independent, then $\mathcal{E
 Let $\mathbf{X}$ and $\mathbf{Y}$ be two six-sided dice. $\mathbf{X}$ is unbalanced with
 probability mass vector $p_X$ and $\mathbf{Y}$ is well-balanced with probability
 mass vector $p_Y$. Determine the distribution for the sum $\mathbf{S}=\mathbf{X}+\mathbf{Y}$. 
-Then use the distributions to calculate $\mathcal{E}\left(\mathbf{X}\right)$, 
-$\mathcal{E}\left(\mathbf{Y}\right)$, and $\mathcal{E}\left(\mathbf{S}\right)$. Confirm
-that $\mathcal{E}\left(\mathbf{S}\right)=\mathcal{E}\left(\mathbf{X}\right)+\mathcal{E}\left(\mathbf{Y}\right)$.t
+Then use the distributions to calculate $\mathcal{E}_\mu\left(\mathbf{X}\right)$, 
+$\mathcal{E}_\mu\left(\mathbf{Y}\right)$, and $\mathcal{E}_\mu\left(\mathbf{S}\right)$. Confirm
+that $\mathcal{E}_\mu\left(\mathbf{S}\right)=\mathcal{E}_\mu\left(\mathbf{X}\right)+\mathcal{E}_\mu\left(\mathbf{Y}\right)$.
 
 ```julia
 using Plots
 
-# Probability Mass Vectors:
-px=[6,5,4,3,2,1]./21
-py=[1,1,1,1,1,1]./6
+# Probability mass vectors
+px = [6, 5, 4, 3, 2, 1] ./ 21    # unbalanced die X
+py = fill(1/6, 6)                # balanced die Y
 
-# Outcomes:
-UX=[1,2,3,4,5,6]
-UY=UX
-US=[UX,7,8,9,10,11,12]
+# Outcomes
+UX = 1:6
+UY = 1:6
+US = 2:12
 
-# Compute probability mass for S:
-ps=zeros(12) 
-for x in UX
-  for y in UX
-    ps[a+b] += px[a]*py[b]  # accumulate probability
-  end
+# Probability mass of S = X + Y (S = 2 is stored at index 1)
+ps = zeros(length(US))
+for x in UX, y in UY
+    ps[x + y - 1] += px[x] * py[y]
 end
 
-# Expectations:
-EX = sum(UX.*px)
-EY = sum(UY.*py)
-ES = sum(US.*ps)
+# Expectations
+EX = sum(UX .* px)
+EY = sum(UY .* py)
+ES = sum(US .* ps)
 
-plot(
-  bar(UX,px),bar(UY,py),
-  bar(US,ps)
-  )
+plot(bar(UX, px), bar(UY, py), bar(US, ps); layout = (1, 3), legend = false)
 
-println("EX=$(EX), EY=$(EY), and ES=$(ES)")
+println("EX = $(round(EX; digits=4)), EY = $(round(EY; digits=4)), and ES = $(round(ES; digits=4))")
 ```
+
+The output is `EX = 2.6667, EY = 3.5, and ES = 6.1667`, which confirms the sum.
 
 [The three distributions are plotted in [@fig:dice_mass_x; @fig:dice_mass_y; @fig:dice_mass_s].]{.draft}
 :::
@@ -237,7 +238,7 @@ println("EX=$(EX), EY=$(EY), and ES=$(ES)")
 A distribution's variance $\text{Var}\left(\mathbf{X}\right)$ gives some indication
 of its unpredictability within an interval around the mean. If $\text{Var}\left(\mathbf{X} \right)=0$
 then $\mathbf{X}$ is not random at all. $\text{Var}\left( \mathbf{X}\right)$ is often denoted as $\sigma_X^2$, and $\sigma$ is called the **standard deviation**. Variance
-is defined terms of expectation as 
+is defined in terms of expectation as 
 $$\text{Var}\left(\mathbf{X} \right)\triangleq\mathcal{E}_\mu\left(\left(\mathbf{X}-\theta_X\right)^2\right)$$
 
 Properties of variance:
@@ -248,7 +249,7 @@ $$\begin{aligned}
   \text{Var}\left( a+\mathbf{X} \right) &= \text{Var}\left(\mathbf{X}\right) & \text{translation}
 \end{aligned}$$
 
-If $\mathbf{X}$ and $\mathbf{Y}$ are independent variables then $\text{Var}\left( \mathbf{X}+\mathbf{Y}\right)=\text{Var}\left(\mathbf{X} \right)+\text{Var}\left(\mathbf{Y} \right).$ For more than two random variables $\mathbf{X_i}$, if they are all paiwise independent, then 
+If $\mathbf{X}$ and $\mathbf{Y}$ are independent variables then $\text{Var}\left( \mathbf{X}+\mathbf{Y}\right)=\text{Var}\left(\mathbf{X} \right)+\text{Var}\left(\mathbf{Y} \right).$ For more than two random variables $\mathbf{X_i}$, if they are all pairwise independent, then 
 $$\begin{aligned}
 \text{Var}\left( \sum_{i=1}^N \mathbf{X_i}\right)&= \sum_{i=1}^N\text{Var}\left( \mathbf{X_i}\right)& \text{(independent variables)}
 \end{aligned}$$
@@ -282,10 +283,10 @@ $$F_U(x) = \int_{-\infty}^x f_U(\chi)d\chi = \begin{cases}
 \end{cases}$$
 
 The expectation is 
-$$\theta=\mathcal{E}_\mu\left(\mathbf{X}\right)=\int_a^b \frac{1}{b-a}xdx=\frac{b^2-a^2}{2(b-a)}=\frac{1}{2}(a+b).$$
+$$\theta=\mathcal{E}_\mu\left(\mathbf{U}\right)=\int_a^b \frac{1}{b-a}xdx=\frac{b^2-a^2}{2(b-a)}=\frac{1}{2}(a+b).$$
 
 The variance is 
-$$\text{Var}\left(\mathbf{X}\right)=\int_a^b\frac{1}{b-a}x^2dx -\theta^2=\frac{b^3-a^3}{3(b-a)}-\frac{1}{2}(a+b)=\frac{1}{12}(b-a)^2.
+$$\text{Var}\left(\mathbf{U}\right)=\int_a^b\frac{1}{b-a}x^2dx -\theta^2=\frac{b^3-a^3}{3(b-a)}-\frac{1}{4}(a+b)^2=\frac{1}{12}(b-a)^2.
 $$
 
 [The density and the cumulative distribution are plotted in [@fig:uniform_density; @fig:uniform_cdf].]{.draft}
@@ -299,8 +300,8 @@ $$
 The **Gaussian distribution**, commonly called the "bell curve",
 is one of the most common distributions in practice. It's defined by
 two parameters: the mean $\theta$ and the **standard deviation**
-$\sigma$. The density function is highest where $x=\mu$, and is
-symmetric on either side of $\mu$:
+$\sigma$. The density function is highest where $x=\theta$, and is
+symmetric on either side of $\theta$:
 $$f_G(x) = \frac{1}{\sigma\sqrt{2\pi}}\exp\left(-\frac{1}{2}\left(\frac{x-\theta}{\sigma}\right)^2\right)$$
 
 The Gaussian distribution is standardized by the **Normal
@@ -308,8 +309,8 @@ Distribution**, which has zero mean and standard deviation of 1:
 $$f_N(x) = \frac{1}{\sqrt{2\pi}}\exp\left(-\frac{x^2}{2}\right).$$
 The Normal distribution can be transformed into a Gaussian distribution
 with parameters $\theta$,$\sigma$:
-$$f_G(x;\theta,\sigma) = f_N\left(\frac{x-\theta}{\sigma}\right).$$
-The cumulative density function is usually indicated as a "special"
+$$f_G(x;\theta,\sigma) = \frac{1}{\sigma}f_N\left(\frac{x-\theta}{\sigma}\right).$$
+The cumulative distribution function is usually indicated as a "special"
 function. The **Standard Normal Cumulative Distribution** 
 is indicated symbolically as $\Phi_N(x)$. For a
 parameterized Gaussian distribution, we obtain the cumulative
@@ -331,7 +332,7 @@ $$F_G(x;\theta,\sigma) = \Phi_N\left(\frac{x-\theta}{\sigma}\right).$$
 
 The exponential distribution is governed by a single parameter $\lambda$:
 
-$$f_X(x)=\lambda e^{-\lambda x}$$
+$$f_X(x)=\lambda e^{-\lambda x}, \qquad x\geq 0$$
 
 The expectation is $\mathcal{E}_\mu\left(\mathbf{X}\right)=1/\lambda$
 and the variance is $\text{Var}\left( \mathbf{X}\right)=1/\lambda^2$.
@@ -358,43 +359,41 @@ We often encounter situations where a random variable $\mathbf{X}$ has
 a known density $f_X(x)$, and we need to determine the density of a
 related random variable $\mathbf{Y}$. If the two variables are related
 by a known function, e.g. $\mathbf{Y} = r(\mathbf{X})$, then we can
-determine the density $f_Y(y)$ by using **Lebesgue integration**. With
+determine the density $f_Y(y)$ by [a **change of variables**]{.draft}. With
 this method, we first apply the mapping from the domain of $\mathbf{X}$
 to the domain of $\mathbf{Y}$, and then integrate $f_X$ in the $\mathbf{Y}$
 domain. If the relationship is one-to-one, i.e. if $r(x)$ is
 invertible at every point, then we can simply say that 
 $$f_Y(y)dy = f_X(x)dx$$
 where $x=r^{-1}(y)$. So we have 
-$$f_Y(y) = \frac{f_X(x)}{dy/dx} = \frac{f_X(x)}{r^\prime(x)}.$$
+$$f_Y(y) = \frac{f_X(x)}{\left|dy/dx\right|} = \frac{f_X(x)}{\left|r^\prime(x)\right|}.$$
 
 
 If the function $r()$ is not one-to-one, then multiple intervals along
 the domain of $\mathbf{X}$ could fold into a single interval
 along the domain of $\mathbf{Y}$. Considering a particular interval $(y,y+dy)$,
-and supposing there are $K\in\mathbb{Z}^+$ pairwise-disjoint invervals along
+and supposing there are $K\in\mathbb{Z}^+$ pairwise-disjoint intervals along
 $x$ mapping to that interval, we can say that the total accumulated measure is
-$$f_Y(y)dy = \sum_{k=1}^K f_X(x_i)dx,$$
-where $y=r(x_i)$ for each of the $x_i$. Then the transformed density is a
+$$f_Y(y)dy = \sum_{k=1}^K f_X(x_k)\left|dx\right|,$$
+where $y=r(x_k)$ for each of the $x_k$. Then the transformed density is a
 sum:
-$$f_Y(y) = \sum_{k=1}^K \frac{f_X(x_i)}{r^\prime\left(x_i\right)}.$$
+$$f_Y(y) = \sum_{k=1}^K \frac{f_X(x_k)}{\left|r^\prime\left(x_k\right)\right|}.$$
 
 :::{.example title="$\mathbf{Y}=\mathbf{X}^2$"}
 
 Given a random variable $\mathbf{X}\in\mathbb{R}$ with a uniform
-density in the interval $\Omega_X=[-2,2]$, determine the probability density of
+density in the interval $[-2,2]$, determine the probability density of
 the related random variable $\mathbf{Y}=r(\mathbf{X})$, where the
 relationship is given by the function $r(x) = x^2$.
 
-In this example, the domain of $\mathbf{Y}$ is the non-negative
-interval $\Omega_Y=[0,4]$. Two subintervals of $\Omega_X$ map to
-$\Omega_Y$, namely $\Omega_X^-=[-2,0]$ and $\Omega_X^+=[0,+2]$. The
-density of $\mathbf{Y}$ therefore has two components:
-$$f_Y(y) = \frac{f_X(x)}{2x} + \frac{f_X(-x)}{-2x} =
-\frac{f_X(x)}{x}.$$
-Furthermore, since $\mathbf{X}$ is uniform, $f_X(x)$ is constant
-(equal to $1/4$) within the indicated interval. So the density of
-$\mathbf{Y}$ is 
-$$f_Y(y) = \begin{cases}\frac{1}{4x} & \text{if~} y\in [0,4]\\0 & \text{otherwise.}\end{cases}$$
+In this example, $\mathbf{Y}$ takes values in the non-negative
+interval $[0,4]$. [Each $y\in(0,4]$ comes from two points, $x=\sqrt{y}$ in
+$[0,2]$ and $x=-\sqrt{y}$ in $[-2,0]$, and at both $\left|r^\prime(x)\right|=2\sqrt{y}$.
+The density of $\mathbf{Y}$ therefore has two components:
+$$f_Y(y) = \frac{f_X(\sqrt{y})}{2\sqrt{y}} + \frac{f_X(-\sqrt{y})}{2\sqrt{y}}.$$
+Since $\mathbf{X}$ is uniform, $f_X$ equals $1/4$ on $[-2,2]$, so
+$$f_Y(y) = \begin{cases}\frac{1}{4\sqrt{y}} & \text{if~} 0 < y \leq 4\\0 & \text{otherwise,}\end{cases}$$
+which integrates to one over $(0,4]$.]{.draft}
 
 :::
 
@@ -402,18 +401,18 @@ $$f_Y(y) = \begin{cases}\frac{1}{4x} & \text{if~} y\in [0,4]\\0 & \text{otherwis
 
 ## Key Terms {#probabilitymeasurekeyterms}
 
-Continous Sample Space $\mathcal{U}_X$
+Continuous Sample Space $\mathcal{U}_X$
 
 : A set of uncountably many points.
 
 Sigma Algebra (Event Space) $\Omega_X$
 
 : A set of sets that is closed under complements, intersections,
-and contable unions.
+and countable unions[, and contains the whole space]{.draft}.
 
 Measure $\mu$
 
-: A non-negative map from $\Omega$ to $\mathbb{R}$.
+: A non-negative map from $\Omega$ to $[0,\infty]$, additive over countable disjoint unions.
 
 $\sigma$-Additivity
 
@@ -442,15 +441,15 @@ on $\mathbb{R}$ in one dimension, $f_X(x)dx=d\mu$.
 
 Cumulative Distribution $F_X(x)$
 
-: The probability that $\mathbf{X}<x$.
+: The probability that $\mathbf{X}\leq x$.
 
 Expectation $\theta_X=\mathcal{E}_\mu(\mathbf{X})$
 
 : Subject to probability measure $\mu$, $\mathcal{E}_\mu(\mathbf{X})=\int_{\mathcal{U}_X}xd\mu=\int_{\mathcal{U}_X}xf_X(x)dx$. Usually interpreted as "average outcome".
 
-Variance $\text{Var(X)}$
+Variance $\text{Var}(\mathbf{X})$
 
-: Subject to probability measure $\mu$, $\text{Var(X)}=\mathcal{E}_\mu(\mathbf{X}^2)-\theta_X^2.$
+: Subject to probability measure $\mu$, $\text{Var}(\mathbf{X})=\mathcal{E}_\mu(\mathbf{X}^2)-\theta_X^2.$
 
 Uniform Distribution $f_U(x)$
 
@@ -462,4 +461,4 @@ Gaussian Distribution
 
 Normal Distribution
 
-: A Gaussian distribution with $\theta=0$ and $\sigma^2=1$.y
+: A Gaussian distribution with $\theta=0$ and $\sigma^2=1$.
