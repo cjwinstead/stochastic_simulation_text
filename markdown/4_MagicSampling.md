@@ -133,9 +133,11 @@ reported sampling gain has some big jumps: $G$ is 68k in one run,
 then 11k in another, then 1k, 4k, 12k, 2k, and so on. Why is it not
 consistent? 
 
-![Comparison of density functions and sample weight for variance-scaled Gaussian importance sampling.](figures/variance_scaling_gaussian_weights.tex)
+[@Fig:variance_scaling_weights compares the two densities and the sample weight, and @fig:variance_scaling_trace traces the estimate and its variance as the sample count grows.]{.draft}
 
-![Estimate and sample variance with increasing sample count for variance-scaled Gaussian importance sampling.](figures/importance_sampling_variance_scaled.tex)
+![Comparison of density functions and sample weight for variance-scaled Gaussian importance sampling.](figures/variance_scaling_gaussian_weights.tex){#fig:variance_scaling_weights}
+
+![Estimate and sample variance with increasing sample count for variance-scaled Gaussian importance sampling.](figures/importance_sampling_variance_scaled.tex){#fig:variance_scaling_trace}
 
 
 \clearpage
@@ -205,7 +207,7 @@ counts, as in @fig:gaussian_interval_trace.
 
 
 
-![Evolution of the probability estimate ](figures/gaussian_interval_probability.tex){#fig:gaussian_interval_trace}
+![[Naive and importance sampling estimates of $\Pr(1<\mathbf{X}<2)$ as the sample count grows.]{.draft}](figures/gaussian_interval_probability.tex){#fig:gaussian_interval_trace}
 
 
 \clearpage

@@ -40,7 +40,7 @@ just a collection of empties. But an *interval* contains an uncountable continuu
 isn't empty. A set is called **measurable** if it contains one or more
 continuous intervals. A measurable set can have a non-zero measure.
 
-![](figures/measurable_interval.tex)
+![[Isolated points form a set of measure zero; an interval has positive measure.]{.draft}](figures/measurable_interval.tex){#fig:measure_zero_points}
 
 The "volume" contained within an interval is called its
 **measure**, and probability is a sub-type of measure. Probability
@@ -262,13 +262,14 @@ plot(
 println("EX=$(EX), EY=$(EY), and ES=$(ES)")
 ```
 
+[The three distributions are plotted in [@fig:dice_mass_x; @fig:dice_mass_y; @fig:dice_mass_s].]{.draft}
 :::
 
-![](figures/dice_mass_x.tex)
+![[Probability mass of the unbalanced die $\mathbf{X}$.]{.draft}](figures/dice_mass_x.tex){#fig:dice_mass_x}
 
-![](figures/dice_mass_y.tex)
+![[Probability mass of the balanced die $\mathbf{Y}$.]{.draft}](figures/dice_mass_y.tex){#fig:dice_mass_y}
 
-![](figures/dice_mass_s.tex)
+![[Probability mass of the sum $\mathbf{S}=\mathbf{X}+\mathbf{Y}$.]{.draft}](figures/dice_mass_s.tex){#fig:dice_mass_s}
 
 
 
@@ -327,6 +328,8 @@ $$\theta=\mathcal{E}_\mu\left(\mathbf{X}\right)=\int_a^b \frac{1}{b-a}xdx=\frac{
 The variance is 
 $$\text{Var}\left(\mathbf{X}\right)=\int_a^b\frac{1}{b-a}x^2dx -\theta^2=\frac{b^3-a^3}{3(b-a)}-\frac{1}{2}(a+b)=\frac{1}{12}(b-a)^2.
 $$
+
+[The density and the cumulative distribution are plotted in [@fig:uniform_density; @fig:uniform_cdf].]{.draft}
 :::
 
 
@@ -358,9 +361,9 @@ $$F_G(x;\theta,\sigma) = \Phi_N\left(\frac{x-\theta}{\sigma}\right).$$
 
 \newpage
 
-![Uniform probability density function in the interval $(a,b)$.](figures/uniform_density.tex)
+![Uniform probability density function in the interval $(a,b)$.](figures/uniform_density.tex){#fig:uniform_density}
 
-![Cumulative uniform distribution in the interval $(a,b)$.](figures/uniform_distribution.tex)
+![Cumulative uniform distribution in the interval $(a,b)$.](figures/uniform_distribution.tex){#fig:uniform_cdf}
 
 
 \newpage

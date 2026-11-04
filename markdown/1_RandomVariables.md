@@ -112,8 +112,8 @@ and 6. After each roll, we check to see if the sample $d$ matches a
 specific event, say $d<4$. When this happens we call it a "success".
 After $N$ trials with $N_s$ successes, we estimate the probability of
 success as $\hat{p}=N_s/N$. If the die is perfectly balanced so that all outcomes are
-equally likely, then we expect the probability to converge to $1/2$. The table
-below shows successive probability estimations for ten sample throws. You can see
+equally likely, then we expect the probability to converge to $1/2$. @Tbl:dice_rolls
+shows successive probability estimations for ten sample throws. You can see
 that the estimation doesn't get very close to 0.5. Continuing to 10,000 repetitions,
 we get an estimate of 0.5021, which is closer but still not exact. The remainder of
 this text should give you an intimate understanding of estimation error, ways to
@@ -125,6 +125,8 @@ reduce it, and the seductive traps that accompany it.
 | $\mathbf{1}_E(d)$   | 1        | 1        | 0        | 1        | 1        | 1        | 0        | 0        | 1        | 0        |
 | $N_E$     | 1        | 2        | 2        | 3        | 4        | 5        | 5        | 5        | 6        | 6        |
 | $\hat{p}$ | 1.00     | 1.00     | 0.67     | 0.75     | 0.80     | 0.83     | 0.71     | 0.62     | 0.67     | 0.60     |
+
+Table: [Ten rolls of a fair die, and the running estimate $\hat{p}$ of $\Pr(d<4)$.]{.draft} {#tbl:dice_rolls}
 
 :::
 
@@ -208,7 +210,7 @@ if $f_{XY}(E)=f_X(E_X)f_Y(E_Y)$.
 Let $\mathbf{X}$ and $\mathbf{Y}$ correspond to two coin tosses 
 with $\mathcal{U}_X=\mathcal{U}_Y=\{H,T\}.$ Each random variable 
 has event space $\Omega_X=\Omega_Y=\left\{\emptyset, \{H\}, \{T\}, \{H,T\}\right\}$. 
-The joint event space $\Omega_{XY}$ is described in the table below.
+The joint event space $\Omega_{XY}$ is described in @tbl:coin_joint_events.
 
 | Event             | Description                                                  |
 |-------------------|--------------------------------------------------------------|
@@ -222,8 +224,10 @@ The joint event space $\Omega_{XY}$ is described in the table below.
 | $(\{H,T\},\{T\})$ | $\mathbf{X}$ is either heads or tails, $\mathbf{Y}$ is tails |
 | $(\{H,T\},\{H,T\})$ | $\mathbf{X}$ is either heads or tails, $\mathbf{Y}$ is either heads or tails |
 
-Embedded within $\Omega_{XY}$ are the marginal event spaces. The
-table below shows events that are indifferent to $\mathbf{Y}$.
+Table: [Events in the joint event space of two coin tosses.]{.draft} {#tbl:coin_joint_events}
+
+Embedded within $\Omega_{XY}$ are the marginal event spaces. 
+@Tbl:coin_marginal_events shows events that are indifferent to $\mathbf{Y}$.
 We say that $\mathbf{Y}$ is **marginalized** because it's been
 rendered irrelevant:
 
@@ -233,6 +237,8 @@ rendered irrelevant:
 | $(\{H\},\{H,T\})$ | $\mathbf{X}$ is heads, $\mathbf{Y}$ is either heads or tails |
 | $(\{T\},\{H,T\})$ | $\mathbf{X}$ is tails, $\mathbf{Y}$ is either heads or tails |
 | $(\{H,T\},\{H,T\})$ | $\mathbf{X}$ is either heads or tails, $\mathbf{Y}$ is either heads or tails |
+
+Table: [Joint events that are indifferent to $\mathbf{Y}$.]{.draft} {#tbl:coin_marginal_events}
 
 The distribution of these events is equal to the marginal distribution $f_X()$. 
 After a variable is marginalized we need no longer speak of it, so the $\mathbf{Y}$
@@ -245,7 +251,7 @@ dimension can just be cut out from the marginal events, leaving $\mathbf{X}$.
 Let $\mathbf{X}$ and $\mathbf{Y}$ correspond to two coin tosses 
 with $\mathcal{U}_X=\mathcal{U}_Y=\{H,T\}.$ Each random variable 
 has event space $\Omega_X=\Omega_Y=\left\{\emptyset, \{H\}, \{T\}, \{H,T\}\right\}$. 
-The joint probability distribution is given in the table below.
+The joint probability distribution is given in @tbl:coin_joint_probability.
 
 | Event               | Probability |
 |---------------------|-------------|
@@ -259,6 +265,8 @@ The joint probability distribution is given in the table below.
 | $(\{H,T\},\{H\})$   | 0.5         |
 | $(\{H,T\},\{T\})$   | 0.5         |
 | $(\{H,T\},\{H,T\})$ | 1.0         |
+
+Table: [Joint probabilities of two independent fair coin tosses.]{.draft} {#tbl:coin_joint_probability}
 
 You can verify that the joint probabilities equal the product of the
 marginals, for instance 
@@ -349,7 +357,7 @@ If the dice are identical and fair, then their probability distribution is
 
 Now suppose the *events* of interest are the sum of the two dice, $s=\mathbf{A}+\mathbf{B}$, 
 which can be any integer between 2 and 12. Each sum event corresponds to a union of
-elementary events listed in the table below. The probability for each event is the sum of
+elementary events listed in @tbl:two_dice_sums. The probability for each event is the sum of
 its constituent elementary probabilities.
 
 | Event $S_j=\mathbf{A}+\mathbf{B}$  | Elementary Events $(a,b)$                                            | $\Pr\left(S_j\right)$ |
@@ -365,7 +373,8 @@ its constituent elementary probabilities.
 | 10          | $(4,6)$\, $(5,5)$\, $(6,4)$                                             | 3/36 |
 | 11          | $(5,6)$\, $(6,5)$                                                           | 2/36 |
 | 12          | $(6,6)$                                                                         | 1/36 |
-Table: Outcomes composed of elementary events with two dice. 
+
+Table: Outcomes composed of elementary events with two dice. {#tbl:two_dice_sums}
 
 Based on the above analysis, we can re-package the experiment into a random variable $\mathbf{S}$ 
 defined as the sum $\mathbf{A}+\mathbf{B}$. The outcomes for $\mathbf{S}$ are the integers $2,\,\dots,\,12$ 

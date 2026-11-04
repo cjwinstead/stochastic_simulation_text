@@ -425,17 +425,19 @@ plot(
   plot(variances,xlabel="Estimator",ylabel="Sample Variance"))
 
 ```
+
+[The estimates are plotted in [@fig:cauchy_means; @fig:cauchy_vars]. A single estimate, followed sample by sample, is traced in [@fig:cauchy_trace; @fig:cauchy_trace_variance].]{.draft}
 :::
 
 
-![100 independent sample mean estimations of a Cauchy distributed random variable. There is no consistency among the estimates.](figures/cauchy_means.tex)
+![100 independent sample mean estimations of a Cauchy distributed random variable. There is no consistency among the estimates.](figures/cauchy_means.tex){#fig:cauchy_means}
 
-![100 independent sample variance estimations for a Cauchy distributed random variable. The results are spread out across five orders of magnitude.](figures/cauchy_vars.tex)
+![100 independent sample variance estimations for a Cauchy distributed random variable. The results are spread out across five orders of magnitude.](figures/cauchy_vars.tex){#fig:cauchy_vars}
 
 
-![A sample mean that gives the appearance of converging, until a "rogue sample" appears near the 900th sample. This is not an outlier; it's a symptom of the Cauchy distribution's pathology.](figures/cauchy_sampling.tex)
+![A sample mean that gives the appearance of converging, until a "rogue sample" appears near the 900th sample. This is not an outlier; it's a symptom of the Cauchy distribution's pathology.](figures/cauchy_sampling.tex){#fig:cauchy_trace}
 
-![Predicted estimator variance based on sample variance. It gives the illusion of smooth convergence to a low variance, but the illusion is eventually shattered.](figures/cauchy_sampling_vars.tex)
+![Predicted estimator variance based on sample variance. It gives the illusion of smooth convergence to a low variance, but the illusion is eventually shattered.](figures/cauchy_sampling_vars.tex){#fig:cauchy_trace_variance}
 
 
 
