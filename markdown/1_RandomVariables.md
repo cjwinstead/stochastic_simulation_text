@@ -126,7 +126,7 @@ reduce it, and the seductive traps that accompany it.
 | $N_E$     | 1        | 2        | 2        | 3        | 4        | 5        | 5        | 5        | 6        | 6        |
 | $\hat{p}$ | 1.00     | 1.00     | 0.67     | 0.75     | 0.80     | 0.83     | 0.71     | 0.62     | 0.67     | 0.60     |
 
-Table: [Ten rolls of a fair die, and the running estimate $\hat{p}$ of $\Pr(d<4)$.]{.draft} {#tbl:dice_rolls}
+Table: Ten rolls of a fair die, and the running estimate $\hat{p}$ of $\Pr(d<4)$. {#tbl:dice_rolls}
 
 :::
 
@@ -152,10 +152,10 @@ For completeness, $\Omega_X$ also contains the empty set, $\emptyset$.
 ### Event Probabilities {#eventprobabilities}
 
 Given an event $E\in \Omega_X$, $\Pr(E)$ denotes the probability that a sample
-from $\mathbf{X}$ is an outcome in $E$. [A **probability distribution** is the
-function that assigns $\Pr(E)$ to every event $E\in\Omega_X$; Chapter 2 makes
-this precise as a probability measure $\mu(E)$. We reserve $f_X$ for probability
-densities.]{.draft}
+from $\mathbf{X}$ is an outcome in $E$. A **probability distribution** is a
+function that assigns $\Pr(E)$ to every event $E\in\Omega_X$; Chapter 2 defines this
+concept more precisely as a probability measure $\mu(E)$. 
+
 Elementary events have the property of
 being mutually exclusive, i.e. if $e_1$ and $e_2$ are elementary events, then
 $\Pr\left(e_1 \cup e_2\right)=\Pr\left(e_1\right)+\Pr\left(e_2\right)$. In general 
@@ -187,7 +187,7 @@ in $\Omega_X$ can have the following basic relationships:
 * **Conditional Probability:** $\Pr(A\,\left| B\right.)=\Pr(A\cap B)/\Pr(B)$.
 
 All elementary events are by definition mutually exclusive. A pair of events
-[with nonzero probabilities]{.draft} cannot be both independent and mutually exclusive.
+with nonzero probabilities cannot be both independent and mutually exclusive.
 
 ### Multiple Random Variables {#multiplerandomvariables}
 
@@ -196,25 +196,25 @@ they can be combined into a joint variable $\left(\mathbf{X},\mathbf{Y}\right)$,
 very much like a vector. The joint sample space is
 $\mathcal{U}_{XY}=\mathcal{U}_X\times\mathcal{U}_Y$, the set of ordered pairs of
 outcomes. [The joint event space $\Omega_{XY}$ contains every set of such pairs.
-Among them are the **rectangles** $E_X\times E_Y$ with $E_X\in\Omega_X$ and
-$E_Y\in\Omega_Y$, which we write $(E_X,E_Y)$; but not every joint event is a
-rectangle. For two coins, "exactly one head" is the event
-$\{(H,T),(T,H)\}$, which is not of the form $E_X\times E_Y$.]{.draft}
+Among them are the **product events** $E_X\times E_Y$ with $E_X\in\Omega_X$ and
+$E_Y\in\Omega_Y$. A product event is also called a **rectangle**, defined formally
+as $(E_X,E_Y) = \left\{(e_x,e_y) : e_x \in E_X, e_y \in E_y\right\}$.
 
 The joint probability distribution assigns a probability $\Pr(E)$ to each event
 $E\in \Omega_{XY}$. In the context of a joint distribution, the
 separated distributions [$\Pr(\mathbf{X}\in E_X)$ and $\Pr(\mathbf{Y}\in E_Y)$]{.draft} are called the 
 **marginal distributions**. Usually we can extract the marginal distributions
 if the joint distribution is given. Two random variables are **independent** 
-if [$\Pr\left((E_X,E_Y)\right)=\Pr(\mathbf{X}\in E_X)\Pr(\mathbf{Y}\in E_Y)$ for every
-rectangle.]{.draft} 
+if $\Pr\left((E_X,E_Y)\right)=\Pr(\mathbf{X}\in E_X)\Pr(\mathbf{Y}\in E_Y)$ for every
+product event. 
 
 :::{.example title="Joint and Marginal Coin Toss Events"}
 
 Let $\mathbf{X}$ and $\mathbf{Y}$ correspond to two coin tosses 
 with $\mathcal{U}_X=\mathcal{U}_Y=\{H,T\}.$ Each random variable 
 has event space $\Omega_X=\Omega_Y=\left\{\emptyset, \{H\}, \{T\}, \{H,T\}\right\}$. 
-The joint event space $\Omega_{XY}$ [contains the rectangles listed in @tbl:coin_joint_events, among other events.]{.draft}
+The joint event space $\Omega_{XY}$ contains the product events listed in 
+@tbl:coin_joint_events, among other events.
 
 | Event             | Description                                                  |
 |-------------------|--------------------------------------------------------------|
@@ -228,7 +228,7 @@ The joint event space $\Omega_{XY}$ [contains the rectangles listed in @tbl:coin
 | $(\{H,T\},\{T\})$ | $\mathbf{X}$ is either heads or tails, $\mathbf{Y}$ is tails |
 | $(\{H,T\},\{H,T\})$ | $\mathbf{X}$ is either heads or tails, $\mathbf{Y}$ is either heads or tails |
 
-Table: [Rectangle events in the joint event space of two coin tosses.]{.draft} {#tbl:coin_joint_events}
+Table: Product events in the joint event space of two coin tosses. {#tbl:coin_joint_events}
 
 Embedded within $\Omega_{XY}$ are the marginal event spaces. 
 @Tbl:coin_marginal_events shows events that are indifferent to $\mathbf{Y}$.
@@ -242,9 +242,9 @@ rendered irrelevant:
 | $(\{T\},\{H,T\})$ | $\mathbf{X}$ is tails, $\mathbf{Y}$ is either heads or tails |
 | $(\{H,T\},\{H,T\})$ | $\mathbf{X}$ is either heads or tails, $\mathbf{Y}$ is either heads or tails |
 
-Table: [Joint events that are indifferent to $\mathbf{Y}$.]{.draft} {#tbl:coin_marginal_events}
+Table: Joint events that are indifferent to $\mathbf{Y}$. {#tbl:coin_marginal_events}
 
-The distribution of these events is equal to the marginal distribution [of $\mathbf{X}$.]{.draft} 
+The distribution of these events is equal to the marginal distribution of $\mathbf{X}$. 
 After a variable is marginalized we need no longer speak of it, so the $\mathbf{Y}$
 dimension can just be cut out from the marginal events, leaving $\mathbf{X}$.
 :::
@@ -270,7 +270,7 @@ The joint probability distribution is given in @tbl:coin_joint_probability.
 | $(\{H,T\},\{T\})$   | 0.5         |
 | $(\{H,T\},\{H,T\})$ | 1.0         |
 
-Table: [Joint probabilities of two independent fair coin tosses.]{.draft} {#tbl:coin_joint_probability}
+Table: Joint probabilities of two independent fair coin tosses. {#tbl:coin_joint_probability}
 
 You can verify that the joint probabilities equal the product of the
 marginals, for instance 
@@ -303,7 +303,8 @@ corresponding to outcome $u$.
 
 Since the elements of $\mathcal{U}_{X}$ are countable, they can
 be arranged in a sensible order and enumerated as outcome 1, 2, 3, and so
-on[, matching Julia's 1-based arrays]{.draft}. When so ordered, the outcome probabilities are arranged as a
+on\footnote{We start from 1 to be consistent with array indexing in Julia programming exmaples.}. 
+When so ordered, the outcome probabilities are arranged as a
 vector, called the **probability mass vector** $\vec{p}_{X}$. The
 individual elements of $\vec{p}_{X}$ are written as $p_{X,i}$ 
 where $i$ is a positive integer. When there is no risk of 

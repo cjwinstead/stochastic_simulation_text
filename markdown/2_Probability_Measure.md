@@ -37,19 +37,19 @@ contain a "volume" of points; a continuous interval contains an
 interval. All the way back in 300 BCE, Euclid defined a **point** as
 "that which has no part", i.e. it's empty. A (countable) collection of points is
 just a collection of empties. But an *interval* contains an uncountable continuum, it
-isn't empty. [Points are not unmeasurable, though: a point, or any countable set
-of points, has a well-defined measure, and that measure is zero
-(@fig:measure_zero_points). An interval has positive measure. Which sets count
-as **measurable** is settled by the $\sigma$-algebra of
-@sec:sigmaalgebras.]{.draft}
+isn't empty. In measure theory, an isolated point has a well-defined measure, and that measure is zero.
+Any countable set of isolated points also has measure zero, as illustrated in 
+(@fig:measure_zero_points). An interval has positive measure^[There is a technical 
+distinction between measureable and unmeasurable sets, which is settled by the $\sigma$-algebra theory 
+explained in @sec:sigmaalgebras.].
 
-![[Isolated points form a set of measure zero; an interval has positive measure.]{.draft}](figures/measurable_interval.tex){#fig:measure_zero_points}
+![Isolated points form a set of measure zero; an interval has positive measure.](figures/measurable_interval.tex){#fig:measure_zero_points}
 
 The "volume" contained within an interval is called its
 **measure**, and probability is a sub-type of measure. Probability
 is therefore contained within the mathematical framework of **measure
-theory**. [The next section introduces probability density informally, and the
-section after it gives a summary introduction to measure theory.]{.draft} For a more information, check out the 
+theory**. The next section introduces probability density informally, and the
+section after it gives a summary introduction to measure theory. For a more information, check out the 
 [Wikipedia page](https://en.wikipedia.org/wiki/Measure_(mathematics)), or
 study [Zakon's open textbook on Mathematical
 Analysis](https://math.libretexts.org/Bookshelves/Analysis/Mathematical_Analysis_(Zakon)). 
@@ -65,7 +65,7 @@ small interval $(x,x+dx)$:
 $$f_X(x)dx \triangleq \Pr(x < \mathbf{X} \leq x+dx).$$
 The interval's width is $dx$, which is smaller than any
 finite value but still greater than zero. No matter how small,
-the interval contains a continuum of points[, so it has positive measure]{.draft}.
+the interval contains a continuum of points, so it has positive measure.
 
 The total probability in a measurable set $\mathcal{S}$ is
 $$
@@ -108,9 +108,9 @@ $$\Pr(a < \mathbf{X} < b) = F_X(b) - F_X(a).$$
 ## Sigma Algebras and Measure Spaces {#sec:sigmaalgebras}
 
 A **sigma algebra** (or $\sigma$-algebra) is a set of rules for manipulating sets whether
-they are countable or uncountable. [A $\sigma$-algebra $\Omega$ on a set
+they are countable or uncountable. A $\sigma$-algebra $\Omega$ on a set
 $\mathcal{U}_X$ is a set of subsets of $\mathcal{U}_X$ that contains $\mathcal{U}_X$
-itself and is closed under complements and *countable* unions. More precisely:]{.draft}
+itself and is closed under complements and *countable* unions. More precisely:
 
 $$\begin{aligned}
 \mathcal{U}_X \in \Omega & \text{~~~whole~space}\\
@@ -118,7 +118,8 @@ E \in \Omega \Rightarrow E^c \in \Omega & \text{~~~complement~closure}\\
 E_1, E_2, \dots \in \Omega \Rightarrow \bigcup_i E_i \in \Omega & \text{~~~countable~union~closure}
 \end{aligned}$$
 
-[Closure under countable intersections follows from the other two properties.]{.draft}
+Closure under countable intersections follows from the other two properties due to De Morgan's Laws, since 
+$E_1 \bigcup E_2 = (E_1^c \bigcap E_2^c)^c$ (the reader is encouraged to complete the proof as an exercise).
 
 A practical example of a $\sigma$-algebra is the **power set**:
 given a set $\mathcal{U}_X$, the power set $\Omega_X$ is the set of all
@@ -164,30 +165,30 @@ $$\begin{aligned}
 $$
 
 
-::: {.draft}
 ### Absolute Continuity and Change of Measure {#sec:absolutecontinuity}
 
-Two different probability measures can be defined on the same sample space and
-event space. Suppose $\mu$ and $\nu$ are both probability measures on
-$(\mathcal{U}_X,\Omega_X)$. We say that $\mu$ is **absolutely continuous** with
-respect to $\nu$, written $\mu\ll\nu$, if every event that $\nu$ considers
-impossible is also impossible under $\mu$:
+Two probability measures $\mu$ and $\nu$ can be defined on the same sample space
+and event space. We say that $\mu$ is **absolutely continuous** with respect to
+$\nu$, written $\mu\ll\nu$, if every event that $\nu$ considers impossible is
+also impossible under $\mu$:
 $$\nu(E)=0 \;\Rightarrow\; \mu(E)=0 \qquad \text{for every } E\in\Omega_X.$$
 
-When $\mu\ll\nu$, the Radon–Nikodym theorem guarantees a non-negative function
-$\ell$, written $\ell=d\mu/d\nu$, that converts one measure into the other:
-$$\mu(E)=\int_E \ell\,d\nu \qquad \text{for every } E\in\Omega_X.$$
 For real-valued variables with densities $f_X$ (for $\mu$) and $f_Y$ (for $\nu$),
-this function is simply the ratio of densities,
-$$\ell(y)=\frac{f_X(y)}{f_Y(y)} \qquad \text{wherever } f_Y(y)>0,$$
-and absolute continuity means that $f_Y$ is positive wherever $f_X$ is.
+this means $f_Y(y)>0$ wherever $f_X(y)>0$. The **likelihood ratio**
+$$\ell(y)=\frac{f_X(y)}{f_Y(y)}$$
+then converts one measure into the other:
+$$\mu(E)=\int_E f_X(y)\,dy=\int_E \ell(y)\,f_Y(y)\,dy.$$
+For discrete variables the same holds with mass functions: $\ell(u)=p_X(u)/p_Y(u)$,
+and $\mu(E)=\sum_{u\in E}\ell(u)\,p_Y(u)$.^[In measure theory, $\ell$ is the
+Radon–Nikodym derivative $d\mu/d\nu$, which exists whenever $\mu\ll\nu$, with or
+without densities. We will not need the general form.]
 
-This ratio, the **likelihood ratio**, is the foundation of importance sampling
+The likelihood ratio is the foundation of importance sampling
 (@sec:importancesamplingfundamentals). It lets us compute probabilities and
 expectations under $\mu$ while drawing samples from $\nu$. If absolute
 continuity fails, some events that matter under $\mu$ are never sampled under
 $\nu$, and no reweighting can recover them.
-:::
+
 
 
 ## Expectation
@@ -210,7 +211,7 @@ $$\begin{aligned}
 Additionally, if $\mathbf{X}$ and $\mathbf{Y}$ are independent, then $\mathcal{E}_\mu\left(\mathbf{X}\mathbf{Y}\right)=\mathcal{E}_\mu\left(\mathbf{X}\right)\mathcal{E}_\mu\left(\mathbf{Y}\right)$.
 
 
-::: {.draft}
+
 ### Expectation of a Function {#sec:lotus}
 
 We often need the expectation of a function of a random variable,
@@ -219,14 +220,15 @@ is not necessary to find the distribution of $h(\mathbf{X})$ first; we can avera
 $h$ directly over the distribution of $\mathbf{X}$:
 $$\mathcal{E}_\mu\left(h(\mathbf{X})\right)=\begin{cases*}\sum_{u\in\mathcal{U}_X} h(u)\,p_X(u) & (discrete)\\
 \int_{\mathcal{U}_X} h(x)\,f_X(x)\,dx & (continuous)\end{cases*}$$ {#eq:lotus}
+For example, if $\mathbf{X}$ is uniform on $(0,1)$, then we can solve for 
+$\mathcal{E}_\mu(\mathbf{X}^2)=\int_0^1 x^2\,dx=1/3$, without having to solve for the density of
+$\mathbf{X}^2$ (compare @sec:functionsofrandomvariables). 
 
-For example, if $\mathbf{X}$ is uniform on $(0,1)$, then
-$\mathcal{E}_\mu(\mathbf{X}^2)=\int_0^1 x^2\,dx=1/3$, with no need for the density of
-$\mathbf{X}^2$ (compare @sec:functionsofrandomvariables). With
-$h(x)=\mathbf{1}_E(x)$, the expectation is the probability of the event:
+In the important case where $h(x)$ is an
+indicator, i.e. $h(x)=\mathbf{1}_E(x)$, the expectation is the probability of the event:
 $\mathcal{E}_\mu\left(\mathbf{1}_E(\mathbf{X})\right)=\Pr(\mathbf{X}\in E)$. Every estimator
 in the following chapters estimates an expectation of this form.
-:::
+
 
 
 :::{.example title="Sum of Two Dice"}
@@ -267,14 +269,14 @@ println("EX = $(round(EX; digits=4)), EY = $(round(EY; digits=4)), and ES = $(ro
 
 The output is `EX = 2.6667, EY = 3.5, and ES = 6.1667`, which confirms the sum.
 
-[The three distributions are plotted in [@fig:dice_mass_x; @fig:dice_mass_y; @fig:dice_mass_s].]{.draft}
+The three distributions are plotted in [@fig:dice_mass_x; @fig:dice_mass_y; @fig:dice_mass_s].
 :::
 
-![[Probability mass of the unbalanced die $\mathbf{X}$.]{.draft}](figures/dice_mass_x.tex){#fig:dice_mass_x}
+![Probability mass of the unbalanced die $\mathbf{X}$.](figures/dice_mass_x.tex){#fig:dice_mass_x}
 
-![[Probability mass of the balanced die $\mathbf{Y}$.]{.draft}](figures/dice_mass_y.tex){#fig:dice_mass_y}
+![Probability mass of the balanced die $\mathbf{Y}$.](figures/dice_mass_y.tex){#fig:dice_mass_y}
 
-![[Probability mass of the sum $\mathbf{S}=\mathbf{X}+\mathbf{Y}$.]{.draft}](figures/dice_mass_s.tex){#fig:dice_mass_s}
+![Probability mass of the sum $\mathbf{S}=\mathbf{X}+\mathbf{Y}$.](figures/dice_mass_s.tex){#fig:dice_mass_s}
 
 
 
@@ -334,7 +336,7 @@ The variance is
 $$\text{Var}\left(\mathbf{U}\right)=\int_a^b\frac{1}{b-a}x^2dx -\theta^2=\frac{b^3-a^3}{3(b-a)}-\frac{1}{4}(a+b)^2=\frac{1}{12}(b-a)^2.
 $$
 
-[The density and the cumulative distribution are plotted in [@fig:uniform_density; @fig:uniform_cdf].]{.draft}
+The density and the cumulative distribution are plotted in [@fig:uniform_density; @fig:uniform_cdf].
 :::
 
 
@@ -404,7 +406,7 @@ We often encounter situations where a random variable $\mathbf{X}$ has
 a known density $f_X(x)$, and we need to determine the density of a
 related random variable $\mathbf{Y}$. If the two variables are related
 by a known function, e.g. $\mathbf{Y} = r(\mathbf{X})$, then we can
-determine the density $f_Y(y)$ by [a **change of variables**]{.draft}. With
+determine the density $f_Y(y)$ by a **change of variables**. With
 this method, we first apply the mapping from the domain of $\mathbf{X}$
 to the domain of $\mathbf{Y}$, and then integrate $f_X$ in the $\mathbf{Y}$
 domain. If the relationship is one-to-one, i.e. if $r(x)$ is
@@ -413,16 +415,19 @@ $$f_Y(y)dy = f_X(x)dx$$
 where $x=r^{-1}(y)$. So we have 
 $$f_Y(y) = \frac{f_X(x)}{\left|dy/dx\right|} = \frac{f_X(x)}{\left|r^\prime(x)\right|}.$$
 
-
 If the function $r()$ is not one-to-one, then multiple intervals along
 the domain of $\mathbf{X}$ could fold into a single interval
-along the domain of $\mathbf{Y}$. Considering a particular interval $(y,y+dy)$,
-and supposing there are $K\in\mathbb{Z}^+$ pairwise-disjoint intervals along
-$x$ mapping to that interval, we can say that the total accumulated measure is
-$$f_Y(y)dy = \sum_{k=1}^K f_X(x_k)\left|dx\right|,$$
-where $y=r(x_k)$ for each of the $x_k$. Then the transformed density is a
-sum:
+along the domain of $\mathbf{Y}$.
+If $r(x)=y$, we say that $y$ is the **image** of $x$, and $x$ is a
+**preimage** of $y$. Suppose $y$ has $K\in\mathbb{Z}^+$ preimages
+$x_1,\dots,x_K$. Around each preimage, a small interval of width
+$\left|dx_k\right|$ maps onto the interval $(y,y+dy)$, so the total
+accumulated measure is
+$$f_Y(y)dy = \sum_{k=1}^K f_X(x_k)\left|dx_k\right|.$$
+Since $\left|dx_k\right| = dy/\left|r^\prime(x_k)\right|$, the transformed
+density is a sum:
 $$f_Y(y) = \sum_{k=1}^K \frac{f_X(x_k)}{\left|r^\prime\left(x_k\right)\right|}.$$
+
 
 :::{.example title="$\mathbf{Y}=\mathbf{X}^2$"}
 
@@ -431,14 +436,20 @@ density in the interval $[-2,2]$, determine the probability density of
 the related random variable $\mathbf{Y}=r(\mathbf{X})$, where the
 relationship is given by the function $r(x) = x^2$.
 
-In this example, $\mathbf{Y}$ takes values in the non-negative
-interval $[0,4]$. [Each $y\in(0,4]$ comes from two points, $x=\sqrt{y}$ in
-$[0,2]$ and $x=-\sqrt{y}$ in $[-2,0]$, and at both $\left|r^\prime(x)\right|=2\sqrt{y}$.
+In this example, $\mathbf{Y}$ takes values in the 
+interval $[0,4]$. Each $y\in(0,4]$ is the image of two points, $x=\sqrt{y}$ in
+$(0,2]$ and $x=-\sqrt{y}$ in $[-2,0)$. At both of the preimages, $\left|r^\prime(x)\right|=2\sqrt{y}$.
 The density of $\mathbf{Y}$ therefore has two components:
 $$f_Y(y) = \frac{f_X(\sqrt{y})}{2\sqrt{y}} + \frac{f_X(-\sqrt{y})}{2\sqrt{y}}.$$
-Since $\mathbf{X}$ is uniform, $f_X$ equals $1/4$ on $[-2,2]$, so
-$$f_Y(y) = \begin{cases}\frac{1}{4\sqrt{y}} & \text{if~} 0 < y \leq 4\\0 & \text{otherwise,}\end{cases}$$
-which integrates to one over $(0,4]$.]{.draft}
+Since $\mathbf{X}$ is uniform, $f_X$ equals $1/4$ everywhere on $[-2,2]$, so
+$$f_Y(y) = \begin{cases}\frac{1}{4\sqrt{y}} & \text{if~} 0 < y \leq 4\\0 & \text{otherwise} \end{cases}$$
+which integrates to one over $[0,4]$.
+
+The foregoing analysis does not work for the point $y=0$, which has only one
+preimage, $x=0$. Because it is an isolated point rather than an interval, it
+has measure zero: $\Pr(\mathbf{Y}=0)=0$. It therefore has no consequence for the
+distribution. We say that our result holds **almost everywhere**, or "up to
+sets of measure zero", to indicate that such points exist but do not matter.
 
 :::
 
@@ -453,7 +464,7 @@ Continuous Sample Space $\mathcal{U}_X$
 Sigma Algebra (Event Space) $\Omega_X$
 
 : A set of sets that is closed under complements, intersections,
-and countable unions[, and contains the whole space]{.draft}.
+and countable unions, and contains the whole space.
 
 Measure $\mu$
 
