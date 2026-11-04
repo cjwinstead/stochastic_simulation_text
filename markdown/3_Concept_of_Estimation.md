@@ -19,7 +19,7 @@ We have already seen a "good" estimator, the sample mean, but
 what makes it a good estimator? To compare the quality of
 different estimators, we analyze the distribution of $\hat{\boldsymbol{\xi}}$.
 We can imagine a community of $R$ researchers independently repeating
-the same estimation using the exact same procedure. The $i^\textrm{th}$
+the same estimation using the exact same procedure. The $i^{\textrm{th}}$
 researcher calculates an estimation $\hat{\xi}_i$, which is itself a sample 
 of $\hat{\boldsymbol{\xi}}$. If the estimator is good, then the researchers
 should be able to obtain repeatable results within a tolerable margin of error.
@@ -112,7 +112,7 @@ but it doesn't converge with increasing samples, so it is not consistent.
 :::
 
 :::{.example title="Sample Mean w/Constant Term (biased and consistent)"}
-We are given $N-1$ iid samples of $\mathbf{X}$, but the $N^\textrm{th}$ sample
+We are given $N-1$ iid samples of $\mathbf{X}$, but the $N^{\textrm{th}}$ sample
 is non-random at $x_N=1$ (perhaps due to a faulty sensor or recording error).
 Then the sample mean becomes
 $$\hat{\theta}_X=\frac{1}{N}\left(\sum_{i=1}^{N-1}x_i + 1\right).$$

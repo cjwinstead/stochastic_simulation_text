@@ -165,7 +165,7 @@ measurable.
 
 The total probability in a measurable set $\mathcal{S}$ is
 $$
-\Pr(\mathbf{X}\in \mathcal{S})=\int_\mathcal{S} f_X(x)dx.
+\Pr(\mathbf{X}\in \mathcal{S})=\int_{\mathcal{S}} f_X(x)dx.
 $$
 If $\mathcal{S}$ is a continuous interval $(x-\epsilon,x+\epsilon)\subset\mathbb{R}$
 then the probability is 

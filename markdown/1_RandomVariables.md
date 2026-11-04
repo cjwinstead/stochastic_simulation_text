@@ -11,7 +11,7 @@ $\mathcal{U}_X$. Sometimes we use an integer subscript to denote the unique
 elements of a set, like $x_i \in \mathcal{U}_X$. 
 Samples
 are often annotated with an integer subscript like $x_i$, where $i\geq 0$,
-signifying the $i^\text{th}$ repetition of the experiment. A collection of samples
+signifying the $i^{\text{th}}$ repetition of the experiment. A collection of samples
 is an array of outcomes, signified by an arrow like $\vec{x}$. The difference between sample arrays
 and outcome sets is important, and should always be evident from the context
 (be sure to watch for it).
