@@ -3,24 +3,31 @@
 % contents and lists are set in book_info.yaml.
 
 % ---------------------------------------------------------------------------
-% Fonts. DejaVu Serif and JuliaMono ship with TeX Live and MiKTeX (packages
-% "dejavu" and "juliamono"). They are loaded by file name because XeLaTeX does
-% not always find TeX Live's own fonts by family name. Everson Mono is used
-% for code when it is installed.
+% Fonts: DejaVu Serif for text; Everson Mono, else JuliaMono, for code.
+%
+% Each font is tried first by family name, which finds fonts installed in the
+% system or user font folders (e.g. ~/.local/share/fonts, as fc-list shows).
+% Otherwise it is loaded by file name, which finds the copies that ship with
+% TeX Live and MiKTeX (packages "dejavu" and "juliamono") even when they are
+% not registered with the system.
 % ---------------------------------------------------------------------------
-\setmainfont{DejaVuSerif}[
-  Extension      = .ttf,
-  BoldFont       = DejaVuSerif-Bold,
-  ItalicFont     = DejaVuSerif-Italic,
-  BoldItalicFont = DejaVuSerif-BoldItalic]
+\IfFontExistsTF{DejaVu Serif}
+  {\setmainfont{DejaVu Serif}}
+  {\setmainfont{DejaVuSerif}[
+     Extension      = .ttf,
+     BoldFont       = DejaVuSerif-Bold,
+     ItalicFont     = DejaVuSerif-Italic,
+     BoldItalicFont = DejaVuSerif-BoldItalic]}
 \IfFontExistsTF{Everson Mono}
   {\setmonofont{Everson Mono}}
-  {\setmonofont{JuliaMono}[
-     Extension      = .ttf,
-     UprightFont    = *-Regular,
-     BoldFont       = *-Bold,
-     ItalicFont     = *-RegularItalic,
-     BoldItalicFont = *-BoldItalic]}
+  {\IfFontExistsTF{JuliaMono}
+     {\setmonofont{JuliaMono}}
+     {\setmonofont{JuliaMono}[
+        Extension      = .ttf,
+        UprightFont    = *-Regular,
+        BoldFont       = *-Bold,
+        ItalicFont     = *-RegularItalic,
+        BoldItalicFont = *-BoldItalic]}}
 
 % ---------------------------------------------------------------------------
 % Mathematics and figures
