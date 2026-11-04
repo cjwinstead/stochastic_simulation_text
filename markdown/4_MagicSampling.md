@@ -1,4 +1,4 @@
-# Importance Sampling Fundamentals {#importancesamplingfundamentals}
+# Importance Sampling Fundamentals {#sec:importancesamplingfundamentals}
 
 ## Magic Sampling {#magicsampling}
 
@@ -144,6 +144,43 @@ samples carry most of the weight. Why is the gain so unstable?]{.draft}
 ![Comparison of density functions and sample weight for variance-scaled Gaussian importance sampling.](figures/variance_scaling_gaussian_weights.tex){#fig:variance_scaling_weights}
 
 ![Estimate and sample variance with increasing sample count for variance-scaled Gaussian importance sampling.](figures/importance_sampling_variance_scaled.tex){#fig:variance_scaling_trace}
+
+
+::: {.draft}
+## Variance of the Importance Sampling Estimator {#sec:isvariance}
+
+The importance sampling estimator $\tilde{\boldsymbol{\xi}}$ is a sample mean of the
+terms $h(\mathbf{Y}_i)\,\ell(\mathbf{Y}_i)$, so its variance is the variance of one
+term divided by $N$:
+$$\text{Var}\left(\tilde{\boldsymbol{\xi}}\right)=\frac{1}{N}\left(\mathcal{E}_\nu\left(h(\mathbf{Y})^2\,\ell(\mathbf{Y})^2\right)-\xi^2\right)=\frac{1}{N}\left(\mathcal{E}_\mu\left(h(\mathbf{X})^2\,\ell(\mathbf{X})\right)-\xi^2\right).$$ {#eq:is-variance}
+The second form follows by changing the measure back. The estimator is unbiased
+whenever the support condition holds, but its variance is finite only if
+$$\int \frac{h(y)^2 f_X(y)^2}{f_Y(y)}\,dy<\infty.$$ {#eq:is-finite-variance}
+Where $f_Y$ is much smaller than $f_X$, the integrand is large; a sampling
+density whose tails are lighter than those of $f_X$ can make the integral
+diverge.
+
+For the Gaussian variance scaling example, $f_X$ is standard Normal and $f_Y$ is
+Normal with standard deviation $\sigma$. Then
+$f_X(y)^2/f_Y(y)\propto\exp\left(-y^2\left(1-\frac{1}{2\sigma^2}\right)\right)$, and the
+integral is finite only when
+$$\sigma^2>\frac{\sigma_X^2}{2}=\frac{1}{2}.$$
+The example used $\sigma=0.01$, so its estimator has **infinite variance**. It is
+still unbiased and consistent, because the law of large numbers needs only a
+finite mean, but the sample variance and the reported gain are meaningless.
+This is why the gain jumped between 277 and 54,397 from run to run, and why the
+report warned that a few samples carried most of the weight
+(@fig:variance_scaling_weights; @fig:variance_scaling_trace). It is the Cauchy
+pathology of @sec:pathologicalcases, created by the choice of sampling
+distribution.
+
+When $\sigma^2>1/2$, the exact gain is
+$G(\sigma)=2\sqrt{2}\,a^{3/2}/\sigma$ with $a=1-1/(2\sigma^2)$. It peaks at
+$\sigma=\sqrt{2}$, where $G\approx 1.3$, and falls below one for $\sigma<1$. For
+this problem no Normal sampling distribution does much better than naive
+sampling; the apparent gain of thousands came entirely from the infinite
+variance.
+:::
 
 
 \clearpage

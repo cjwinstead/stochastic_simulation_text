@@ -164,6 +164,32 @@ $$\begin{aligned}
 $$
 
 
+::: {.draft}
+### Absolute Continuity and Change of Measure {#sec:absolutecontinuity}
+
+Two different probability measures can be defined on the same sample space and
+event space. Suppose $\mu$ and $\nu$ are both probability measures on
+$(\mathcal{U}_X,\Omega_X)$. We say that $\mu$ is **absolutely continuous** with
+respect to $\nu$, written $\mu\ll\nu$, if every event that $\nu$ considers
+impossible is also impossible under $\mu$:
+$$\nu(E)=0 \;\Rightarrow\; \mu(E)=0 \qquad \text{for every } E\in\Omega_X.$$
+
+When $\mu\ll\nu$, the Radon–Nikodym theorem guarantees a non-negative function
+$\ell$, written $\ell=d\mu/d\nu$, that converts one measure into the other:
+$$\mu(E)=\int_E \ell\,d\nu \qquad \text{for every } E\in\Omega_X.$$
+For real-valued variables with densities $f_X$ (for $\mu$) and $f_Y$ (for $\nu$),
+this function is simply the ratio of densities,
+$$\ell(y)=\frac{f_X(y)}{f_Y(y)} \qquad \text{wherever } f_Y(y)>0,$$
+and absolute continuity means that $f_Y$ is positive wherever $f_X$ is.
+
+This ratio, the **likelihood ratio**, is the foundation of importance sampling
+(@sec:importancesamplingfundamentals). It lets us compute probabilities and
+expectations under $\mu$ while drawing samples from $\nu$. If absolute
+continuity fails, some events that matter under $\mu$ are never sampled under
+$\nu$, and no reweighting can recover them.
+:::
+
+
 ## Expectation
 
 For a real-valued random variable $\mathbf{X}$ with probability measure
@@ -182,6 +208,25 @@ $$\begin{aligned}
 \end{aligned}$$
 
 Additionally, if $\mathbf{X}$ and $\mathbf{Y}$ are independent, then $\mathcal{E}_\mu\left(\mathbf{X}\mathbf{Y}\right)=\mathcal{E}_\mu\left(\mathbf{X}\right)\mathcal{E}_\mu\left(\mathbf{Y}\right)$.
+
+
+::: {.draft}
+### Expectation of a Function {#sec:lotus}
+
+We often need the expectation of a function of a random variable,
+$h(\mathbf{X})$, such as $\mathbf{X}^2$ or an indicator $\mathbf{1}_E(\mathbf{X})$. It
+is not necessary to find the distribution of $h(\mathbf{X})$ first; we can average
+$h$ directly over the distribution of $\mathbf{X}$:
+$$\mathcal{E}_\mu\left(h(\mathbf{X})\right)=\begin{cases*}\sum_{u\in\mathcal{U}_X} h(u)\,p_X(u) & (discrete)\\
+\int_{\mathcal{U}_X} h(x)\,f_X(x)\,dx & (continuous)\end{cases*}$$ {#eq:lotus}
+
+For example, if $\mathbf{X}$ is uniform on $(0,1)$, then
+$\mathcal{E}_\mu(\mathbf{X}^2)=\int_0^1 x^2\,dx=1/3$, with no need for the density of
+$\mathbf{X}^2$ (compare @sec:functionsofrandomvariables). With
+$h(x)=\mathbf{1}_E(x)$, the expectation is the probability of the event:
+$\mathcal{E}_\mu\left(\mathbf{1}_E(\mathbf{X})\right)=\Pr(\mathbf{X}\in E)$. Every estimator
+in the following chapters estimates an expectation of this form.
+:::
 
 
 :::{.example title="Sum of Two Dice"}
@@ -353,7 +398,7 @@ how long you think we've been stuck in the car.
 
 \newpage
 
-## Functions of Random Variables
+## Functions of Random Variables {#sec:functionsofrandomvariables}
 
 We often encounter situations where a random variable $\mathbf{X}$ has
 a known density $f_X(x)$, and we need to determine the density of a

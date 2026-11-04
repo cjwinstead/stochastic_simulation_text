@@ -293,6 +293,25 @@ variance should be
 $$\text{Var}\left( \hat{p}_E\right)=\frac{p_E\left(1-p_E\right)}{N}.$$
 
 
+::: {.draft}
+### Confidence Intervals {#sec:confidenceintervals}
+
+An estimate is more useful with a statement of how far it might be from the
+true value. A **confidence interval** is a range computed from the samples that
+contains the true parameter with a stated probability, such as 95%.
+
+For a probability estimate $\hat{p}_E$ from $N$ samples, the simplest choice is
+the **Wald interval**, which uses the Normal approximation to the estimator:
+$$p_E \in \hat{p}_E \pm z\sqrt{\frac{\hat{p}_E(1-\hat{p}_E)}{N}},$$
+where $z=1.96$ for 95% confidence. The Wald interval is unreliable when
+$\hat{p}_E$ is close to zero or the number of successes $N\hat{p}_E$ is small; when
+there are no successes it collapses to the single point zero. The **Wilson
+score interval** behaves well in those cases:
+$$p_E \in \frac{\hat{p}_E+\frac{z^2}{2N}\pm z\sqrt{\frac{\hat{p}_E(1-\hat{p}_E)}{N}+\frac{z^2}{4N^2}}}{1+\frac{z^2}{N}}.$$
+Both are available in the course file as `wald_interval` and `wilson_interval`.
+:::
+
+
 ## Monte Carlo Simulation Methods {#montecarlosimulationmethods}
 
 Estimator concepts can be applied to a variety of numerical computation and 
@@ -385,7 +404,7 @@ $4\hat{p}_C$ varies by about $0.005$.]{.draft}
 :::
 
 
-## "Pathological" Cases {#pathologicalcases}
+## "Pathological" Cases {#sec:pathologicalcases}
 
 There are distributions for which the mean and variance are undefined.
 The Cauchy Distribution is a commonly cited example. Let $\mathbf{U}$
@@ -436,6 +455,37 @@ plot(plot(estimates; xlabel = "Estimate index", ylabel = "Sample mean", legend =
 ![A sample mean that gives the appearance of converging, until a "rogue sample" appears near the 900th sample. This is not an outlier; it's a symptom of the Cauchy distribution's pathology.](figures/cauchy_sampling.tex){#fig:cauchy_trace}
 
 ![Predicted estimator variance based on sample variance. It gives the illusion of smooth convergence to a low variance, but the illusion is eventually shattered.](figures/cauchy_sampling_vars.tex){#fig:cauchy_trace_variance}
+
+::: {.draft}
+## Rare Events {#sec:rareevents}
+
+The Cauchy distribution shows one way naive estimation fails: the quantity
+being estimated has no finite variance. A second failure is more common in
+verification problems, and it occurs even for perfectly well-behaved
+distributions: the event of interest is **rare**.
+
+The estimator variance $p_E(1-p_E)/N$ is small when $p_E$ is small, but so is the
+quantity being estimated. What matters is the error *relative* to $p_E$:
+$$\frac{\sqrt{\text{Var}(\hat{p}_E)}}{p_E}=\sqrt{\frac{1-p_E}{N\,p_E}}\approx\frac{1}{\sqrt{N\,p_E}}.$$ {#eq:relative-error}
+Here $N p_E$ is the expected number of samples that land in $E$. To estimate
+$p_E$ within about 10%, we need about 100 samples in $E$, and therefore about
+$100/p_E$ samples in total (@tbl:rare_event_burden).
+
+| $p_E$ | Samples for 10% relative error |
+|---|---|
+| $10^{-3}$ | $10^{5}$ |
+| $10^{-6}$ | $10^{8}$ |
+| $10^{-9}$ | $10^{11}$ |
+
+Table: Naive sample counts needed for 10% relative error. {#tbl:rare_event_burden}
+
+Failure probabilities of reliable systems are often far smaller than $10^{-6}$,
+so naive estimation becomes impractical exactly where verification matters
+most. Importance sampling, the subject of the next chapter, addresses this
+by drawing more of the samples from the rare event and correcting for the
+change with a weight.
+:::
+
 
 \newpage
 
