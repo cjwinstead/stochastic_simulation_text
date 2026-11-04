@@ -3,7 +3,7 @@ TEXT_FILES = $(wildcard markdown/*.md)
 PANDOC_FLAGS =	--verbose \
                 -fmarkdown+definition_lists \
 		--pdf-engine=xelatex \
-		--template=textbook_template.latex \
+		--include-before-body=latex/dedication.tex \
 		--top-level-division=chapter \
 		--filter pandoc-crossref \
 		--lua-filter ./textbook.lua \
@@ -14,7 +14,7 @@ HTML_FLAGS =	--verbose \
                 -fmarkdown+definition_lists \
 		--filter pandoc-crossref \
 		--lua-filter ./textbook.lua \
-		--mathjax \
+		--math-method=mathjax \
 		--toc \
 		--syntax-highlighting=tango
 
@@ -24,7 +24,7 @@ CHUNK_FLAGS =	--verbose \
 		--lua-filter ../../textbook.lua \
 		-tchunkedhtml \
 		--toc \
-		--mathjax \
+		--math-method=mathjax \
 		--syntax-highlighting=tango
 
 .PHONY: all 
@@ -45,7 +45,7 @@ chunk: $(TEXT_FILES) FORCE
 
 html/stochastic_simulation.html: $(TEXT_FILES) book_info.yaml FORCE
 	mkdir -p html/src
-	for x in $(TEXT_FILES); do tgt=`echo $$x | sed 's|\([[:digit:]]_\)[^/]*/\([^/]*\)$$|\1\2|'`; printf "$$tgt\n"; cp $$x html/src/$$tgt; done
+	for x in $(TEXT_FILES); do cp $$x html/src/; done
 	@for x in html/src/*.md; do sed -i 's|figures/\(.*\)\.tex|figures/svg/\1.svg|' $$x ; done
 	pandoc html/src/*.md book_info.yaml $(HTML_FLAGS) -s -o html/stochastic_verification.html
 

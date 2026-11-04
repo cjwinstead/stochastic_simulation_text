@@ -1,0 +1,100 @@
+% preamble.tex: LaTeX additions to pandoc's default template for the PDF.
+% Loaded from header-includes in book_info.yaml. Page layout, language,
+% contents and lists are set in book_info.yaml.
+
+% ---------------------------------------------------------------------------
+% Fonts. DejaVu Serif and JuliaMono ship with TeX Live and MiKTeX (packages
+% "dejavu" and "juliamono"). They are loaded by file name because XeLaTeX does
+% not always find TeX Live's own fonts by family name. Everson Mono is used
+% for code when it is installed.
+% ---------------------------------------------------------------------------
+\setmainfont{DejaVuSerif}[
+  Extension      = .ttf,
+  BoldFont       = DejaVuSerif-Bold,
+  ItalicFont     = DejaVuSerif-Italic,
+  BoldItalicFont = DejaVuSerif-BoldItalic]
+\IfFontExistsTF{Everson Mono}
+  {\setmonofont{Everson Mono}}
+  {\setmonofont{JuliaMono}[
+     Extension      = .ttf,
+     UprightFont    = *-Regular,
+     BoldFont       = *-Bold,
+     ItalicFont     = *-RegularItalic,
+     BoldItalicFont = *-BoldItalic]}
+
+% ---------------------------------------------------------------------------
+% Mathematics and figures
+% ---------------------------------------------------------------------------
+\usepackage{mathtools}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usetikzlibrary{arrows,calc,shapes,backgrounds,intersections,patterns,positioning}
+\usepackage[american]{circuitikz}
+\tikzset{plotfigstyle/.style={}}
+\pgfplotsset{plotaxisstyle/.style={width=0.9\linewidth,height=0.6\linewidth},legend pos=south east}
+
+% ---------------------------------------------------------------------------
+% Cross-references. pandoc-crossref emits \cref and \Cref; it loads cleveref
+% itself only if it is not already loaded, so these options take effect.
+% ---------------------------------------------------------------------------
+\usepackage[capitalize,nameinlink,noabbrev]{cleveref}
+
+% ---------------------------------------------------------------------------
+% Example boxes, produced by textbook.lua from ::: {.example} divs
+% ---------------------------------------------------------------------------
+\usepackage{tcolorbox}
+\tcbuselibrary{theorems}
+\newtcbtheorem[number within=chapter]{example}{Example}%
+  {parbox=false,colback=green!5,colframe=green!35!black,fonttitle=\bfseries}{th}
+\newtcbtheorem[number within=chapter]{source}{Julia Example}%
+  {parbox=false,colback=green!5,colframe=green!35!black,fonttitle=\bfseries}{th}
+\newcommand{\exampleautorefname}{Example}
+\newcommand{\sourceautorefname}{Julia Example}
+\crefname{example}{example}{examples}
+\Crefname{example}{Example}{Examples}
+\crefname{source}{julia example}{julia examples}
+\Crefname{source}{Julia Example}{Julia Examples}
+
+% ---------------------------------------------------------------------------
+% Title page: large bold title, author in small capitals
+% ---------------------------------------------------------------------------
+\usepackage{titling}
+\pretitle{\begin{center}\Huge\bfseries}
+\posttitle{\par\end{center}\vskip 1em}
+\preauthor{\begin{center}\large\scshape}
+\postauthor{\par\end{center}}
+
+% ---------------------------------------------------------------------------
+% Chapter headings show the number without the word "Chapter"
+% ---------------------------------------------------------------------------
+\makeatletter
+\renewcommand{\@chapapp}{}
+\makeatother
+
+% ---------------------------------------------------------------------------
+% dedication environment (used in dedication.tex)
+% Source: http://www.tug.org/pipermail/texhax/2010-June/015184.html
+% ---------------------------------------------------------------------------
+\newenvironment{dedication}
+  {\cleardoublepage
+   \thispagestyle{empty}
+   \vspace*{\stretch{1}}
+   \hfill\begin{minipage}[t]{0.66\textwidth}
+   \raggedright}
+  {\end{minipage}
+   \vspace*{\stretch{3}}
+   \clearpage}
+
+% ---------------------------------------------------------------------------
+% chapquote environment: a quotation at the start of a chapter
+% Source: http://tex.stackexchange.com/a/53380
+% ---------------------------------------------------------------------------
+\makeatletter
+\newenvironment{chapquote}[2][2em]
+  {\setlength{\@tempdima}{#1}%
+   \def\chapquote@author{#2}%
+   \parshape 1 \@tempdima \dimexpr\textwidth-2\@tempdima\relax%
+   \itshape}
+  {\par\normalfont\hfill--\ \chapquote@author\hspace*{\@tempdima}\par\bigskip}
+\makeatother

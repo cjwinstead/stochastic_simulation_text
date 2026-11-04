@@ -16,6 +16,14 @@ pair (for example, from the release page of
 [pandoc-crossref](https://github.com/lierdakil/pandoc-crossref/releases) or from
 conda-forge). The PDF is typeset with `xelatex`.
 
+The PDF uses pandoc's default LaTeX template. The book's own setup is in two
+small files: `latex/preamble.tex` (fonts, TikZ and pgfplots, cleveref, the
+Example boxes, title and chapter styling) and `latex/dedication.tex`. Page
+layout and the lists of contents, figures and tables are set in
+`book_info.yaml`. A full TeX Live or MiKTeX installation has every package the
+build needs, including the fonts: DejaVu Serif for text and JuliaMono for code
+(Everson Mono is used instead when it is installed).
+
 ## Cross-reference syntax
 
 Label a figure, equation or table, then refer to it:

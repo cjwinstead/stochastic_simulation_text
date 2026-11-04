@@ -1,9 +1,31 @@
 ---
 title: "Verification via Stochastic Simulation"
 author: "Chris Winstead"
-monofont: Everson Mono
-# pandoc-crossref: emit \cref references through the template's cleveref,
-# number figures within chapters, and spell out reference names.
+
+# PDF layout, using pandoc's default LaTeX template. Fonts and the rest of the
+# book's LaTeX setup are in latex/preamble.tex.
+documentclass: book
+papersize: letter
+fontsize: 11pt
+geometry: margin=1in
+lang: en-US
+numbersections: true
+secnumdepth: 2
+toc: true
+lof: true
+lot: true
+# mathspec instead of unicode-math keeps the traditional math fonts, under
+# which \boldsymbol works.
+mathspec: true
+# The book's LaTeX setup. It is loaded here, not with --include-in-header,
+# because that option would replace the header-includes pandoc-crossref adds.
+header-includes: |
+  ```{=latex}
+  \input{latex/preamble.tex}
+  ```
+
+# pandoc-crossref: emit \cref references through cleveref, number figures
+# within chapters, and spell out reference names.
 cref: true
 chapters: true
 linkReferences: true
