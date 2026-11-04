@@ -489,6 +489,10 @@ Measure Space $(\mathcal{U}_X,\Omega_X,\mu)$
 : A tuple that defines the sample space, event space, and
 measure for random variable $\mathbf{X}$.
 
+Almost Everywhere
+
+: A statement holds almost everywhere if the set of points where it fails has
+measure zero.
 
 Probability Density $f_X(x)$
 
@@ -518,3 +522,4 @@ Gaussian Distribution
 Normal Distribution
 
 : A Gaussian distribution with $\theta=0$ and $\sigma^2=1$.
+
