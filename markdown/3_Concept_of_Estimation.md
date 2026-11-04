@@ -149,98 +149,6 @@ This estimator is unbiased.
 :::
 
 
-## Monte Carlo Simulation Methods {#montecarlosimulationmethods}
-
-Estimator concepts can be applied to a variety of numerical computation and 
-simulation problems. In these applications, samples are obtained from a 
-random number generator (RNG) algorithm. An important example is **Monte Carlo
-integration**: we can numerically approximate an integral of the form 
-$\int xf(x)dx$. If $f(x)\geq 0$ and $\int_{-\infty}^{\infty}f(x)dx=1$, then
-the integral has the form of an expectation:
-$$\int xf(x)dx = \mathcal{E}_\mu\left(\mathbf{X}\right)$$
-where $\mathbf{X}$ is a random variable with density function $f(x)$.
-
-If we have a way to generate random samples from the distribution $f(x)$,
-then we can use the sample mean $\hat\theta_X$ to approximate the integral.
-
-:::{.example title="Monte Carlo Integration"}
-Let's estimate the integral $\int_a^b xdx$ with $a=0$ and $b=1$. We construct 
-a random variable $\mathbf{X}$ with uniform density in the interval $(0,1)$,
-so the density function is 
-$$f_X=\begin{cases}
-1 & 0 < x\leq 1\\
-0 & \text{otherwise}
-\end{cases}
-$$
-Then we collect $N$ samples of $\mathbf{X}$. The integral is approximately 
-$$\int_0^1 xf(x)dx \approx \frac{1}{N}\sum_{i=1}^N x_i.$$
-In this example we can easily solve the exact value of the expectation integral,
-$\mathcal{E}_\mu\left(\mathbf{X}\right)=0.5$. The Monte Carlo estimation should
-converge to the exact value as $N\rightarrow\infty$.
-
-```julia
-# Monte Carlo integration of x over (0,1)
-using Random, Statistics
-
-N=100000
-x=rand(N)
-θx=mean(x)
-
-println("θx = $(θx)")
-```
-
-An instance of this simulation produced the result 0.5007827786800374, which
-is correct to the third decimal. After repeating the simulation, we get a slightly
-different result each time. @Fig:uniformhistogram shows a histogram of results
-from ten thousand repeated simulations. The estimation result resembles a Gaussian
-distribution with mean equal to the true value. This variability raises two questions: 
-(1) How accurate is a given Monte Carlo integration result? and (2) How many samples 
-do we need to achieve a specified accuracy?
-
-:::
-
-
-![Histogram of Monte Carlo integrations $\int_0^1xdx$. Each result was computed from $N=10^5$ samples.](figures/uniform_histogram.tex){#fig:uniformhistogram}
-
-
-:::{.example title="Estimating $\pi$"}
-
-We know that $\pi$ is the area of a unit circle. Suppose the circle is contained
-within a square of area 4, with corners at $(\pm 1, \pm 1)$. Let $\mathbf{X}$ and
-$\mathbf{Y}$ be uniformly distributed horizontal and vertical coordinates within
-the square. Define indicator function for the event that $(x,y)$ is within the
-circle:
-$$\mathbf{1}_C\left(x,y\right)=\begin{cases}1 & x^2 + y^2 < 1\\ 0 & \text{otherwise.}\end{cases}$$
-Then collect $N$ samples each from $\mathbf{X}$,$\mathbf{Y}$ and compute the
-sample mean of the indicator function:
-$$\hat{p}_C = \frac{1}{N}\sum_{i=1}^N \mathbf{1}_C\left(x_i,y_i\right).$$
-Now $\hat{p}_C$ estimates the probability that a point lands in the circle,
-which should equal the area of the circle divided by the total area of the
-square region, $p_C=\pi/4$. 
-
-```julia
-using Random,Statistics
-
-N=100000
-
-# Generate coordinates in [-1,+1]
-x=-1 .+ 2.0*rand(N)
-y=-1 .+ 2.0*rand(N)
-
-# Compute indicator function
-i=(x.^2 + y.^2) .< 1
-
-pc=mean(i)
-
-println("Pi estimation is $(4.0*pc)")
-```
-
-One run of this example produced the estimate 3.14712 from $10^5$ samples. Subsequent runs yielded
-3.1488, 3.14608, 3.13488, 3.13564, and so on. The results appear to be consistent to the first 
-decimal point, but we need still some tools to quantify the precision of Monte Carlo results.
-:::
-
-
 ## Estimator Variance {#estimatorvariance}
 
 The efficiency of an estimator is closely related to its variance, 
@@ -382,7 +290,99 @@ variance should be
 $$\text{Var}\left( \hat{p}_E\right)=\frac{p_E\left(1-p_E\right)}{N}.$$
 
 
-### "Pathological" Cases {#pathologicalcases}
+## Monte Carlo Simulation Methods {#montecarlosimulationmethods}
+
+Estimator concepts can be applied to a variety of numerical computation and 
+simulation problems. In these applications, samples are obtained from a 
+random number generator (RNG) algorithm. An important example is **Monte Carlo
+integration**: we can numerically approximate an integral of the form 
+$\int xf(x)dx$. If $f(x)\geq 0$ and $\int_{-\infty}^{\infty}f(x)dx=1$, then
+the integral has the form of an expectation:
+$$\int xf(x)dx = \mathcal{E}_\mu\left(\mathbf{X}\right)$$
+where $\mathbf{X}$ is a random variable with density function $f(x)$.
+
+If we have a way to generate random samples from the distribution $f(x)$,
+then we can use the sample mean $\hat\theta_X$ to approximate the integral.
+
+:::{.example title="Monte Carlo Integration"}
+Let's estimate the integral $\int_a^b xdx$ with $a=0$ and $b=1$. We construct 
+a random variable $\mathbf{X}$ with uniform density in the interval $(0,1)$,
+so the density function is 
+$$f_X=\begin{cases}
+1 & 0 < x\leq 1\\
+0 & \text{otherwise}
+\end{cases}
+$$
+Then we collect $N$ samples of $\mathbf{X}$. The integral is approximately 
+$$\int_0^1 xf(x)dx \approx \frac{1}{N}\sum_{i=1}^N x_i.$$
+In this example we can easily solve the exact value of the expectation integral,
+$\mathcal{E}_\mu\left(\mathbf{X}\right)=0.5$. The Monte Carlo estimation should
+converge to the exact value as $N\rightarrow\infty$.
+
+```julia
+# Monte Carlo integration of x over (0,1)
+using Random, Statistics
+
+N=100000
+x=rand(N)
+θx=mean(x)
+
+println("θx = $(θx)")
+```
+
+An instance of this simulation produced the result 0.5007827786800374, which
+is correct to the third decimal. After repeating the simulation, we get a slightly
+different result each time. @Fig:uniformhistogram shows a histogram of results
+from ten thousand repeated simulations. The estimation result resembles a Gaussian
+distribution with mean equal to the true value. [This variability is the estimator variance of the previous section. It
+tells us how accurate a given Monte Carlo result is, and how many samples a
+specified accuracy requires.]{.draft}
+
+:::
+
+
+![Histogram of Monte Carlo integrations $\int_0^1xdx$. Each result was computed from $N=10^5$ samples.](figures/uniform_histogram.tex){#fig:uniformhistogram}
+
+
+:::{.example title="Estimating $\pi$"}
+
+We know that $\pi$ is the area of a unit circle. Suppose the circle is contained
+within a square of area 4, with corners at $(\pm 1, \pm 1)$. Let $\mathbf{X}$ and
+$\mathbf{Y}$ be uniformly distributed horizontal and vertical coordinates within
+the square. Define indicator function for the event that $(x,y)$ is within the
+circle:
+$$\mathbf{1}_C\left(x,y\right)=\begin{cases}1 & x^2 + y^2 < 1\\ 0 & \text{otherwise.}\end{cases}$$
+Then collect $N$ samples each from $\mathbf{X}$,$\mathbf{Y}$ and compute the
+sample mean of the indicator function:
+$$\hat{p}_C = \frac{1}{N}\sum_{i=1}^N \mathbf{1}_C\left(x_i,y_i\right).$$
+Now $\hat{p}_C$ estimates the probability that a point lands in the circle,
+which should equal the area of the circle divided by the total area of the
+square region, $p_C=\pi/4$. 
+
+```julia
+using Random,Statistics
+
+N=100000
+
+# Generate coordinates in [-1,+1]
+x=-1 .+ 2.0*rand(N)
+y=-1 .+ 2.0*rand(N)
+
+# Compute indicator function
+i=(x.^2 + y.^2) .< 1
+
+pc=mean(i)
+
+println("Pi estimation is $(4.0*pc)")
+```
+
+One run of this example produced the estimate 3.14712 from $10^5$ samples. Subsequent runs yielded
+3.1488, 3.14608, 3.13488, 3.13564, and so on. The results appear to be consistent to the first 
+decimal point, but we need still some tools to quantify the precision of Monte Carlo results.
+:::
+
+
+## "Pathological" Cases {#pathologicalcases}
 
 There are distributions for which the mean and variance are undefined.
 The Cauchy Distribution is a commonly cited example. Let $\mathbf{U}$
@@ -438,8 +438,6 @@ plot(
 ![A sample mean that gives the appearance of converging, until a "rogue sample" appears near the 900th sample. This is not an outlier; it's a symptom of the Cauchy distribution's pathology.](figures/cauchy_sampling.tex){#fig:cauchy_trace}
 
 ![Predicted estimator variance based on sample variance. It gives the illusion of smooth convergence to a low variance, but the illusion is eventually shattered.](figures/cauchy_sampling_vars.tex){#fig:cauchy_trace_variance}
-
-
 
 \newpage
 

@@ -45,14 +45,65 @@ continuous intervals. A measurable set can have a non-zero measure.
 The "volume" contained within an interval is called its
 **measure**, and probability is a sub-type of measure. Probability
 is therefore contained within the mathematical framework of **measure
-theory**. The next section gives a summary introduction to measure
-theory. For a more information, check out the 
+theory**. [The next section introduces probability density informally, and the
+section after it gives a summary introduction to measure theory.]{.draft} For a more information, check out the 
 [Wikipedia page](https://en.wikipedia.org/wiki/Measure_(mathematics)), or
 study [Zakon's open textbook on Mathematical
 Analysis](https://math.libretexts.org/Bookshelves/Analysis/Mathematical_Analysis_(Zakon)). 
 
 
-# Sigma Algebras and Measure Spaces {#sigmaalgebras}
+## Probability Density and Distribution {#probabilitydensity}
+
+Probability measure is quantified by a **probability density
+function** $f_X(x)$. Probalility density is defined for a
+real-valued random variable $\mathbf{X}\in\mathbb{R}$ as the
+differential probability that $\mathbf{X}$ lies in a vanishingly
+small interval $(x,x+dx)$: 
+$$f_X(x)dx \triangleq \Pr(x < \mathbf{X} \leq x+dx).$$
+The interval's width is $dx$, which is smaller than any
+finite value but still greater than zero. No matter how small,
+the interval contains a continuum of points is therefore
+measurable.
+
+The total probability in a measurable set $\mathcal{S}$ is
+$$
+\Pr(\mathbf{X}\in \mathcal{S})=\int_{\mathcal{S}} f_X(x)dx.
+$$
+If $\mathcal{S}$ is a continuous interval $(x-\epsilon,x+\epsilon)\subset\mathbb{R}$
+then the probability is 
+$$
+\Pr(x-\epsilon < \mathbf{X} \leq x+\epsilon) =
+\int_{x-\epsilon}^{x+\epsilon} f_X(u)du,
+$$
+where $u$ is an integration variable holding the place of $x$. 
+
+The density function provides a complete representation of probability
+on the event space $\Omega_X$, and it inherits the properties of
+probability measure:
+
+$$\begin{aligned}
+ f_X(x) & \geq 0 \\
+ \int_{\mathcal{U}_X} f_X(u)du & = 1
+ \end{aligned}
+$$
+
+In other words, probability density is never negative (but could be
+zero), and when integrated across the entire space, it comes to a
+total probability of 1 (i.e. it covers all possible events).  
+
+### Cumulative Distribution 
+
+The **cumulative distribution function** $F_X(x)$ is defined along a
+single real-valued dimension as
+
+$$F_X(x) \triangleq \int_{-\infty}^x f_X(u)du.$$
+
+The cumulative distribution is convenient for computing the
+probability in a real interval $(a,b)$, since 
+$$\Pr(a < \mathbf{X} < b) = F_X(b) - F_X(a).$$
+
+
+## Sigma Algebras and Measure Spaces {#sigmaalgebras}
 
 A **sigma algebra** (or $\sigma$-algebra) is a set of rules for manipulating sets whether
 they are countable or uncountable. A $\sigma$-algebra $\Omega$ is a set of sets that is
@@ -107,98 +158,6 @@ $$\begin{aligned}
  \mu\left(A \cup B\right) & = \mu\left(A\right) + \mu\left(B\right) - \mu\left(A\cap B\right) &  \text{union} 
 \end{aligned}
 $$
-
-
-\vfill\newpage
-
-## Key Terms {#probabilitymeasurekeyterms}
-
-Continous Sample Space $\mathcal{U}_X$
-
-: A set of uncountably many points.
-
-Sigma Algebra (Event Space) $\Omega_X$
-
-: A set of sets that is closed under complements, intersections,
-and contable unions.
-
-Measure $\mu$
-
-: A non-negative map from $\Omega$ to $\mathbb{R}$.
-
-$\sigma$-Additivity
-
-: The measure of a countable union of disjoint sets equals the
-sum of the sets' measures.
-
-Measure Zero
-
-: An isolated point, a countable set of points, and the empty set
-all have measure zero.
-
-Probability Measure
-
-: A measure for which $\mu(\mathcal{U}_X)=1$.
-
-Measure Space $(\mathcal{U}_X,\Omega_X,\mu)$
-
-: A tuple that defines the sample space, event space, and
-measure for random variable $\mathbf{X}$.
-
-
-
-# Real-Valued Random Variables
-
-
-## Probability Density and Distribution
-
-Probability measure is quantified by a **probability density
-function** $f_X(x)$. Probalility density is defined for a
-real-valued random variable $\mathbf{X}\in\mathbb{R}$ as the
-differential probability that $\mathbf{X}$ lies in a vanishingly
-small interval $(x,x+dx)$: 
-$$f_X(x)dx \triangleq \Pr(x < \mathbf{X} \leq x+dx).$$
-The interval's width is $dx$, which is smaller than any
-finite value but still greater than zero. No matter how small,
-the interval contains a continuum of points is therefore
-measurable.
-
-The total probability in a measurable set $\mathcal{S}$ is
-$$
-\Pr(\mathbf{X}\in \mathcal{S})=\int_{\mathcal{S}} f_X(x)dx.
-$$
-If $\mathcal{S}$ is a continuous interval $(x-\epsilon,x+\epsilon)\subset\mathbb{R}$
-then the probability is 
-$$
-\Pr(x-\epsilon < \mathbf{X} \leq x+\epsilon) =
-\int_{x-\epsilon}^{x+\epsilon} f_X(u)du,
-$$
-where $u$ is an integration variable holding the place of $x$. 
-
-The density function provides a complete representation of probability
-on the event space $\Omega_X$, and it inherits the properties of
-probability measure:
-
-$$\begin{aligned}
- f_X(x) & \geq 0 \\
- \int_{\mathcal{U}_X} f_X(u)du & = 1
- \end{aligned}
-$$
-
-In other words, probability density is never negative (but could be
-zero), and when integrated across the entire space, it comes to a
-total probability of 1 (i.e. it covers all possible events).  
-
-### Cumulative Distribution 
-
-The **cumulative distribution function** $F_X(x)$ is defined along a
-single real-valued dimension as
-
-$$F_X(x) \triangleq \int_{-\infty}^x f_X(u)du.$$
-
-The cumulative distribution is convenient for computing the
-probability in a real interval $(a,b)$, since 
-$$\Pr(a < \mathbf{X} < b) = F_X(b) - F_X(a).$$
 
 
 ## Expectation
@@ -439,11 +398,42 @@ $$f_Y(y) = \begin{cases}\frac{1}{4x} & \text{if~} y\in [0,4]\\0 & \text{otherwis
 
 :::
 
-
-
 \newpage
 
-## Key Terms
+## Key Terms {#probabilitymeasurekeyterms}
+
+Continous Sample Space $\mathcal{U}_X$
+
+: A set of uncountably many points.
+
+Sigma Algebra (Event Space) $\Omega_X$
+
+: A set of sets that is closed under complements, intersections,
+and contable unions.
+
+Measure $\mu$
+
+: A non-negative map from $\Omega$ to $\mathbb{R}$.
+
+$\sigma$-Additivity
+
+: The measure of a countable union of disjoint sets equals the
+sum of the sets' measures.
+
+Measure Zero
+
+: An isolated point, a countable set of points, and the empty set
+all have measure zero.
+
+Probability Measure
+
+: A measure for which $\mu(\mathcal{U}_X)=1$.
+
+Measure Space $(\mathcal{U}_X,\Omega_X,\mu)$
+
+: A tuple that defines the sample space, event space, and
+measure for random variable $\mathbf{X}$.
+
 
 Probability Density $f_X(x)$
 
@@ -473,6 +463,3 @@ Gaussian Distribution
 Normal Distribution
 
 : A Gaussian distribution with $\theta=0$ and $\sigma^2=1$.y
-
-
-
