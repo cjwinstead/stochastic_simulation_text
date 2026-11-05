@@ -60,6 +60,8 @@ FORCE:
 #   notebooks/lib/*.jl              course files, copied next to every notebook
 #   $(SOLUTIONS)/notebooks/M*/NAME.solutions.jl   private solutions
 #
+#   make check                 run every check below
+#   make check-keyterms        Key Terms match the bold terms in each chapter
 #   make notebooks             merge solutions, build .jl and .ipynb in build/
 #   make notebooks NBGRADER=1  same, with nbgrader solution delimiters
 #   make check-notebooks       fail if a public source contains a solution
@@ -72,7 +74,12 @@ NB_SOURCES = $(wildcard notebooks/M*/*.jl)
 NB_LIB     = notebooks/lib/StochasticSimulationCourse.jl notebooks/lib/course_plots.jl
 NB_BUILD   = build/notebooks
 
-.PHONY: notebooks check-notebooks test-course
+.PHONY: check check-keyterms notebooks check-notebooks test-course
+
+check: check-keyterms check-notebooks
+
+check-keyterms:
+	@python3 tools/check_keyterms.py $(TEXT_FILES)
 
 notebooks: check-notebooks
 	@for src in $(NB_SOURCES); do \

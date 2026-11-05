@@ -39,6 +39,16 @@ See @fig:name and @eq:is-estimator.   @Fig:name begins a sentence.
 In the PDF, references go through `cleveref` and read "Figure 3.1",
 "Equation 4.2"; the names are set in `book_info.yaml`.
 
+## Key Terms
+
+A term is defined where it first appears in **bold**, and each chapter ends
+with a `## Key Terms` section listing its terms, under the same names, in the
+order the chapter defines them. Use *italics*, not bold, for emphasis. An
+entry may list synonyms separated by commas (`Expectation, Expected Value`).
+`make check-keyterms` reports bold terms without entries, entries without bold
+terms, entries out of order, and terms bolded twice; `make check` runs every
+check.
+
 ## Draft text
 
 New or substantially revised text that awaits the author's review is marked
