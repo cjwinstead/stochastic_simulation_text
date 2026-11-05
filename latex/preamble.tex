@@ -35,6 +35,17 @@
 \definecolor{draftcolor}{RGB}{164,0,0}
 
 % ---------------------------------------------------------------------------
+% Code blocks. pandoc sets code in its Highlighting environment (fancyvrb).
+% fvextra adds line breaking: code is set one size smaller, and a line that
+% is still wider than the space available, such as inside an example box,
+% wraps with a continuation mark instead of running past the margin.
+% ---------------------------------------------------------------------------
+\usepackage{fvextra}
+\fvset{fontsize=\small}
+\RecustomVerbatimEnvironment{Highlighting}{Verbatim}%
+  {commandchars=\\\{\},breaklines,breaknonspaceingroup,breakanywhere}
+
+% ---------------------------------------------------------------------------
 % Mathematics and figures
 % ---------------------------------------------------------------------------
 \usepackage{mathtools}
@@ -71,11 +82,14 @@
 % Example boxes, produced by textbook.lua from ::: {.example} divs
 % ---------------------------------------------------------------------------
 \usepackage{tcolorbox}
-\tcbuselibrary{theorems}
-\newtcbtheorem[number within=chapter]{example}{Example}%
-  {parbox=false,colback=green!5,colframe=green!35!black,fonttitle=\bfseries}{th}
-\newtcbtheorem[number within=chapter]{source}{Julia Example}%
-  {parbox=false,colback=green!5,colframe=green!35!black,fonttitle=\bfseries}{th}
+\tcbuselibrary{theorems,breakable,skins}
+% breakable: a box longer than the space left on a page continues on the next
+% page instead of moving whole and leaving a gap. enhanced jigsaw draws the
+% split edges cleanly.
+\tcbset{exampleboxstyle/.style={breakable,enhanced jigsaw,parbox=false,
+  colback=green!5,colframe=green!35!black,fonttitle=\bfseries}}
+\newtcbtheorem[number within=chapter]{example}{Example}{exampleboxstyle}{th}
+\newtcbtheorem[number within=chapter]{source}{Julia Example}{exampleboxstyle}{th}
 \newcommand{\exampleautorefname}{Example}
 \newcommand{\sourceautorefname}{Julia Example}
 
