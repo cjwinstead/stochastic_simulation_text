@@ -67,11 +67,11 @@ let
     p_E = interval_probability(μ, 3.2, 3.3)
 
     rng = StableRNG(2026)
-    r_naive = naive_estimate(rng, μ, in_E; N = 100_000)
-    r_opt = is_estimate(rng, μ, ν, in_E; N = 100)
+    r_naive = naive_estimate(rng, μ, in_E; N=100_000)
+    r_opt = is_estimate(rng, μ, ν, in_E; N=100)
 
-    report(r_naive, r_opt; exact = p_E, labels = ["Naive N=1e5", "Optimal N=100"])
-    println("\nDistinct values among the 100 terms: ", length(unique(round.(r_opt.terms; sigdigits = 12))))
+    report(r_naive, r_opt; exact=p_E, labels=["Naive N=1e5", "Optimal N=100"])
+    println("\nDistinct values among the 100 terms: ", length(unique(round.(r_opt.terms; sigdigits=12))))
 end
 
 # %% [markdown]
@@ -107,8 +107,8 @@ end
 let
     μ = Exponential(1)
     ν = truncated(μ, 0, 2)
-    r = is_estimate(StableRNG(5), μ, ν, x -> x < 2; N = 1_000)
-    report(r; exact = 1 - exp(-2))
+    r = is_estimate(StableRNG(5), μ, ν, x -> x < 2; N=1_000)
+    report(r; exact=1 - exp(-2))
 end
 
 # %% [markdown]
@@ -168,7 +168,7 @@ rng2 = StableRNG(22)
 
 # %% nbgrader={"grade": true, "grade_id": "p2_tests", "locked": true, "points": 2, "schema_version": 3, "solution": false, "task": false}
 @assert length(q) == 6 "q has one entry per face"
-@assert isapprox(sum(q), 1; atol = 1e-12) "q must sum to 1"
+@assert isapprox(sum(q), 1; atol=1e-12) "q must sum to 1"
 @assert all(q[[1, 3, 5]] .== 0) "Odd faces should never be sampled"
 @assert r2 isa EstimateResult && length(r2) == 50 "Use is_estimate with N = 50"
 #@hidden-tests p2

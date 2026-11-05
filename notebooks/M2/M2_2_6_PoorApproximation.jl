@@ -71,11 +71,11 @@ let
     p_E = interval_probability(μ, 3.2, 3.3)
 
     rng = StableRNG(2026)
-    r_naive = naive_estimate(rng, μ, in_E; N = 100_000)
-    r_is = is_estimate(rng, μ, ν, in_E; N = 100_000)
-    report(r_naive, r_is; exact = p_E)
+    r_naive = naive_estimate(rng, μ, in_E; N=100_000)
+    r_is = is_estimate(rng, μ, ν, in_E; N=100_000)
+    report(r_naive, r_is; exact=p_E)
     println("\nTrue relative error of the IS estimate: ",
-            round(100 * abs(estimate(r_is) - p_E) / p_E; digits = 1), "%")
+            round(100 * abs(estimate(r_is) - p_E) / p_E; digits=1), "%")
 end
 
 # %% [markdown]
@@ -88,8 +88,8 @@ end
 # %%
 let
     μ = Normal(0, 1)
-    r_is = is_estimate(StableRNG(2026), μ, Normal(3.3, 0.000625), x -> 3.2 < x < 3.3; N = 100_000)
-    plot_weight_distribution(r_is; size = (600, 300))
+    r_is = is_estimate(StableRNG(2026), μ, Normal(3.3, 0.000625), x -> 3.2 < x < 3.3; N=100_000)
+    plot_weight_distribution(r_is; size=(600, 300))
 end
 
 # %% [markdown]

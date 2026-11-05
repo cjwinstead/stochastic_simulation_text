@@ -85,10 +85,10 @@ let
     c = interval_probability(μ, a′, b′)
 
     rng = StableRNG(2026)
-    r_naive = naive_estimate(rng, μ, in_E; N = 100_000)
-    r_is = is_estimate(rng, μ, ν, in_E; N = 100_000)
+    r_naive = naive_estimate(rng, μ, in_E; N=100_000)
+    r_is = is_estimate(rng, μ, ν, in_E; N=100_000)
 
-    report(r_naive, r_is; exact = p_E, σ²_naive = bernoulli_variance(p_E))
+    report(r_naive, r_is; exact=p_E, σ²_naive=bernoulli_variance(p_E))
     println("\nExact gain (1 - p_E)/(c - p_E) = ", round(Int, (1 - p_E) / (c - p_E)))
 end
 
@@ -101,8 +101,8 @@ let
     μ = Normal(0, 1)
     ν = truncated(μ, 3.1, 3.4)
     in_E(x) = 3.2 < x < 3.3
-    r_is = is_estimate(StableRNG(2026), μ, ν, in_E; N = 2_000)
-    plot_weights(r_is; size = (500, 250), ylims = (0, 0.002))
+    r_is = is_estimate(StableRNG(2026), μ, ν, in_E; N=2_000)
+    plot_weights(r_is; size=(500, 250), ylims=(0, 0.002))
 end
 
 # %% [markdown]
@@ -122,9 +122,9 @@ let
     p_E = interval_probability(μ, 3.2, 3.3)
 
     rng = StableRNG(7)
-    r_is = is_estimate(rng, μ, ν, in_E; N = 100_000)
+    r_is = is_estimate(rng, μ, ν, in_E; N=100_000)
     for k in 1:5
-        r_naive = naive_estimate(rng, μ, in_E; N = 100_000)
+        r_naive = naive_estimate(rng, μ, in_E; N=100_000)
         println("run $k: ", lpad(n_nonzero(r_naive), 3), " hits, estimated gain ",
                 round(Int, gain(r_naive, r_is)))
     end
@@ -197,7 +197,7 @@ y = rand(StableRNG(11), ν, 1_000)
 
 # %% nbgrader={"grade": true, "grade_id": "p3_tests", "locked": true, "points": 2, "schema_version": 3, "solution": false, "task": false}
 @assert a_cover <= 3.2 && b_cover >= 3.3 "The cover must contain [3.2, 3.3]"
-@assert isapprox(b_cover - a_cover, 0.4; atol = 1e-9) "The cover must have width 0.4"
+@assert isapprox(b_cover - a_cover, 0.4; atol=1e-9) "The cover must have width 0.4"
 #@hidden-tests p3
 #@end
 

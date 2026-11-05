@@ -65,6 +65,35 @@ A sentence with [a revised phrase]{.draft} inside.
 ![[A caption to review.]{.draft}](figures/name.tex){#fig:name}
 ```
 
+# Julia environment and builds
+
+The text's examples and the notebooks share one Julia environment,
+`notebooks/Project.toml` and `notebooks/Manifest.toml`, which pins Julia 1.12
+and every package version. Both files are committed, so every machine and the
+JupyterHub image run the same code. The Makefile is the single entry point:
+
+```
+make env            install the pinned packages (once per machine)
+make check          Key Terms and notebook-solution checks
+make test           course-file tests, every Julia example in the text
+                    (each run on its own), and every notebook with solutions
+make release        check, test, the PDF, and the notebooks, in build/
+make env-update     update packages within Project.toml's compat bounds
+```
+
+After `make env-update`, review the change to `Manifest.toml`, run
+`make test`, and commit both files together.
+
+## Code style
+
+Code in the text and the notebooks follows the plan's notation-to-Julia
+crosswalk: distributions are `Distribution` objects named after their measure
+(`μ`, `ν`, or `μ_X` when there are several), samples are `x` or `y`, an
+indicator is `in_E`, the likelihood ratio and its logarithm are `ℓ` and `L`,
+and every random call takes an explicit `rng = StableRNG(2026)`. Keyword
+arguments have no spaces around `=` (`f(x; N=10_000)`), and code lines stay
+under about 80 characters so they fit in an example box.
+
 # Notebooks
 
 Assignment notebooks live in `notebooks/`, one Jupytext percent-format `.jl`
@@ -72,10 +101,12 @@ file per video item, named `M<module>_<lesson>_<item>_<Name>.jl`:
 
 ```
 notebooks/
+  Project.toml, Manifest.toml   the pinned Julia environment
   lib/   StochasticSimulationCourse.jl, course_plots.jl, test_course.jl
   M1/    Module 1 notebooks
   M2/    Module 2 notebooks
-tools/   solutions.py (split/merge/check), pre-commit
+tools/   solutions.py (split/merge/check), check_keyterms.py,
+         text_examples.py, pre-commit
 ```
 
 Solutions and hidden tests are kept in a separate private repository. In a

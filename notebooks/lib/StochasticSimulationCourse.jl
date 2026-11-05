@@ -97,18 +97,18 @@ function _terms(h::Vector{Float64}, L::Vector{Float64})
 end
 
 """
-    naive_estimate(rng, μ, h; N = 10_000)
+    naive_estimate(rng, μ, h; N=10_000)
 
 Estimate ξ = 𝓔_μ(h(𝐗)) by the sample mean of h over `N` samples drawn from `μ`.
 """
-function naive_estimate(rng::AbstractRNG, μ, h; N::Integer = 10_000)
+function naive_estimate(rng::AbstractRNG, μ, h; N::Integer=10_000)
     x = _draw(rng, μ, N)
     hx = Float64.(h.(x))
     return EstimateResult(:naive, μ, μ, x, hx, zeros(length(x)), copy(hx))
 end
 
 """
-    is_estimate(rng, μ, ν, h; N = 10_000)
+    is_estimate(rng, μ, ν, h; N=10_000)
 
 Estimate ξ = 𝓔_μ(h(𝐗)) by importance sampling: draw `N` samples yᵢ from `ν`
 and average h(yᵢ) ℓ(yᵢ), with ℓ(y) = f_X(y) / f_Y(y) computed in log space.
@@ -116,7 +116,7 @@ and average h(yᵢ) ℓ(yᵢ), with ℓ(y) = f_X(y) / f_Y(y) computed in log spa
 The estimate is unbiased only if f_Y(y) > 0 wherever h(y) f_X(y) ≠ 0.
 That condition cannot be checked from the samples.
 """
-function is_estimate(rng::AbstractRNG, μ, ν, h; N::Integer = 10_000)
+function is_estimate(rng::AbstractRNG, μ, ν, h; N::Integer=10_000)
     y = _draw(rng, ν, N)
     hy = Float64.(h.(y))
     L = [Float64(logpdf(μ, yi) - logpdf(ν, yi)) for yi in y]
@@ -146,12 +146,12 @@ n_nonzero(r::EstimateResult) = count(!iszero, r.terms)
 likelihood_ratio(r::EstimateResult) = exp.(r.L)
 
 """
-    confidence_interval(r; z = 1.96)
+    confidence_interval(r; z=1.96)
 
 Normal-approximation interval `estimate ± z·standard_error`. It is meaningful
 only when the terms have finite variance and enough of them are nonzero.
 """
-function confidence_interval(r::EstimateResult; z::Real = 1.96)
+function confidence_interval(r::EstimateResult; z::Real=1.96)
     m, s = estimate(r), standard_error(r)
     return (m - z * s, m + z * s)
 end
@@ -232,22 +232,22 @@ bernoulli_variance(p::Real) = p * (1 - p)
 interval_probability(μ::UnivariateDistribution, a::Real, b::Real) = cdf(μ, b) - cdf(μ, a)
 
 """
-    wald_interval(p_hat, N; z = 1.96)
+    wald_interval(p_hat, N; z=1.96)
 
 Wald interval p̂ ± z √(p̂(1 − p̂)/N) for a proportion.
 """
-function wald_interval(p_hat::Real, N::Integer; z::Real = 1.96)
+function wald_interval(p_hat::Real, N::Integer; z::Real=1.96)
     half = z * sqrt(p_hat * (1 - p_hat) / N)
     return (p_hat - half, p_hat + half)
 end
 
 """
-    wilson_interval(p_hat, N; z = 1.96)
+    wilson_interval(p_hat, N; z=1.96)
 
 Wilson score interval for a proportion; better than the Wald interval when
 p̂ is small or N p̂ is only a few counts.
 """
-function wilson_interval(p_hat::Real, N::Integer; z::Real = 1.96)
+function wilson_interval(p_hat::Real, N::Integer; z::Real=1.96)
     z² = z^2
     denom = 1 + z² / N
     center = (p_hat + z² / (2N)) / denom
@@ -308,7 +308,7 @@ end
 _pct(x::Real) = isfinite(x) ? @sprintf("%.2f%%", 100x) : _fmt(x)
 
 """
-    report([io,] results...; exact = nothing, σ²_naive = nothing, labels = nothing)
+    report([io,] results...; exact=nothing, σ²_naive=nothing, labels=nothing)
 
 Print a side-by-side summary of one or more results, with diagnostics and
 warnings. Gains are computed against the first result. Pass `exact` to show
@@ -316,7 +316,7 @@ the true value, and `σ²_naive` (the exact per-sample naive variance) to add
 an exact gain.
 """
 function report(io::IO, results::EstimateResult...;
-                exact = nothing, σ²_naive = nothing, labels = nothing)
+                exact=nothing, σ²_naive=nothing, labels=nothing)
     isempty(results) && return nothing
     names = labels === nothing ? [_label(r) for r in results] : collect(string.(labels))
     w = 14
@@ -383,12 +383,12 @@ Base.show(io::IO, r::EstimateResult) =
 # ---------------------------------------------------------------------------
 
 """
-    within_se(x, exact, se; k = 4)
+    within_se(x, exact, se; k=4)
 
 True when |x − exact| ≤ k·se. With k = 4 a correct, unbiased answer fails
 about 6 times in 100,000. Compute `se` from the exact distribution when
 possible, not from the student's samples.
 """
-within_se(x::Real, exact::Real, se::Real; k::Real = 4) = abs(x - exact) <= k * se
+within_se(x::Real, exact::Real, se::Real; k::Real=4) = abs(x - exact) <= k * se
 
 end # module

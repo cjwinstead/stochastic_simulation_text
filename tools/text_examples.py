@@ -21,7 +21,7 @@ def main(argv):
         return 2
     out = Path(argv[1])
     out.mkdir(parents=True, exist_ok=True)
-    for old in out.glob("ch*_L*.jl"):
+    for old in [*out.glob("ch*_L*.jl"), *out.glob("ch*_L*.out")]:
         old.unlink()
     for path in argv[2:]:
         text = Path(path).read_text(encoding="utf-8")

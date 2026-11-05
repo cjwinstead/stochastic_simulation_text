@@ -69,10 +69,10 @@ let
     p_E = interval_probability(μ, 3.2, 3.3)
 
     rng = StableRNG(2026)
-    r_naive = naive_estimate(rng, μ, in_E; N = 100_000)
-    r_is = is_estimate(rng, μ, ν, in_E; N = 100_000)
-    report(r_naive, r_is; exact = p_E, σ²_naive = bernoulli_variance(p_E))
-    println("\nShare of samples inside E: ", round(n_nonzero(r_is) / length(r_is); digits = 3))
+    r_naive = naive_estimate(rng, μ, in_E; N=100_000)
+    r_is = is_estimate(rng, μ, ν, in_E; N=100_000)
+    report(r_naive, r_is; exact=p_E, σ²_naive=bernoulli_variance(p_E))
+    println("\nShare of samples inside E: ", round(n_nonzero(r_is) / length(r_is); digits=3))
 end
 
 # %% [markdown]
@@ -90,9 +90,9 @@ let
     σ²_naive = bernoulli_variance(interval_probability(μ, 3.2, 3.3))
     println(" s       gain      share in E   N_eff")
     for (k, s) in enumerate((0.01, 0.02, 0.04, 0.08, 0.16, 0.32))
-        r = is_estimate(StableRNG(100 + k), μ, Normal(3.25, s), in_E; N = 100_000)
+        r = is_estimate(StableRNG(100 + k), μ, Normal(3.25, s), in_E; N=100_000)
         println(rpad(s, 6), lpad(round(Int, gain(σ²_naive, r)), 9),
-                lpad(round(n_nonzero(r) / length(r); digits = 3), 13),
+                lpad(round(n_nonzero(r) / length(r); digits=3), 13),
                 lpad(round(Int, N_eff(r)), 9))
     end
 end
