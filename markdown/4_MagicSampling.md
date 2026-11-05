@@ -62,18 +62,21 @@ The oracle has an infinite sampling gain. In practice we usually get a finite sa
 but it can still be pretty big.
 
 [The code below is a direct implementation of the importance sampling estimator.
-It computes the likelihood ratio through `logpdf`, the logarithm of the density,
-because ratios of very small densities can underflow to zero in floating point.]{.draft}
+It first computes the log-likelihood ratio $L(y)=\log\ell(y)$ from `logpdf`, the
+logarithm of the density, because ratios of very small densities can underflow
+to zero in floating point.]{.draft}
 
 ```julia
 using Distributions, Statistics
 
 # Importance sampling estimate of 𝓔_μ(h(X)) from N samples of ν
-function importance_estimate(rng, μ, ν, h; N = 10_000)
+function importance_estimate(rng, μ, ν, h; N=10_000)
     y = rand(rng, ν, N)
-    ℓ = exp.(logpdf.(μ, y) .- logpdf.(ν, y))   # likelihood ratios f_X(y)/f_Y(y)
+    L = logpdf.(μ, y) .- logpdf.(ν, y)   # log-likelihood ratios
+    ℓ = exp.(L)                          # likelihood ratios f_X(y)/f_Y(y)
     terms = h.(y) .* ℓ
-    return mean(terms), var(terms) / N          # estimate and its estimated variance
+    ξ_tilde = mean(terms)
+    return ξ_tilde, var(terms) / N       # estimate and its estimated variance
 end
 ```
 
@@ -96,6 +99,8 @@ An example is simulated in the code block:
 ```julia
 include("StochasticSimulationCourse.jl")
 using .StochasticSimulationCourse
+check_version(v"0.1.0")
+
 using Distributions, StableRNGs
 
 μ = Normal(0, 1)      # θ = 0, σ = 1
@@ -103,8 +108,8 @@ using Distributions, StableRNGs
 h(x) = x
 
 rng = StableRNG(2026)
-r_naive = naive_estimate(rng, μ, h; N = 10_000)
-r_is = is_estimate(rng, μ, ν, h; N = 10_000)
+r_naive = naive_estimate(rng, μ, h; N=10_000)
+r_is = is_estimate(rng, μ, ν, h; N=10_000)
 report(r_naive, r_is)
 ```
 
@@ -216,6 +221,8 @@ complexity.
 ```julia
 include("StochasticSimulationCourse.jl")
 using .StochasticSimulationCourse
+check_version(v"0.1.0")
+
 using Distributions, StableRNGs
 
 μ = Normal()
@@ -223,9 +230,9 @@ using Distributions, StableRNGs
 in_E(x) = 1 < x < 2
 
 rng = StableRNG(2026)
-r_naive = naive_estimate(rng, μ, in_E; N = 1_000_000)
-r_is = is_estimate(rng, μ, ν, in_E; N = 1_000_000)
-report(r_naive, r_is; exact = interval_probability(μ, 1, 2))
+r_naive = naive_estimate(rng, μ, in_E; N=1_000_000)
+r_is = is_estimate(rng, μ, ν, in_E; N=1_000_000)
+report(r_naive, r_is; exact=interval_probability(μ, 1, 2))
 ```
 
 The output from this run:

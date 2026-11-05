@@ -248,31 +248,32 @@ that $\mathcal{E}_\mu\left(\mathbf{S}\right)=\mathcal{E}_\mu\left(\mathbf{X}\rig
 using Plots
 
 # Probability mass vectors
-px = [6, 5, 4, 3, 2, 1] ./ 21    # unbalanced die X
-py = fill(1/6, 6)                # balanced die Y
+p_X = [6, 5, 4, 3, 2, 1] ./ 21   # unbalanced die X
+p_Y = fill(1/6, 6)               # balanced die Y
 
-# Outcomes
-UX = 1:6
-UY = 1:6
-US = 2:12
+# Sample spaces
+U_X = 1:6
+U_Y = 1:6
+U_S = 2:12
 
 # Probability mass of S = X + Y (S = 2 is stored at index 1)
-ps = zeros(length(US))
-for x in UX, y in UY
-    ps[x + y - 1] += px[x] * py[y]
+p_S = zeros(length(U_S))
+for x in U_X, y in U_Y
+    p_S[x + y - 1] += p_X[x] * p_Y[y]
 end
 
 # Expectations
-EX = sum(UX .* px)
-EY = sum(UY .* py)
-ES = sum(US .* ps)
+θ_X = sum(U_X .* p_X)
+θ_Y = sum(U_Y .* p_Y)
+θ_S = sum(U_S .* p_S)
 
-plot(bar(UX, px), bar(UY, py), bar(US, ps); layout = (1, 3), legend = false)
+plot(bar(U_X, p_X), bar(U_Y, p_Y), bar(U_S, p_S); layout=(1, 3), legend=false)
 
-println("EX = $(round(EX; digits=4)), EY = $(round(EY; digits=4)), and ES = $(round(ES; digits=4))")
+println("θ_X = ", round(θ_X; digits=4), ", θ_Y = ", round(θ_Y; digits=4),
+        ", θ_S = ", round(θ_S; digits=4))
 ```
 
-The output is `EX = 2.6667, EY = 3.5, and ES = 6.1667`, which confirms the sum.
+The output is `θ_X = 2.6667, θ_Y = 3.5, θ_S = 6.1667`, which confirms the sum.
 
 The three distributions are plotted in [@fig:dice_mass_x; @fig:dice_mass_y; @fig:dice_mass_s].
 :::
@@ -284,6 +285,28 @@ The three distributions are plotted in [@fig:dice_mass_x; @fig:dice_mass_y; @fig
 ![Probability mass of the sum $\mathbf{S}=\mathbf{X}+\mathbf{Y}$.](figures/dice_mass_s.tex){#fig:dice_mass_s}
 
 
+
+::: {.draft}
+In the rest of the text, distributions are represented by objects from the
+Distributions.jl package. An object stands for the probability measure, and
+provides its mean, its variance, its mass or density function (`pdf`), and
+samples (`rand`). The unbalanced die is a `Categorical` distribution:
+
+```julia
+using Distributions
+
+μ_X = Categorical([6, 5, 4, 3, 2, 1] ./ 21)   # the unbalanced die X
+
+println("mean = ", round(mean(μ_X); digits=4))
+println("variance = ", round(var(μ_X); digits=4))
+println("Pr(X = 3) = ", round(pdf(μ_X, 3); digits=4))
+```
+
+This prints a mean of 2.6667, as computed above, a variance of 2.2222, and
+$\Pr(\mathbf{X}=3)=0.1905$. Continuous distributions such as `Uniform(a, b)` and
+`Normal(θ, σ)` work the same way; note that `Normal` takes the standard
+deviation $\sigma$, not the variance.
+:::
 
 ## Variance
 

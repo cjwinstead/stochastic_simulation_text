@@ -388,6 +388,34 @@ and the probability distribution is the vector $\vec{q}$ for which $q_j=\Pr\left
 
 
 
+::: {.draft}
+## Running the Examples {#sec:runningexamples}
+
+The examples in this text are written in Julia, version 1.12. They use a small
+set of packages: Distributions.jl for probability distributions, StableRNGs.jl
+for random numbers that are reproducible across Julia versions, Statistics, and
+Plots.jl. The exact versions are pinned in the course environment,
+`notebooks/Project.toml` and `notebooks/Manifest.toml`. Running `make env` in
+the text's repository installs them, and `julia --project=notebooks` starts
+Julia in that environment.
+
+From Chapter 4 on, examples also use the course file
+`StochasticSimulationCourse.jl`, found in `notebooks/lib`. Those examples begin
+with the same setup lines as the course notebooks:
+
+```julia
+include("StochasticSimulationCourse.jl")
+using .StochasticSimulationCourse
+check_version(v"0.1.0")
+```
+
+Every example that uses random numbers creates its generator explicitly, with
+`rng = StableRNG(2026)`, and passes it to each call, so it prints the results
+shown in the text.
+:::
+
+\newpage
+
 ## Key Terms {#randomvariableskeyterms}
 
 Random Variable $\mathbf{X}$

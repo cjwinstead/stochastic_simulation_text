@@ -217,9 +217,10 @@ over $N=10^5$ samples. The expected estimator variance is
 $\text{Var}\left(\mathbf{X}\right)/N=10^{-5}$.  
 
 ```julia
-using StableRNGs, Statistics
+using Distributions, StableRNGs, Statistics
 
 rng = StableRNG(2026)
+μ = Normal(0, 1)
 N = 100_000   # samples per estimate
 M = 1_000     # independent estimates
 
@@ -227,7 +228,7 @@ estimates = zeros(M)   # the sample means
 variances = zeros(M)   # the sample variances (divisor N - 1)
 
 for j in 1:M
-    x = randn(rng, N)
+    x = rand(rng, μ, N)
     estimates[j] = mean(x)
     variances[j] = var(x)
 end
@@ -253,9 +254,10 @@ should have a Chi-Squared distribution with mean 1 and variance 2, so the estima
 variance should be $\text{Var}\left( \mathbf{X}^2\right)/N=2\times 10^{-5}.$
 
 ```julia
-using StableRNGs, Statistics
+using Distributions, StableRNGs, Statistics
 
 rng = StableRNG(2026)
+μ = Normal(0, 1)
 N = 100_000   # samples per estimate
 M = 1_000     # independent estimates
 h(x) = x^2
@@ -264,7 +266,7 @@ estimates = zeros(M)
 variances = zeros(M)
 
 for j in 1:M
-    hx = h.(randn(rng, N))
+    hx = h.(rand(rng, μ, N))
     estimates[j] = mean(hx)
     variances[j] = var(hx)
 end
@@ -345,11 +347,12 @@ converge to the exact value as $N\rightarrow\infty$.
 
 ```julia
 # Monte Carlo integration of x over (0,1)
-using StableRNGs, Statistics
+using Distributions, StableRNGs, Statistics
 
 rng = StableRNG(2026)
+μ = Uniform(0, 1)
 N = 100_000
-x = rand(rng, N)
+x = rand(rng, μ, N)
 θ_hat = mean(x)
 
 println("θ_hat = $(θ_hat)")
@@ -385,15 +388,16 @@ which should equal the area of the circle divided by the total area of the
 square region, $p_C=\pi/4$. 
 
 ```julia
-using StableRNGs, Statistics
+using Distributions, StableRNGs, Statistics
 
 rng = StableRNG(2026)
+μ = Uniform(-1, 1)   # each coordinate is uniform on [-1, +1]
 N = 100_000
 in_C(x, y) = x^2 + y^2 < 1   # indicator of the unit circle
 
 for run in 1:5
-    x = -1 .+ 2 .* rand(rng, N)   # coordinates in [-1, +1]
-    y = -1 .+ 2 .* rand(rng, N)
+    x = rand(rng, μ, N)
+    y = rand(rng, μ, N)
     p_hat = mean(in_C.(x, y))
     println("π estimate: $(4 * p_hat)")
 end
@@ -422,27 +426,28 @@ What happens if we try to estimate the parameters of a Cauchy Distributed
 variable? 
 
 ```julia
-using StableRNGs, Statistics
+using Distributions, StableRNGs, Statistics
 using Plots
 
 rng = StableRNG(2026)
 N = 100_000   # samples per estimate
 M = 100       # independent estimates
 
-r(u) = tan(π * (u - 0.5))   # transforms Uniform(0,1) samples to Cauchy samples
+r(u) = tan(π * (u - 0.5))   # maps Uniform(0,1) samples to Cauchy samples
 
 estimates = zeros(M)
 variances = zeros(M)
 
 for j in 1:M
-    x = r.(rand(rng, N))
+    x = r.(rand(rng, Uniform(0, 1), N))
     estimates[j] = mean(x)
     variances[j] = var(x)
 end
 
-plot(plot(estimates; xlabel = "Estimate index", ylabel = "Sample mean", legend = false),
-     plot(variances; xlabel = "Estimate index", ylabel = "Sample variance",
-          yscale = :log10, legend = false))
+plot(plot(estimates; xlabel="Estimate index", ylabel="Sample mean",
+          legend=false),
+     plot(variances; xlabel="Estimate index", ylabel="Sample variance",
+          yscale=:log10, legend=false))
 ```
 
 [The estimates are plotted in [@fig:cauchy_means; @fig:cauchy_vars]. A single estimate, followed sample by sample, is traced in [@fig:cauchy_trace; @fig:cauchy_trace_variance].]{.draft}
