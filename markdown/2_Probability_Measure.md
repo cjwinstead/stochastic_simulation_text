@@ -34,11 +34,11 @@ points. Within a continuous space, discrete points have zero probability.
 In order to have a non-zero probability, our measurement needs to
 contain a "volume" of points; a continuous interval contains an
 *uncountable* infinity of points, no matter how small the
-interval. All the way back in 300 BCE, Euclid defined a **point** as
+interval. All the way back in 300 BCE, Euclid defined a *point* as
 "that which has no part", i.e. it's empty. A (countable) collection of points is
 just a collection of empties. But an *interval* contains an uncountable continuum, it
 isn't empty. In measure theory, an isolated point has a well-defined measure, and that measure is zero.
-Any countable set of isolated points also has measure zero, as illustrated in 
+Any countable set of isolated points also has **measure zero**, as illustrated in
 (@fig:measure_zero_points). An interval has positive measure^[There is a technical 
 distinction between measureable and unmeasurable sets, which is settled by the $\sigma$-algebra theory 
 explained in @sec:sigmaalgebras.].
@@ -46,9 +46,9 @@ explained in @sec:sigmaalgebras.].
 ![Isolated points form a set of measure zero; an interval has positive measure.](figures/measurable_interval.tex){#fig:measure_zero_points}
 
 The "volume" contained within an interval is called its
-**measure**, and probability is a sub-type of measure. Probability
-is therefore contained within the mathematical framework of **measure
-theory**. The next section introduces probability density informally, and the
+*measure*, and probability is a sub-type of measure. Probability
+is therefore contained within the mathematical framework of *measure
+theory*. The next section introduces probability density informally, and the
 section after it gives a summary introduction to measure theory. For a more information, check out the 
 [Wikipedia page](https://en.wikipedia.org/wiki/Measure_(mathematics)), or
 study [Zakon's open textbook on Mathematical
@@ -137,7 +137,8 @@ $$
 Given a subset of pairwise disjoint\footnote{Pairwise disjoint means that
 $E_i \cap E_j = \emptyset$ if $i\neq j$.}
 elements $E_i\in \Omega$, with $i=1,2,\dots$,
-the measure of the union equals the sum of the measures:
+the measure of the union equals the sum of the measures, [a property called
+**$\sigma$-additivity**]{.draft}:
 
 $$\begin{aligned}
 \mu\left(\bigcup_i E_i\right) & = \sum_i \mu(E_i) & \sigma\text{~additivity}
@@ -150,6 +151,10 @@ A **probability measure** is a measure with one additional property:
 $$\begin{aligned}
 \mu(\mathcal{U}_X) &= 1 & \text{Probability Measure}
 \end{aligned}$$
+
+[Together, the sample space, the event space and a measure form a **measure
+space** $(\mathcal{U}_X,\Omega_X,\mu)$. When $\mu$ is a probability measure, it is
+also called a probability space.]{.draft}
 
 From the properties of probability measure, we can obtain all the
 properties of probability algebra:
@@ -282,7 +287,7 @@ The three distributions are plotted in [@fig:dice_mass_x; @fig:dice_mass_y; @fig
 
 ## Variance
 
-A distribution's variance $\text{Var}\left(\mathbf{X}\right)$ gives some indication
+A distribution's **variance** $\text{Var}\left(\mathbf{X}\right)$ gives some indication
 of its unpredictability within an interval around the mean. If $\text{Var}\left(\mathbf{X} \right)=0$
 then $\mathbf{X}$ is not random at all. $\text{Var}\left( \mathbf{X}\right)$ is often denoted as $\sigma_X^2$, and $\sigma$ is called the **standard deviation**. Variance
 is defined in terms of expectation as 
@@ -344,7 +349,7 @@ The density and the cumulative distribution are plotted in [@fig:uniform_density
 
 The **Gaussian distribution**, commonly called the "bell curve",
 is one of the most common distributions in practice. It's defined by
-two parameters: the mean $\theta$ and the **standard deviation**
+two parameters: the mean $\theta$ and the standard deviation
 $\sigma$. The density function is highest where $x=\theta$, and is
 symmetric on either side of $\theta$:
 $$f_G(x) = \frac{1}{\sigma\sqrt{2\pi}}\exp\left(-\frac{1}{2}\left(\frac{x-\theta}{\sigma}\right)^2\right)$$
@@ -449,14 +454,33 @@ sets of measure zero", to indicate that such points exist but do not matter.
 
 ## Key Terms {#probabilitymeasurekeyterms}
 
-Continuous Sample Space $\mathcal{U}_X$
+Uncountable
 
-: A set of uncountably many points.
+: [A set that is not countable, such as an interval of real numbers. A
+  continuous random variable has an uncountable sample space.]{.draft}
+
+Measure Zero
+
+: An isolated point, a countable set of points, and the empty set
+  all have measure zero.
+
+Probability Density Function $f_X(x)$
+
+: [A non-negative function whose integral over an interval gives the
+  probability of that interval: $\Pr(a<\mathbf{X}\leq b)=\int_a^b f_X(x)\,dx$.]{.draft}
+
+Cumulative Distribution Function $F_X(x)$
+
+: The probability that $\mathbf{X}\leq x$.
 
 Sigma Algebra (Event Space) $\Omega_X$
 
 : A set of sets that is closed under complements, intersections,
-and countable unions, and contains the whole space.
+  and countable unions, and contains the whole space.
+
+Power Set
+
+: [The set of all subsets of a set.]{.draft}
 
 Measure $\mu$
 
@@ -465,12 +489,7 @@ Measure $\mu$
 $\sigma$-Additivity
 
 : The measure of a countable union of disjoint sets equals the
-sum of the sets' measures.
-
-Measure Zero
-
-: An isolated point, a countable set of points, and the empty set
-all have measure zero.
+  sum of the sets' measures.
 
 Probability Measure
 
@@ -479,29 +498,32 @@ Probability Measure
 Measure Space $(\mathcal{U}_X,\Omega_X,\mu)$
 
 : A tuple that defines the sample space, event space, and
-measure for random variable $\mathbf{X}$.
+  measure for random variable $\mathbf{X}$.
 
-Almost Everywhere
+Absolutely Continuous $\mu\ll\nu$
 
-: A statement holds almost everywhere if the set of points where it fails has
-measure zero.
+: [$\mu$ is absolutely continuous with respect to $\nu$ if every event with
+  $\nu(E)=0$ also has $\mu(E)=0$.]{.draft}
 
-Probability Density $f_X(x)$
+Likelihood Ratio $\ell(y)$
 
-: A function that defines the differential probability measure for $\mathbf{X}$
-on $\mathbb{R}$ in one dimension, $f_X(x)dx=d\mu$.
+: [The ratio $f_X(y)/f_Y(y)$ of densities (or $p_X(u)/p_Y(u)$ of masses)
+  that converts probabilities under $\nu$ into probabilities under $\mu$.]{.draft}
 
-Cumulative Distribution $F_X(x)$
+Expectation, Expected Value $\theta_X=\mathcal{E}_\mu(\mathbf{X})$
 
-: The probability that $\mathbf{X}\leq x$.
-
-Expectation $\theta_X=\mathcal{E}_\mu(\mathbf{X})$
-
-: Subject to probability measure $\mu$, $\mathcal{E}_\mu(\mathbf{X})=\int_{\mathcal{U}_X}xd\mu=\int_{\mathcal{U}_X}xf_X(x)dx$. Usually interpreted as "average outcome".
+: [Subject to probability measure $\mu$,
+  $\mathcal{E}_\mu(\mathbf{X})=\sum_{u\in\mathcal{U}_X}u\,p_X(u)$ (discrete) or
+  $\int_{\mathcal{U}_X}x\,f_X(x)\,dx$ (continuous). Usually interpreted as
+  "average outcome".]{.draft}
 
 Variance $\text{Var}(\mathbf{X})$
 
 : Subject to probability measure $\mu$, $\text{Var}(\mathbf{X})=\mathcal{E}_\mu(\mathbf{X}^2)-\theta_X^2.$
+
+Standard Deviation $\sigma_X$
+
+: [The square root of the variance.]{.draft}
 
 Uniform Distribution $f_U(x)$
 
@@ -515,3 +537,32 @@ Normal Distribution
 
 : A Gaussian distribution with $\theta=0$ and $\sigma^2=1$.
 
+Standard Normal Cumulative Distribution $\Phi_N(x)$
+
+: [The cumulative distribution function of the Normal distribution.]{.draft}
+
+Memoryless
+
+: [A distribution is memoryless if, given $\mathbf{X}>t$, the remaining
+  amount $\mathbf{X}-t$ has the same distribution as $\mathbf{X}$. The
+  exponential distribution is memoryless.]{.draft}
+
+Change of Variables
+
+: [Finding the density of $\mathbf{Y}=r(\mathbf{X})$ from the density of
+  $\mathbf{X}$: $f_Y(y)=\sum_k f_X(x_k)/\left|r^\prime(x_k)\right|$, summed over the
+  preimages $x_k$ of $y$.]{.draft}
+
+Image
+
+: [If $r(x)=y$, then $y$ is the image of $x$.]{.draft}
+
+Preimage
+
+: [If $r(x)=y$, then $x$ is a preimage of $y$. A value can have more than
+  one preimage.]{.draft}
+
+Almost Everywhere
+
+: A statement holds almost everywhere if the set of points where it fails has
+  measure zero.

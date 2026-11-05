@@ -36,7 +36,7 @@ recent decades the more abstract "Bayesian" interpretation grew to greater promi
 
 When a random variable is associated with a repeatable direct experiment, it can be
 understood using the **frequentist probability interpretation**. In the
-frequentist theory, probability is defined as the frequency of
+frequentist theory, **probability** is defined as the frequency of
 observation for a particular **event**. An event $E$ refers to a
 set of outcomes (e.g. $E=\left\{x\in\mathcal{U}_X\,:\,x<4\right\}$).
 For a random variable $\mathbf{X}$, the frequentist probability of an event $E$ is
@@ -138,7 +138,7 @@ called the **sample space**, $\mathcal{U}_X$. Every experimental trial
 results in a single element drawn from the sample space.
 For any outcome $x\in \mathcal{U}_X$,
 the corresponding singleton set $\{x\}$ is called an **elementary event**. We can define an
-**event** $E$ as a union of elementary events satisfying a proposition $\phi(x)$. 
+event $E$ as a union of elementary events satisfying a proposition $\phi(x)$.
 In set builder notation, $E=\{x\in\mathcal{U}_X\,:\,\phi(x)\}$.
 The **event space** $\Omega_X$
 is a set containing all elementary events along with all unions of elementary events.
@@ -201,7 +201,7 @@ The joint probability distribution assigns a probability $\Pr(E)$ to each event
 $E\in \Omega_{XY}$. In the context of a joint distribution, the
 separated distributions [$\Pr(\mathbf{X}\in E_X)$ and $\Pr(\mathbf{Y}\in E_Y)$]{.draft} are called the 
 **marginal distributions**. Usually we can extract the marginal distributions
-if the joint distribution is given. Two random variables are **independent** 
+if the joint distribution is given. Two random variables are *independent*
 if $\Pr\left((E_X,E_Y)\right)=\Pr(\mathbf{X}\in E_X)\Pr(\mathbf{Y}\in E_Y)$ for every
 product event. 
 
@@ -307,8 +307,8 @@ individual elements of $\vec{p}_{X}$ are written as $p_{X,i}$
 where $i$ is a positive integer. When there is no risk of 
 ambiguity, we may also indicate the elements more simply as $p_i$.
 
-Altogether, the vector $\vec{p}_{X}$ constitutes a **probability
-distribution**, meaning it reports the probability for every elementary
+Altogether, the vector $\vec{p}_{X}$ constitutes a probability
+distribution, meaning it reports the probability for every elementary
 event, and therefore generates the probability for any event in 
 $\Omega_X$.
 
@@ -343,7 +343,7 @@ elementary events where $\mathbf{A}=1$: (1,1), (1,2), up to (1,6).
 In this example, $\Omega$ includes events for two random
 variables, but the event $E$ is only concerned with one variable. In
 this situation, the ignored variable is said to be
-**marginalized**. The event specified for $\mathbf{A}$ carries along
+*marginalized*. The event specified for $\mathbf{A}$ carries along
 all the non-contradicting outcomes for $\mathbf{B}$.
 
 :::
@@ -392,26 +392,44 @@ and the probability distribution is the vector $\vec{q}$ for which $q_j=\Pr\left
 
 Random Variable $\mathbf{X}$
 
-: Symbol representing a random experiment. 
+: Symbol representing a random experiment.
 
-  
 Sample $x$
 
-: The observed or recorded result from a single random experiment. 
-
-Sample Space $\mathcal{U}_X$
-
-: The set of all possible sample values that may be recorded from a random experiment. 
-
+: The observed or recorded result from a single random experiment.
 
 Outcome $\mathbf{X}=x$
 
 : The actual result of a single random trial, or the actual truth of a
   proposition.
 
+Frequentist Probability Interpretation
+
+: [Probability understood as the relative frequency of an event over many
+  repetitions of an experiment.]{.draft}
+
+Probability $\Pr(E)$
+
+: The relative frequency of observing a particular event $E$ (frequentist
+  interpretation); or degree of belief/confidence in the truth of $E$ (Bayesian
+  interpretation).
+
 Event $E$
 
 : A set of outcomes to which a probability can be assigned.
+
+Indicator Function $\mathbf{1}_E(x)$
+
+: A binary function that returns 1 if $x\in E$, otherwise returns 0.
+
+Bayesian Interpretation
+
+: [Probability understood as a degree of belief in a proposition, which is
+  updated as evidence is observed.]{.draft}
+
+Sample Space $\mathcal{U}_X$
+
+: The set of all possible sample values that may be recorded from a random experiment.
 
 Elementary Event $\{x\}$
 
@@ -420,25 +438,57 @@ Elementary Event $\{x\}$
 Event Space $\Omega_X$
 
 : The set of all events associated with $\mathbf{X}$, often the power set
-of $\mathcal{U}_X$.
+  of $\mathcal{U}_X$.
 
-Probability $\Pr(E)$
-
-: The relative frequency of observing a particular event $E$ (frequentist
-  interpretation); or degree of belief/confidence in the truth of $E$ (Bayesian
-  interpretation). 
-  
 Probability Distribution
 
 : A function that reports the probability for every event $E\in\Omega_X$.
-  
+
+Mutually Exclusive
+
+: [Events $A$ and $B$ that share no outcome: $A\cap B=\emptyset$.]{.draft}
+
+Independent
+
+: [Events $A$ and $B$ are independent if $\Pr(A\cap B)=\Pr(A)\Pr(B)$.
+  Random variables are independent if the probability of every product
+  event factors in the same way.]{.draft}
+
+Conditional Probability $\Pr(A\,|\,B)$
+
+: [The probability of $A$ given that $B$ occurs: $\Pr(A\cap B)/\Pr(B)$,
+  defined when $\Pr(B)>0$.]{.draft}
+
+Product Event, Rectangle $E_X\times E_Y$
+
+: [A joint event that combines a condition on $\mathbf{X}$ with a separate
+  condition on $\mathbf{Y}$. Not every joint event is a product event.]{.draft}
+
+Marginal Distribution
+
+: [The distribution of one random variable alone, obtained from a joint
+  distribution.]{.draft}
+
+Marginalized
+
+: [A random variable is marginalized in a joint event that places no
+  condition on it, so it does not affect the event's probability.]{.draft}
+
+Discrete
+
+: [A random variable is discrete if its elementary events are countable.]{.draft}
+
+Countable
+
+: [A set is countable if its elements can be ordered so that there is a
+  first element and every element has a unique next element.]{.draft}
+
 Probability Mass Vector $\vec{p}$
 
 : A vector that expresses a discrete probability distribution function. The
   vector's length is equal to the number of outcomes in the sample
   space, which could be countably infinite.
-  
 
-Indicator Function $\mathbf{1}_E(x)$
+Uniform
 
-: A binary function that returns 1 if $x\in E$, otherwise returns 0.
+: [A distribution is uniform if every outcome has the same probability.]{.draft}

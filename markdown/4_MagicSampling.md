@@ -43,7 +43,7 @@ The ratio of densities
 
 $$\ell(y)=\frac{f_X(y)}{f_Y(y)}$$
 
-is the **likelihood ratio**. It is the weight that restores the native measure:
+is the *likelihood ratio* (@sec:absolutecontinuity). It is the weight that restores the native measure:
 samples where $\nu$ is more likely than $\mu$ are weighted down, and samples where
 it is less likely are weighted up. The step is valid only if $f_Y(y)>0$
 wherever $h(y)f_X(y)\neq 0$; otherwise part of the integral is never sampled.
@@ -314,3 +314,28 @@ incomplete knowledge.
 
 :::
 
+\newpage
+
+## Key Terms {#keytermsimportancesampling}
+
+Change of Measure
+
+: [Computing an expectation under $\mu$ from samples drawn under a
+  different measure $\nu$, each weighted by the likelihood ratio.]{.draft}
+
+Importance Sampling Estimator $\tilde{\boldsymbol{\xi}}$
+
+: [$\tilde{\xi}=\frac{1}{N}\sum_{i=1}^N h(y_i)\,\ell(y_i)$, with samples $y_i$
+  drawn from $\nu$.]{.draft}
+
+Sampling Gain $G$
+
+: [The ratio $\text{Var}(\hat{\boldsymbol{\xi}})/\text{Var}(\tilde{\boldsymbol{\xi}})$: the factor
+  by which importance sampling reduces the number of samples needed for
+  a given estimator variance.]{.draft}
+
+Infinite Variance
+
+: [An estimator whose variance diverges. It may still be unbiased and
+  consistent, but its sample variance, confidence intervals and sampling
+  gain are meaningless.]{.draft}

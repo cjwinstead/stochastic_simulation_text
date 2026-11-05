@@ -1,8 +1,9 @@
 # The Concept of an Estimator {#conceptofanestimator}
 
 An **estimator** is an algorithm for inferring the value of an
-unknown statistical parameter. We'll use the symbol $\xi$ to 
-represent the parameter, and $\hat{\boldsymbol{\xi}}$ for its estimate. 
+unknown statistical parameter. [We'll use the symbol $\xi$ to
+represent the **parameter**, $\hat{\boldsymbol{\xi}}$ for the estimator, and
+$\hat{\xi}$ for a particular numerical **estimate** obtained from data.]{.draft}
 The estimation is itself a random variable; it is typically a statistic
 derived from data. The 
 parameter of interest could be the mean, the variance, the 
@@ -26,9 +27,9 @@ should be able to obtain repeatable results within a tolerable margin of error.
 
 ## Estimator Attributes {#estimatorattributes}
 
-A good estimator should be **unbiased**, meaning $\mathcal{E}_\mu\left(\hat{\boldsymbol{\xi}}\right)=\xi.$ It should also be **consistent**, meaning all the estimates $\hat{\boldsymbol{\xi}}$
+A good estimator should be *unbiased*, meaning $\mathcal{E}_\mu\left(\hat{\boldsymbol{\xi}}\right)=\xi.$ It should also be *consistent*, meaning all the estimates $\hat{\boldsymbol{\xi}}$
 converge to $\xi$ as the number of samples grows to infinity. It should preferably be 
-**efficient**, meaning we can achieve a precise estimation with a practical number of
+*efficient*, meaning we can achieve a precise estimation with a practical number of
 samples\footnote{Formal definitions of efficiency are complicated, we will avoid the 
 full treatment and use simplified approaches in this text.}.
 
@@ -168,12 +169,13 @@ how far the estimate might be from the true parameter value on average.
 
 In this text we will usually perform estimations of expectations, 
 $\mathcal{E}_\mu\left(h\left(\mathbf{X}\right)\right)$ for a random
-variable $\mathbf{X}$ and function $h()$. We use the sample mean
-estimator, applying the function to $N$ iid samples. The result is
+variable $\mathbf{X}$ and function $h()$. We use the **sample mean
+estimator**, applying the function to $N$ iid samples. The result is
 a sum of independent random variables:
 $$\hat{\boldsymbol{\xi}}=\frac{1}{N}\sum_{i=1}^N h\left(\mathbf{X}_i\right),$$
 This estimator can be used if the distribution of $h\left(\mathbf{X}\right)$ 
-has finite mean and variance.
+has finite mean and variance[; we call such a distribution a
+**well-behaved distribution**]{.draft}.
 Applying the properties
 of variance, namely scaling and independent summation, the estimator's
 variance takes on this form:
@@ -406,7 +408,7 @@ $4\hat{p}_C$ varies by about $0.005$.]{.draft}
 
 ## "Pathological" Cases {#sec:pathologicalcases}
 
-There are distributions for which the mean and variance are undefined.
+There are [**pathological distributions**]{.draft}, for which the mean and variance are undefined.
 The Cauchy Distribution is a commonly cited example. Let $\mathbf{U}$
 be a uniformly distributed random variable in the interval $[0,1]$.
 Then define a transformed variable 
@@ -462,7 +464,7 @@ plot(plot(estimates; xlabel = "Estimate index", ylabel = "Sample mean", legend =
 The Cauchy distribution shows one way naive estimation fails: the quantity
 being estimated has no finite variance. A second failure is more common in
 verification problems, and it occurs even for perfectly well-behaved
-distributions: the event of interest is **rare**.
+distributions: the event of interest is a **rare event**.
 
 The estimator variance $p_E(1-p_E)/N$ is small when $p_E$ is small, but so is the
 quantity being estimated. What matters is the error *relative* to $p_E$:
@@ -491,48 +493,79 @@ change with a weight.
 
 ## Key Terms {#keytermsestimation}
 
+Estimator $\hat{\boldsymbol{\xi}}$
+
+: An algorithm for inferring the value of $\xi$ based on sampled data;
+  also denotes the random variable that results from applying the algorithm to
+  randomly sampled data.
+
 Parameter $\xi$
 
 : A property of a random distribution.
-
-Estimator $\hat{\boldsymbol{\xi}}$
-
-: An algorithm for inferring the value of $\xi$ based on sampled data; 
-also denotes the random variable that results from applying the algorithm to
-randomly sampled data.
 
 Estimate $\hat{\xi}$
 
 : A numerical result from applying the estimator on sampled data.
 
-Sample Mean Estimator 
+Unbiased
 
-: Has the form $\hat{\xi}=\frac{1}{N}\sum_{i=1}^N h\left(x_i\right)$ for 
-some function $h(x)$ applied to iid samples $x_i$.
+: [An estimator is unbiased if $\mathcal{E}_\mu\left(\hat{\boldsymbol{\xi}}\right)=\xi$.]{.draft}
+
+Consistent
+
+: [An estimator is consistent if
+  $\Pr\left(\left|\hat{\boldsymbol{\xi}}-\xi\right|>\epsilon\right)\rightarrow 0$ for every
+  $\epsilon>0$ as $N\rightarrow\infty$ (convergence in probability).]{.draft}
+
+Efficient
+
+: [An estimator is efficient if it has minimal variance (loose definition).]{.draft}
+
+Estimator Variance $\text{Var}\left(\hat{\boldsymbol{\xi}}\right)$
+
+: Variance of the estimator's result. For well-behaved sample mean estimations
+  $\text{Var}\left( \hat{\boldsymbol{\xi}}\right)=\frac{1}{N}\text{Var}\left(h\left(\mathbf{X}\right) \right)$.
+
+Mean Squared Error
+
+: [$\mathcal{E}_\mu\left(\left(\hat{\boldsymbol{\xi}}-\xi\right)^2\right)$, the squared bias plus the
+  estimator variance. For an unbiased estimator it equals the estimator
+  variance.]{.draft}
+
+Sample Mean Estimator
+
+: Has the form $\hat{\xi}=\frac{1}{N}\sum_{i=1}^N h\left(x_i\right)$ for
+  some function $h(x)$ applied to iid samples $x_i$.
 
 Well-Behaved Distribution
 
 : $h\left(\mathbf{X}\right)$ has finite expectation and variance.
 
+Confidence Interval
+
+: [A range computed from the samples that contains the true parameter
+  with a stated probability, such as 95%.]{.draft}
+
+Wald Interval
+
+: [The confidence interval $\hat{p}_E\pm z\sqrt{\hat{p}_E(1-\hat{p}_E)/N}$ for a
+  probability; unreliable when few samples fall in $E$.]{.draft}
+
+Wilson Score Interval
+
+: [A confidence interval for a probability that remains reliable when
+  $\hat{p}_E$ is small or few samples fall in $E$.]{.draft}
+
+Monte Carlo Integration
+
+: [Approximating an integral by the sample mean of the integrand at
+  randomly sampled points.]{.draft}
+
 Pathological Distribution
 
 : $h\left(\mathbf{X}\right)$ has undefined expectation and/or variance (e.g. Cauchy Distribution).
 
-Estimator Variance $\text{Var}\left(\hat{\boldsymbol{\xi}}\right)$
+Rare Event
 
-: Variance of the estimator's result. For well-behaved sample mean estimations
-$\text{Var}\left( \hat{\boldsymbol{\xi}}\right)=\frac{1}{N}\text{Var}\left(h\left(\mathbf{X}\right) \right)$.
-
-Unbiased Estimator
-
-: Satisfies $\mathcal{E}_\mu\left(\hat{\boldsymbol{\xi}}\right)=\xi$.
-
-Consistent Estimator
-
-: Satisfies $\Pr\left(\left|\hat{\boldsymbol{\xi}}-\xi\right|>\epsilon\right)\rightarrow 0$ for every $\epsilon>0$ as $N\rightarrow\infty$ (convergence in probability).
-
-Efficient Estimator
-
-: An estimator with minimal variance (loose definition).
-
-
+: [An event with probability $p_E$ so small that naive estimation needs
+  about $100/p_E$ samples for a 10% relative error.]{.draft}
