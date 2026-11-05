@@ -31,9 +31,28 @@ CHUNK_FLAGS =	--verbose \
 all: pdf/stochastic_simulation_text.pdf
 
 
+# The PDF is built in two steps so that the LaTeX log is kept: pandoc writes
+# the LaTeX source, and latexmk compiles it with XeLaTeX in $(PDF_BUILD),
+# rerunning until cross-references settle. The log, with every warning, is
+# $(PDF_BUILD)/stochastic_simulation_text.log; a summary is printed after
+# each build (tools/latex_warnings.py), and make pdf-warnings repeats it.
+PDF_BUILD = build/pdf
+PDF_NAME  = stochastic_simulation_text
+
 pdf/stochastic_simulation_text.pdf: $(TEXT_FILES) FORCE
-	@mkdir -p pdf
-	pandoc $(TEXT_FILES) $(PANDOC_FLAGS)  -o "$@"
+	@mkdir -p pdf $(PDF_BUILD)
+	pandoc $(TEXT_FILES) $(PANDOC_FLAGS) -s -o $(PDF_BUILD)/$(PDF_NAME).tex
+	@latexmk -xelatex -interaction=nonstopmode -halt-on-error -file-line-error \
+	  -outdir=$(PDF_BUILD) $(PDF_BUILD)/$(PDF_NAME).tex > $(PDF_BUILD)/latexmk.out 2>&1 \
+	  || { echo "LaTeX stopped with an error (full log: $(PDF_BUILD)/$(PDF_NAME).log):"; \
+	       grep -m1 -A6 -E '^(!|[^ ]+:[0-9]+: )' $(PDF_BUILD)/$(PDF_NAME).log; exit 1; }
+	@cp $(PDF_BUILD)/$(PDF_NAME).pdf $@
+	@echo "Built $@. LaTeX warnings:"
+	@python3 tools/latex_warnings.py $(PDF_BUILD)/$(PDF_NAME).log
+
+.PHONY: pdf-warnings
+pdf-warnings:
+	@python3 tools/latex_warnings.py $(PDF_BUILD)/$(PDF_NAME).log
 
 
 chunk: $(TEXT_FILES) FORCE

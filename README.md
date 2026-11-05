@@ -84,6 +84,15 @@ make env-update     update packages within Project.toml's compat bounds
 After `make env-update`, review the change to `Manifest.toml`, run
 `make test`, and commit both files together.
 
+The PDF is built in two steps: pandoc writes the LaTeX source to `build/pdf`,
+and `latexmk` compiles it there with XeLaTeX. The full log,
+`build/pdf/stochastic_simulation_text.log`, is kept, and each build ends with a
+summary of missing characters, overfull boxes, undefined references and other
+warnings, each with the file being read at the time (`make pdf-warnings`
+repeats it). A LaTeX error stops the build and prints the error with its line
+in the generated `.tex` file. `latexmk` comes with TeX Live; with MiKTeX it
+also needs Perl.
+
 To work in the environment by hand, start `julia --project=notebooks` and use
 `instantiate`, not `resolve`: `instantiate` installs exactly the versions in
 `Manifest.toml`, while `resolve` may change them. If Pkg reports that a pinned
