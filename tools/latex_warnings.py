@@ -27,10 +27,12 @@ UNDEF_REF = re.compile(r"LaTeX Warning: Reference `([^']+)' on page (\d+) undefi
 OTHER = re.compile(r"((?:LaTeX|Package \w+|Class \w+) Warning: .*)")
 # Known, harmless messages. mathtools asks to be loaded before unicode-math,
 # but pandoc's default template loads unicode-math before the book's
-# preamble; the order has no visible effect on the text.
+# preamble; the order has no visible effect on the text. A document with no
+# captioned tables (the notebook review copy) leaves \captionsetup[table] unused.
 IGNORE = re.compile(r"Label\(s\) may have changed|There were undefined references|"
                     r"Font shape .* undefined|Size substitutions|Some font shapes were not available|"
-                    r"mathtools Warning: For best results, please load mathtools \*before\*")
+                    r"mathtools Warning: For best results, please load mathtools \*before\*|"
+                    r"Unused \\captionsetup\[table\]")
 
 
 def main(argv):

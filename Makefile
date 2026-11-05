@@ -96,6 +96,9 @@ FORCE:
 #   make test-course           the course-file test suite
 #   make test-examples         every Julia example in the text, each on its own
 #   make test-notebooks        every notebook, built with its solutions
+#   make notebooks-pdf         run every notebook (with solutions) and render it,
+#                              outputs and plots included, as a review copy in
+#                              pdf/course_notebooks.pdf, styled like the text
 #   make release               checks, tests, PDF and notebooks: the full build
 # ---------------------------------------------------------------------------
 
@@ -108,7 +111,7 @@ NB_LIB     = notebooks/lib/StochasticSimulationCourse.jl notebooks/lib/course_pl
 NB_BUILD   = build/notebooks
 
 .PHONY: check check-keyterms notebooks check-notebooks env env-update \
-	test test-course test-examples test-notebooks release
+	test test-course test-examples test-notebooks notebooks-pdf release
 
 check: check-keyterms check-notebooks
 
@@ -153,4 +156,22 @@ test-notebooks: notebooks
 	  else echo "FAILED  $$name (see $$d$$name.out)"; failed=1; fi; \
 	done; exit $$failed
 
-release: check test all notebooks
+NB_REVIEW = build/notebooks-review
+NB_PANDOC_FLAGS = $(filter-out --include-before-body=%,$(PANDOC_FLAGS))
+
+notebooks-pdf: notebooks
+	@rm -rf $(NB_REVIEW) && mkdir -p $(NB_REVIEW) $(PDF_BUILD)
+	$(JULIA_RUN) tools/render_notebooks.jl $(NB_BUILD) $(NB_REVIEW)
+	pandoc $(NB_REVIEW)/M*.md $(NB_PANDOC_FLAGS) \
+	  -M title="Course Notebooks: Review Copy" -M subtitle="with solutions and hidden tests" \
+	  -M lof=false -M lot=false --resource-path=$(NB_REVIEW) \
+	  -s -o $(PDF_BUILD)/course_notebooks.tex
+	@latexmk -xelatex -interaction=nonstopmode -halt-on-error -file-line-error \
+	  -outdir=$(PDF_BUILD) $(PDF_BUILD)/course_notebooks.tex > $(PDF_BUILD)/latexmk-notebooks.out 2>&1 \
+	  || { echo "LaTeX stopped with an error (full log: $(PDF_BUILD)/course_notebooks.log):"; \
+	       grep -m1 -A6 -E '^(!|[^ ]+:[0-9]+: )' $(PDF_BUILD)/course_notebooks.log; exit 1; }
+	@mkdir -p pdf && cp $(PDF_BUILD)/course_notebooks.pdf pdf/
+	@echo "Built pdf/course_notebooks.pdf. LaTeX warnings:"
+	@python3 tools/latex_warnings.py $(PDF_BUILD)/course_notebooks.log
+
+release: check test all notebooks notebooks-pdf

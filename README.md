@@ -77,6 +77,8 @@ make env            install the pinned packages (once per machine)
 make check          Key Terms and notebook-solution checks
 make test           course-file tests, every Julia example in the text
                     (each run on its own), and every notebook with solutions
+make notebooks-pdf  run the notebooks and render them, with solutions,
+                    output and plots, in pdf/course_notebooks.pdf
 make release        check, test, the PDF, and the notebooks, in build/
 make env-update     update packages within Project.toml's compat bounds
 ```
@@ -121,7 +123,8 @@ notebooks/
   M1/    Module 1 notebooks
   M2/    Module 2 notebooks
 tools/   solutions.py (split/merge/check), check_keyterms.py,
-         text_examples.py, pre-commit
+         text_examples.py, render_notebooks.jl, latex_warnings.py,
+         pre-commit
 ```
 
 Solutions and hidden tests are kept in a separate private repository. In a
@@ -137,6 +140,15 @@ location `../stochastic_simulation_solutions`, override with `SOLUTIONS=`),
 copies the course files next to each notebook, and writes `.jl` and `.ipynb`
 files under `build/notebooks/`. Add `NBGRADER=1` to emit nbgrader delimiters
 instead of `#@` markers. Building requires `python3` and `jupytext`.
+
+`make notebooks-pdf` builds a review copy of every notebook in the text's
+style, `pdf/course_notebooks.pdf`. It runs each built notebook cell by cell, as
+Jupyter would, and shows each cell's printed output, its displayed value and
+any plot. As the author's copy it includes the solutions and hidden tests,
+with the markers shown as `# --- solution (removed from the student copy) ---`,
+and labels the answer cells and the locked test cells with their points. A
+cell that raises an error shows `ERROR:` in its output, and the build lists
+the count per notebook.
 
 `make check-notebooks` fails if any public notebook contains a solution.
 Install the same check as a commit hook with
