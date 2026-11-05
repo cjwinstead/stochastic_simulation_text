@@ -120,7 +120,7 @@ this text should give you an intimate understanding of estimation error, ways to
 reduce it, and the seductive traps that accompany it.
 
 | Trial $N$ | 1        | 2        | 3        | 4        | 5        | 6        | 7        | 8        | 9        | 10       |
-|-----------|----------|----------|----------|----------|----------|----------|----------|----------|----------|----------|
+|-----------------|----------|----------|----------|----------|----------|----------|----------|----------|----------|----------|
 | $d$    | 1 | 3 | 6 | 2 | 3 | 2 | 4 | 6 | 1 | 5 |
 | $\mathbf{1}_E(d)$   | 1        | 1        | 0        | 1        | 1        | 1        | 0        | 0        | 1        | 0        |
 | $N_E$     | 1        | 2        | 2        | 3        | 4        | 5        | 5        | 5        | 6        | 6        |
@@ -129,9 +129,6 @@ reduce it, and the seductive traps that accompany it.
 Table: Ten rolls of a fair die, and the running estimate $\hat{p}$ of $\Pr(d<4)$. {#tbl:dice_rolls}
 
 :::
-
-\newpage
-
 
 ## Probability Algebra {#probabilityalgebra}
 
@@ -366,7 +363,7 @@ elementary events listed in @tbl:two_dice_sums. The probability for each event i
 its constituent elementary probabilities.
 
 | Event $S_j=\mathbf{A}+\mathbf{B}$  | Elementary Events $(a,b)$                                            | $\Pr\left(S_j\right)$ |
-|------------------------------|-----------------------------------------------------------|------|
+|------------------------------|--------------------------------------------------|---------------|
 | 2           | $(1,1)$                                                                         | 1/36 |
 | 3           | $(1,2)$\, $(2,1)$                                                           | 2/36 |
 | 4           | $(1,3)$\, $(2,2)$\, $(3,1)$                                             | 3/36 |

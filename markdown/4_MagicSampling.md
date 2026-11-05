@@ -183,8 +183,6 @@ variance.
 :::
 
 
-\clearpage
-
 ## Importance Sampling for Probability Estimation {#isforprobabilityestimation}
 
 
@@ -255,9 +253,6 @@ counts, as in @fig:gaussian_interval_trace.
 
 
 ![[Naive and importance sampling estimates of $\Pr(1<\mathbf{X}<2)$ as the sample count grows.]{.draft}](figures/gaussian_interval_probability.tex){#fig:gaussian_interval_trace}
-
-
-\clearpage
 
 
 ## Optimal Importance Sampling Distributions {#sec:optimalis}

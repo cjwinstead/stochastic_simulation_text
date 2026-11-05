@@ -340,8 +340,6 @@ The density and the cumulative distribution are plotted in [@fig:uniform_density
 :::
 
 
-\newpage
-
 :::{.example title="Gaussian Distribution"}
 
 The **Gaussian distribution**, commonly called the "bell curve",
@@ -366,14 +364,10 @@ $$F_G(x;\theta,\sigma) = \Phi_N\left(\frac{x-\theta}{\sigma}\right).$$
 
 :::
 
-\newpage
-
 ![Uniform probability density function in the interval $(a,b)$.](figures/uniform_density.tex){#fig:uniform_density}
 
 ![Cumulative uniform distribution in the interval $(a,b)$.](figures/uniform_distribution.tex){#fig:uniform_cdf}
 
-
-\newpage
 
 :::{.example title="Exponential Distribution"}
 
@@ -397,8 +391,6 @@ is exponentially distributed with $\lambda=0.02$, then the answer is always
 how long you think we've been stuck in the car.
 
 :::
-
-\newpage
 
 ## Functions of Random Variables {#sec:functionsofrandomvariables}
 
