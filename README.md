@@ -84,6 +84,12 @@ make env-update     update packages within Project.toml's compat bounds
 After `make env-update`, review the change to `Manifest.toml`, run
 `make test`, and commit both files together.
 
+To work in the environment by hand, start `julia --project=notebooks` and use
+`instantiate`, not `resolve`: `instantiate` installs exactly the versions in
+`Manifest.toml`, while `resolve` may change them. If Pkg reports that a pinned
+version is not available ("no versions left"), the local registry is older
+than the Manifest; run `registry up` first. `make env` does this for you.
+
 ## Code style
 
 Code in the text and the notebooks follows the plan's notation-to-Julia

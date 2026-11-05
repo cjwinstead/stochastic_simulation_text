@@ -68,7 +68,8 @@ FORCE:
 #
 # Julia environment (notebooks/Project.toml and notebooks/Manifest.toml)
 #
-#   make env                   install the pinned packages; run once per machine
+#   make env                   update the package registry, then install the
+#                              pinned packages; run once per machine
 #   make env-update            update packages within the compat bounds in
 #                              Project.toml, rewriting Manifest.toml (review the
 #                              change, run make test, and commit both files)
@@ -110,7 +111,7 @@ check-notebooks:
 	@python3 tools/solutions.py check $(NB_SOURCES)
 
 env:
-	$(JULIA_RUN) -e 'using Pkg; Pkg.instantiate(); Pkg.precompile()'
+	$(JULIA_RUN) -e 'using Pkg; Pkg.Registry.update(); Pkg.instantiate(); Pkg.precompile()'
 
 env-update:
 	$(JULIA_RUN) -e 'using Pkg; Pkg.update(); Pkg.status()'
